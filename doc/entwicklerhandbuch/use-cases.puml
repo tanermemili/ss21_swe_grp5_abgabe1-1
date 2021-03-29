@@ -21,7 +21,7 @@ skinparam componentStyle uml2
 actor Gast
 actor Admin
 
-' An Domäne anpassen
+'TODO: An Domäne anpassen
 rectangle kunde {
     Gast --> (Buch suchen)
     Gast --> (Datei herunterladen)
