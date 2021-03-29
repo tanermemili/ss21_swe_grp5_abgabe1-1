@@ -344,7 +344,7 @@ localhost, sondern die Kubernetes-internen Rechnernamen verwendet werden.
 Außerdem muss in `.env` noch der Linux-Pfad für das Logging gesetzt werden.
 
 Durch das Skript `docker-build.ts` wird mit Hilfe der Datei
-`Dockerfile` das Docker-Image `juergenzimmermann/buch:1.0.0` gebaut:
+`Dockerfile` das Docker-Image `juergenzimmermann/film:1.0.0` gebaut:
 
 ```PowerShell
     npm run docker-build
@@ -366,7 +366,7 @@ des Appservers. Wenn das Docker-Image erstellt ist (s.o.), kann das Deployment
 in Kubernetes folgendermaßen durchgeführt werden, was man z.B. mit _Lens_ ode
  _Octant_ inspizieren kann. Dabei wird die Logdatei im internen Verzeichnis
 `/var/log/node` angelegt, welches durch _Mounting_ dem Windows-Verzeichnis
-`C:\Zimmermann\volumes\buch` entspricht und mit _Schreibberechtigung_ existieren
+`C:\Zimmermann\volumes\film` entspricht und mit _Schreibberechtigung_ existieren
 muss.
 
 ```PowerShell
@@ -636,12 +636,12 @@ Rechts oben kann man sich über den Menüpunkt _Sign Out_ ausloggen.
 
 Um nicht die DB `test` (s.o. in der URL) im künftigen Appserver zu benutzen,
 erstellt man in einer Powershell mit der Mongo CLI eine eigene DB (z.B. `acme`)
-mit einer leeren Collection (z.B. `Buch`):
+mit einer leeren Collection (z.B. `film`):
 
 ```text
     mongo "mongodb+srv://<<MEINE_KENNUNG>>:<<MEIN_PASSWORT_>>@cluster0-....mongodb.net/test?w=majority"
         use acme
-        db.createCollection('Buch')
+        db.createCollection('film')
         exit
 ```
 
@@ -887,7 +887,7 @@ oder https://www.sitepoint.com/debug-node-app-tips-tricks-tools.
 In Anlehnung an die
 [Guidelines von TypeScript](https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines)
 
-- "Feature Filenames", z.B. buch.service.ts
+- "Feature Filenames", z.B. film.service.ts
 - Klassennamen und Enums mit PascalCase,
 - Attribute und Funktionen mit camelCase,
 - private Properties _nicht_ mit vorangestelltem **\_**,
