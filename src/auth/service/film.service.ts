@@ -13,9 +13,11 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { FilmData } from '../../film/entity/film';
+import { Film, FilmData } from '../../film/entity/film';
 import { FilmModel } from '../../film/entity/film.model';
+import { validateFilm } from '../../film/entity/validateFilm';
 import { logger } from '../../shared';
+import { FilmInvalid, FilmServiceError, TitelExists } from './errors';
 
 export class FilmService {
 
@@ -31,6 +33,59 @@ export class FilmService {
     private deleteTimestamps(film: FilmData) {
         delete film.createdAt;
         delete film.updatedAt;
+    }
+
+    /**
+     * Validiert einen Film der erzeugt werden soll
+     * @param film Ein Film vom Typ {@linkcode Film}
+     * @returns Einen Fehler, falls z.B. der Filmtitel bereits vergeben ist.
+     */
+    private async validateCreate(film: Film) {
+        const msg = validateFilm(film);
+
+        if (msg !== undefined) {
+            logger.debug(
+                'FilmService.validateCreate(): Validation Message: %o',
+                msg
+            );
+            return new FilmInvalid(msg);
+        }
+
+        const { titel } = film;
+
+        if (await FilmModel.exists({ titel })) {
+            return new TitelExists(titel);
+        }
+        
+        logger.debug('FilmService.validateCreate(): ok');
+        return undefined;
+
+    }
+
+    // ==============================================================
+    //                           CREATE
+    // ==============================================================
+
+    /**
+     * 
+     * @param film Der neu abzulegende Film
+     * @returns Die ID des neu angeleten Films oder im Fehlerfall
+     * - {@linkcode FilmInvalid} falls die Filmdaten gegen Constraints verstoßen
+     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
+     */
+    async create(film: Film): Promise<FilmInvalid | TitelExists | string> {
+        logger.debug('FilmService.create(): film=%o', film);
+        const validateResult = await this.validateCreate(film);
+        if (validateResult instanceof FilmServiceError) {
+            return validateResult;
+        }
+
+        const filmModel = new FilmModel(film);
+        const saved = await filmModel.save();
+        const id = saved._id as string;
+        logger.debug('FilmService.create(): id=%s');
+
+        return id;
     }
 
     // ==============================================================
