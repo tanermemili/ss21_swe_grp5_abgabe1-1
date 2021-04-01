@@ -39,6 +39,6 @@ export interface FilmData extends Film {
     updatedAt?: Date;
 }
 
-export type Genre = 'DOKUMENTATION' | 'KOMOEDIE' | 'DRAMA'
+export type Genre = 'DOKUMENTATION' | 'KOMOEDIE' | 'DRAMA' | 'HORROR' | 'ACION'
 
-export type ProduktionsStudio = 'TBD'
+export type ProduktionsStudio = 'DISNEY' | 'UNIVERSAL' | 'WARNER BROS'
