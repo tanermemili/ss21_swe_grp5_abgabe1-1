@@ -40,3 +40,30 @@ export class TitelExists extends FilmServiceError {
         super();
     }
 }
+
+/**
+ * Fehlerklasse für eine ungültige Versionsnummer beim Update.
+ */
+export class VersionInvalid extends FilmServiceError {
+    constructor(readonly version: string | undefined) {
+        super();
+    }
+}
+
+/**
+ * Fehlerklasse für einen nicht existierenden Film.
+ */
+export class FilmNotExists extends FilmServiceError {
+    constructor(readonly id: string | undefined) {
+        super();
+    }
+}
+
+/**
+ * Klasse für eine veraltete Versionsnummer beim Update.
+ */
+export class VersionOutdated extends FilmServiceError {
+    constructor(readonly id: string, readonly version: number) {
+        super();
+    }
+}
