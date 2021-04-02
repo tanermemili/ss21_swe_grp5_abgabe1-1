@@ -13,14 +13,16 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import { QueryOptions } from 'mongoose';
 import { Film, FilmData } from '../../film/entity/film';
 import { FilmModel } from '../../film/entity/film.model';
 import { validateFilm } from '../../film/entity/validateFilm';
 import { logger } from '../../shared';
-import { FilmInvalid, FilmServiceError, TitelExists } from './errors';
+import { FilmInvalid, FilmNotExists, FilmServiceError, TitelExists, VersionInvalid, VersionOutdated } from './errors';
 
 export class FilmService {
 
+    private static readonly UPDATE_OPTIONS: QueryOptions = { new: true };
 
     // ==============================================================
     //                           Utility
@@ -34,6 +36,56 @@ export class FilmService {
         delete film.createdAt;
         delete film.updatedAt;
     }
+
+    /**
+     * Prüft, ob ein Filmtitel bereits existiert
+     * @param film Film der überprüft werden soll vom Typ {@linkcode Film}
+     * @returns Undefined wenn der Titel nicht vergeben ist, ansonsten {@linkcode TitelExists}
+     */
+    private async checkTitelExists(film: Film) {
+
+        const { titel } = film;
+
+        const result = await FilmModel.findOne({ titel }, { _id: true}).lean();
+        if (result !== null) {
+            const id = result._id;
+            logger.debug('FilmService.checkTitelExists(): _id=%s', id);
+            return new TitelExists(titel, id);
+        }
+
+        logger.debug("FilmService.checkTitelExists(): ok");
+        return undefined;
+    }
+
+    /**
+     * Prüft die Id und Version eines Films
+     * @param id Die ID des Films
+     * @param version Die Version des Films
+     * @returns Undefined wenn OK, ansonsten
+     * - {@linkcode FilmNotExists} Falls der Film nicht existiert
+     * - {@linkcode VersionOutdated} Falls die Version nicht aktuell ist
+     */
+    private async checkIdAndVersion(id: string, version: number) {
+        const filmDb: FilmData | null = await FilmModel.findById(id).lean();
+        if (filmDb === null) {
+            const result = new FilmNotExists(id);
+            logger.debug("FilmService.checkIdAndVersion(): FilmNotExists=%o", result)
+            return result;
+        };
+
+        const versionDb = filmDb.__v ?? 0;
+        if (version < versionDb) {
+            const result = new VersionOutdated(id, version);
+            logger.debug("FilmService.checkIdAndVersion(): VersionOutdated=%o", result);
+            return result;
+        }
+
+        return undefined;
+    }
+
+    // ==============================================================
+    //                           Validation
+    // ==============================================================
 
     /**
      * Validiert einen Film der erzeugt werden soll
@@ -60,6 +112,75 @@ export class FilmService {
         logger.debug('FilmService.validateCreate(): ok');
         return undefined;
 
+    }
+
+    /**
+     * Validiert die Version eines Films.
+     * @param versionStr Die Version des Films
+     * @returns Die Version, wenn OK. Ansonsten Fehlermeldung.
+     */
+    private validateVersion(versionStr: string | undefined) {
+        if(versionStr === undefined) {
+            const error = new VersionInvalid(versionStr);
+            logger.debug(
+                'FilmService.validateVersion(): VersionInvalid=%o',
+                error
+            );
+            return error;
+        }
+
+        const version = Number.parseInt(versionStr, 10);
+        if (Number.isNaN(version)) {
+            const error = new VersionInvalid(versionStr);
+            logger.debug('FilmService.validateVersion(): VersionInvalid=%o', error);
+
+            return error;
+        }
+
+        return version;
+    }
+
+    /**
+     * Validiert einen Film, der aktualisiert werden soll.
+     * @param film Der zu aktualisierende Film vom Typ {@linkcade Film}
+     * @param versionStr Die Versionsnummer
+     * @returns Undefined, wenn OK. Ansonsten entsprechende Fehlermeldung.
+     */
+    private async validateUpdate(film: Film, versionStr: string) {
+        const result = this.validateVersion(versionStr);
+        if(typeof result !== 'number') {
+            return result;
+        }
+
+        const version = result;
+        logger.debug("FilmService.validateUpdate(): version=%d", version);
+        logger.debug("FilmService.validateUpdate(): film=%o", film);
+
+        const validationMsg = validateFilm(film);
+        if (validationMsg !== undefined) {
+            return new FilmInvalid(validationMsg);
+        }
+
+        const resultTitel = await this.checkTitelExists(film);
+        if (resultTitel !== undefined && resultTitel.id !== film._id) {
+            return resultTitel;
+        }
+
+        if (film._id === undefined) {
+            return new FilmNotExists(undefined);
+        }
+
+        const resultIdAndVersion = await this.checkIdAndVersion(
+            film._id,
+            version
+        );
+
+        if ( resultIdAndVersion !== undefined) {
+            return resultIdAndVersion;
+        }
+
+        logger.debug('FilmService.validateUpdate(): ok');
+        return undefined;
     }
 
     // ==============================================================
@@ -150,5 +271,63 @@ export class FilmService {
         }
 
         return filme;
+    }
+
+    // ==============================================================
+    //                            UPDATE
+    // ==============================================================
+
+    /**
+     * Einen vorhandenen Film aktualisieren.
+     * @param film Der zu aktualisierende Film vom Typ {@linkcode Film}
+     * @param versionStr Die Versionsnummer für die optimistische Synchronisation
+     * @returns Die neue Versionsnummer gemäß optimistischer Synchronisation oder im Fehlerfall
+     * - {@linkcode FilmInvalid} falls Constraints verletzt sind
+     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
+     * - {@linkcode FilmNotExists} falls der Film nicht existiert
+     * - {@linkcode VersionInvalid} falls die Versionsnummer nicht aktuell ist
+     */
+    async update(film: Film, versionStr: string): Promise<FilmInvalid | TitelExists | FilmNotExists | VersionInvalid | number> {
+
+
+        logger.debug('FilmService.update(): film=%o', film);
+        logger.debug('FilmService.update(): versionStr=%s', versionStr);
+
+        const validateResult = await this.validateUpdate(film, versionStr);
+        if (validateResult instanceof FilmServiceError) {
+            return validateResult;
+        }
+
+        const filmModel = new FilmModel(film);
+        const updated = await FilmModel.findByIdAndUpdate(
+            film._id,
+            filmModel,
+            FilmService.UPDATE_OPTIONS).lean<FilmData | null>();
+        
+        if ( updated === null ) {
+            return new FilmNotExists(film._id);
+        }
+
+        const version = updated.__v as number;
+        logger.debug('FilmService.update(): version=%d', version);
+
+        return Promise.resolve(version);
+    }
+
+    // ==============================================================
+    //                           DELETE
+    // ==============================================================
+
+    /**
+     * Ein Film asynchron anhand der ID löschen.
+     * @param id Die ID des Films
+     * @returns true, falls der Film vorhanden war und gelöscht wurde. Ansonsten false.
+     */
+    async delete(id: string) {
+        logger.debug("FilmService.delete(): id=%s", id);
+
+        const deleted = await FilmModel.findByIdAndDelete(id).lean();
+        logger.debug("FilmService.delete(): deleted=%o", deleted);
+        return deleted !== null;
     }
 }
