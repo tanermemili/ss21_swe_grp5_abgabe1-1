@@ -22,22 +22,15 @@ import type { ConnectOptions } from 'mongoose';
 import { dbConfig } from '../config';
 import { logger } from '../logger';
 
-// http://mongoosejs.com/docs/connections.html
-// https://github.com/mongodb/node-mongodb-native
-// https://docs.mongodb.com/manual/tutorial/configure-ssl-clients
 
 const { url } = dbConfig;
 
-// https://mongoosejs.com/docs/deprecations.html
 const useNewUrlParser = true;
 
-// findOneAndUpdate nutzt findOneAndUpdate() von MongoDB statt findAndModify()
 const useFindAndModify = false;
 
-// Mongoose nutzt createIndex() von MongoDB statt ensureIndex()
 const useCreateIndex = true;
 
-// MongoDB hat eine neue "Server Discover and Monitoring engine"
 const useUnifiedTopology = true;
 
 // Name eines mongoose-Models = Name der Collection
@@ -45,18 +38,12 @@ const useUnifiedTopology = true;
 // eslint-disable-next-line line-comment-position, spaced-comment, unicorn/no-useless-undefined
 pluralize(undefined); //NOSONAR
 
-// Callback: Start des Appservers, nachdem der DB-Server gestartet ist
-
 export const connectDB = async () => {
     logger.info(
         'URL fuer mongoose: %s',
         url.replace(/\/\/.*:/u, '//USERNAME:@').replace(/:[^:]*@/u, ':***@'),
     );
 
-    // Optionale Einstellungen, die nicht im Connection-String verwendbar sind
-    // http://mongoosejs.com/docs/connections.html
-    // http://mongodb.github.io/node-mongodb-native/3.5/api/MongoClient.html#.connect
-    // https://mongodb.github.io/node-mongodb-native/3.5/reference/connecting/connection-settings
     const options: ConnectOptions = {
         useNewUrlParser,
         useFindAndModify,
@@ -64,11 +51,6 @@ export const connectDB = async () => {
         useUnifiedTopology,
     };
 
-    // http://mongoosejs.com/docs/api.html#index_Mongoose-createConnection
-    // http://mongoosejs.com/docs/api.html#connection_Connection-open
-    // http://mongoosejs.com/docs/connections.html
-    // https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options
-    // http://mongodb.github.io/node-mongodb-native/3.5/api/MongoClient.html
     try {
         await connect(url, options);
     } catch (err: any) {
@@ -82,8 +64,6 @@ export const connectDB = async () => {
 
     logger.info('DB-Verbindung zu %s ist aufgebaut', connection.name);
 
-    // util.promisify(fn) funktioniert nur mit Funktionen, bei denen
-    // der error-Callback das erste Funktionsargument ist
     connection.on('disconnecting', () =>
         logger.info('DB-Verbindung wird geschlossen...'),
     );
@@ -93,7 +73,6 @@ export const connectDB = async () => {
     connection.on('error', () => logger.error('Fehlerhafte DB-Verbindung'));
 };
 
-// In Produktion auf false setzen
 export const autoIndex = true;
 
 /* eslint-enable no-process-exit */
