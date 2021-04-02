@@ -313,4 +313,21 @@ export class FilmService {
 
         return Promise.resolve(version);
     }
+
+    // ==============================================================
+    //                           DELETE
+    // ==============================================================
+
+    /**
+     * Ein Film asynchron anhand der ID löschen.
+     * @param id Die ID des Films
+     * @returns true, falls der Film vorhanden war und gelöscht wurde. Ansonsten false.
+     */
+    async delete(id: string) {
+        logger.debug("FilmService.delete(): id=%s", id);
+
+        const deleted = await FilmModel.findByIdAndDelete(id).lean();
+        logger.debug("FilmService.delete(): deleted=%o", deleted);
+        return deleted !== null;
+    }
 }
