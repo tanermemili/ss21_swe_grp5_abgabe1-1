@@ -26,7 +26,7 @@ export interface Film {
     readonly preis: number | null | undefined;
     readonly rabatt: number | null | undefined;
     readonly verfuegbarkeit: boolean | null | undefined;
-    veroeffentlichung: Date | null | undefined;
+    veroeffentlichung: Date | string | undefined;
     readonly beschreibung: string | null | undefined;
     readonly website: string | null | undefined;
     readonly schauspieler?: string[];
@@ -41,4 +41,4 @@ export interface FilmData extends Film {
 
 export type Genre = 'DOKUMENTATION' | 'KOMOEDIE' | 'DRAMA' | 'HORROR' | 'ACION'
 
-export type ProduktionsStudio = 'DISNEY' | 'UNIVERSAL' | 'WARNER BROS'
+export type ProduktionsStudio = 'DISNEY' | 'UNIVERSAL' | 'WARNERBROS'
