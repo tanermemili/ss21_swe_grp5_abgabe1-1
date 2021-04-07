@@ -16,10 +16,11 @@
  */
 
 /**
- * Das Modul besteht aus Security-Funktionen durch das npm-Package Helmet und
- * Funktionen für CORS.
+ * Das Modul besteht aus dem JSON-Array mit den vorhandenen Rollen.
  * @packageDocumentation
  */
 
-export * from './cors.handler';
-export * from './helmet.handler';
+/**
+ * Ein JSON-Array mit den vorhandenen Rollen.
+ */
+export const roles = ['admin', 'mitarbeiter', 'abteilungsleiter', 'kunde'];
