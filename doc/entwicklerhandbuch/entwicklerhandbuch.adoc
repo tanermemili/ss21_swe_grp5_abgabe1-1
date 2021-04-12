@@ -22,13 +22,6 @@ Jürgen Zimmermann <Juergen.Zimmermann@HS-Karlsruhe.de>
 :sectnums:
 :source-highlighter: coderay
 :icons: font
-// :kroki-server-url: https://kroki.io
-
-// https://github.com/asciidoctor/asciidoctorj
-// https://github.com/asciidoctor/asciidoctor-diagram
-// http://de.plantuml.com/classes.html
-// http://de.plantuml.com/component.html
-// https://github.com/odrotbohm/asciidoctor-plantuml
 
 IMPORTANT: Copyright (C) 2020 - present Jürgen Zimmermann, Hochschule Karlsruhe. +
            Free use of this software is granted under the terms of the
@@ -39,7 +32,7 @@ IMPORTANT: Copyright (C) 2020 - present Jürgen Zimmermann, Hochschule Karlsruhe
 
 === Der Applikationsserver im Überblick
 
-bla bla
+Im folgenden wird ein grober Überblick über den Applikationsserver gegeben. Ein Gast kann somit nur einen Film suchen und herunterladen, während ein Admin alle Use-Cases ausführen kann.
 
 .Use Cases
 [plantuml,use-cases,svg]
@@ -47,7 +40,7 @@ bla bla
 include::use-cases.puml[]
 ----
 
-bla bla
+Die verschiedenen Komponenten des Applikationsservers: Ein RESTClient schickt einen Request ab und wird von der Router-Funktion entgegen genommen und an die Handler-Funktionen übergeben. Der Request wird dann an den Anwendungskern weitergeleitet. Der Anwendungskern kann z.B. einen Datenbank-Request ausführen oder eine Mail versenden (je nach Request). Zuletzt wird ein Response-Objekt gebaut und befüllt und an den RESTClient geschickt.
 
 .Komponentendiagramm
 [plantuml,komponenten,svg]
@@ -57,32 +50,32 @@ include::komponenten.puml[]
 
 === Die REST-Schnittstelle
 
-bla bla
+Dies sind verschiedenen Handler-Funktionen, die an der REST-Schnittstelle ausgeführt werden können.
 
 .Handler für die REST-Schnittstelle
-[plantuml,BuchHandler,svg]
+[plantuml,FilmHandler,svg]
 ----
-include::BuchHandler.puml[]
+include::FilmHandler.puml[]
 ----
 
 === Der Anwendungskern
 
-bla bla
+Der Anwendungskern beinhaltet die Service-Funktionen und die verschiedenen Entitäten.
 
 .Anwendungskern mit Mongoose
-[plantuml,BuchService,svg]
+[plantuml,FilmService,svg]
 ----
-include::BuchService.puml[]
+include::FilmService.puml[]
 ----
 
 === Interface für Entities und das Mongoose-Model
 
-bla bla
+Ein Film hat 2 Enum-Properties (Genre und Produktionsstudio).
 
 .Entity, Model und Schema
-[plantuml,Buch,svg]
+[plantuml,Film,svg]
 ----
-include::Buch.puml[]
+include::Film.puml[]
 ----
 
 == Programmierrichtlinien für TypeScript und JavaScript

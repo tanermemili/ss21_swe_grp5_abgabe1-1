@@ -27,7 +27,7 @@ resources:
 
 #TODO: An Domäne anpassen
 configMapGenerator:
-  - name: buch-env
+  - name: film-env
     behavior: merge
     literals:
       - NODE_ENV=development

@@ -38,9 +38,9 @@ module.exports = {
         '<rootDir>/scripts/',
         '<rootDir>/temp/',
         //TODO: An unsere Domäne anpassen
-        // '<rootDir>/src/buch/service/mock/',
-        // '<rootDir>/src/buch/graphql',
-        // '<rootDir>/src/buch/html',
+        // '<rootDir>/src/film/service/mock/',
+        // '<rootDir>/src/film/graphql',
+        // '<rootDir>/src/film/html',
     ],
     coverageReporters: ['text-summary', 'html'],
     errorOnDeprecated: true,

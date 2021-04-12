@@ -22,13 +22,13 @@ actor Gast
 actor Admin
 
 'TODO: An Domäne anpassen
-rectangle kunde {
-    Gast --> (Buch suchen)
+rectangle Streamingdienst {
+    Gast --> (Film suchen)
     Gast --> (Datei herunterladen)
-    Admin --> (Buch suchen)
-    Admin --> (Buch anlegen)
-    Admin --> (Buch ändern)
-    Admin --> (Buch löschen)
+    Admin --> (Film suchen)
+    Admin --> (Film anlegen)
+    Admin --> (Film ändern)
+    Admin --> (Film löschen)
     Admin --> (Datei hochladen)
     Admin --> (Datei herunterladen)
 }

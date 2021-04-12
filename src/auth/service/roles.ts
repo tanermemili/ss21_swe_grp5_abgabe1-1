@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 - present Juergen Zimmermann, Hochschule Karlsruhe
+ *
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { exec } from 'shelljs';
+/**
+ * Das Modul besteht aus dem JSON-Array mit den vorhandenen Rollen.
+ * @packageDocumentation
+ */
 
-const dockerAccount = 'juergenzimmermann';
-//TODO: An Domäne anpassen
-const imageName = 'film';
-const imageTag = '1.0.0';
-
-const image = `docker.io/${dockerAccount}/${imageName}:${imageTag}`;
-
-// Dockerfile im aktuellen Verzeichnis
-// Download der diversen Layer fuer node:x.y.z-buster und distroless/nodejs
-exec(`docker build --tag ${image} .`);
+/**
+ * Ein JSON-Array mit den vorhandenen Rollen.
+ */
+export const roles = ['admin', 'mitarbeiter', 'abteilungsleiter', 'kunde'];
