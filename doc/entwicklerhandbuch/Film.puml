@@ -54,8 +54,8 @@ package film.entity {
   interface FilmData <<entity>> {
     + _id?: string
     + __v?: number
-    + createdAt?: number
-    + updatedAt?: number
+    + createdAt?: Date
+    + updatedAt?: Date
     + titel: string
     + bewertung?: number
     + genre?: Genre
