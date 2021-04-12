@@ -265,8 +265,8 @@ _Mutations_ hat.
 
 Die URL für GraphQL lautet im vorliegenden Beispiel
 `https://localhost:3000/graphql`. Beispielhafte _Queries_ und _Mutations_ für
-GraphQL gibt es in den Dateien `restclient\graphql\buecher.query.http` und
-`restclient\graphql\buecher.mutation.http`.
+GraphQL gibt es in den Dateien `restclient\graphql\filme.query.http` und
+`restclient\graphql\filme.mutation.http`.
 
 #### Schema Introspection
 
@@ -820,7 +820,7 @@ https://devcenter.heroku.com/articles/free-dyno-hours.
 Nach dem Deployment ist die eigene Anwendung verfügbar und kann benutzt
 werden. Beispielsweise kann man in einer eigenen Powershell das Kommando
 `npm run curl:heroku` aufrufen. Dabei wird mit `curl` auf die URL
-`https://gener-iert-12345.herokuapp.com/buecher/00000000-0000-0000-0000-000000000001`
+`https://gener-iert-12345.herokuapp.com/filme/00000000-0000-0000-0000-000000000001`
 zugegriffen.
 
 Alternativ kann man auch `npm run open:heroku` oder `npm run open:heroku:file`

@@ -32,20 +32,20 @@ package express {
   interface Response
 }
 
-class App <<boudary>> {
+class App <<boundary>> {
   + readonly app: Express
 }
 App ..> Express
 App ..> express
 
-package buch {
+package film {
   package entity {
-    interface BuchData <<entity>> {
+    interface FilmData <<entity>> {
     }
   }
 
   package service {
-    class BuchService << control >> {
+    class FilmService << control >> {
     }
   }
 
@@ -53,13 +53,13 @@ package buch {
     "Handler Functions" .right.> Request
     "Handler Functions" ..> Response
     "Handler Functions" ..> Promise
-    "Handler Functions" ..> BuchHandler
+    "Handler Functions" ..> FilmHandler
 
-    BuchHandler o--> "1" BuchService : service
-    BuchHandler .right.> Request
-    BuchHandler ..> Response
-    BuchHandler ..> BuchData
-    BuchHandler ..> Promise
+    FilmHandler o--> "1" FilmService : service
+    FilmHandler .right.> Request
+    FilmHandler ..> Response
+    FilmHandler ..> FilmData
+    FilmHandler ..> Promise
 
     class "Handler Functions" << boundary >> {
       + async findById(req: Request, res: Response): Promise<void>
@@ -70,7 +70,7 @@ package buch {
     }
     hide "Handler Functions" << boundary >> circle
 
-    class BuchHandler << control >> {
+    class FilmHandler << control >> {
       + async findById(req: Request, res: Response): Promise<void>
       + async find(req: Request, res: Response): Promise<void>
       + async create(req: Request, res: Response): Promise<void>

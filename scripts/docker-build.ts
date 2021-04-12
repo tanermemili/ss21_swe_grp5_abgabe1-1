@@ -19,7 +19,7 @@ import { exec } from 'shelljs';
 
 const dockerAccount = 'juergenzimmermann';
 //TODO: An Domäne anpassen
-const imageName = 'buch';
+const imageName = 'film';
 const imageTag = '1.0.0';
 
 const image = `docker.io/${dockerAccount}/${imageName}:${imageTag}`;

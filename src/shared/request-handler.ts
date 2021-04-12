@@ -48,10 +48,9 @@ class SharedRequestHandler {
     // aber auf dem Wert kann man keine Funktionen aufrufen und auch auf keine
     // Properties zugreifen, d.h. es muss vorher ein Typecast durchgefuehrt werden
     // eslint-disable-next-line max-params
-    //TODO: An Domäne anpassen
     validateUUID(_: Request, res: Response, next: NextFunction, id: unknown) {
         if (typeof id !== 'string') {
-            res.status(HttpStatus.BAD_REQUEST).send('Keine gueltige Buch-ID');
+            res.status(HttpStatus.BAD_REQUEST).send('Keine gueltige Film-ID');
         }
         const idStr = id as string;
         if (validator.isUUID(idStr)) {
@@ -62,7 +61,7 @@ class SharedRequestHandler {
 
         logger.debug('SharedRequestHandler.validateUUID(): status=BAD_REQUEST');
         res.status(HttpStatus.BAD_REQUEST).send(
-            `${idStr} ist keine gueltige Buch-ID`,
+            `${idStr} ist keine gueltige Film-ID`,
         );
     }
 

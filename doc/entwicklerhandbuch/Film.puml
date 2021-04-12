@@ -25,47 +25,50 @@ package mongoose {
   hide model circle
 }
 
-package buch.entity {
-  class "validateBuch()" as validateBuch
-  hide validateBuch circle
+package film.entity {
+  class "validateFilm()" as validateFilm
+  hide validateFilm circle
 
-  class BuchModel
-  hide BuchModel circle
+  class FilmModel
+  hide FilmModel circle
 
-  BuchModel ..> Schema
-  BuchModel ..> model
-  BuchModel ..> validateBuch
+  FilmModel ..> Schema
+  FilmModel ..> model
+  FilmModel ..> validateFilm
 
-  BuchData ..> BuchArt
-  BuchData ..> Verlag
+  FilmData ..> Genre
+  FilmData ..> Produktionsstudio
 
-  enum BuchArt {
-    KINDLE
-    DRUCKAUSGABE
+  enum Genre {
+    DOKUMENTATION
+    KOMOEDIE
+    DRAMA
   }
 
-  enum Verlag {
-    FOO_VERLAG
-    BAR_VERLAG
+  enum Produktionsstudio {
+    DISNEY
+    UNIVERSAL
+    WARNER BROS
   }
 
-  interface BuchData <<entity>> {
+  interface FilmData <<entity>> {
     + _id?: string
     + __v?: number
     + createdAt?: number
     + updatedAt?: number
     + titel: string
-    + rating?: number
-    + art?: BuchArt
-    + verlag: Verlag
+    + bewertung?: number
+    + genre?: FilmArt
+    + produktionsStudio: PrduktionsStudio
     + preis: number
     + rabatt?: number
-    + lieferbar?: boolean
-    + datum?: Date
-    + isbn: string
-    + homepage?: string
-    + schlagwoerter?: Array<string>
-    + autoren: any
+    + verfuegbarkeit?: boolean
+    + veroeffentlichung?: Date
+    + beschreibung: string
+    + website?: string
+    + schauspieler?: Array<string>
+    + regisseur: any
+    + spieldauer: number
   }
 }
 
