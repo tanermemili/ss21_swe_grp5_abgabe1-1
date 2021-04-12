@@ -23,7 +23,7 @@
  */
 
 import { FilmInvalid, FilmNotExists, FilmServiceError, TitelExists, VersionInvalid, VersionOutdated } from "../../auth/service/errors";
-import { FilmService } from "../../auth/service/film.service";
+import { FilmService } from "../service/film.service";
 import { logger } from "../../shared/logger";
 import { Film } from "../entity/film";
 
