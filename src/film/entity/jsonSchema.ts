@@ -51,8 +51,7 @@ export const jsonSchema: GenericJsonSchema = {
         beschreibung: {
             type: 'string',
             // TODO https://github.com/ajv-validator/ajv-formats/issues/14
-            pattern:
-                '^\\w.*',
+            pattern: '^\\w.*',
         },
         website: { type: 'string', format: 'uri' },
         schauspieler: {
@@ -70,12 +69,14 @@ export const jsonSchema: GenericJsonSchema = {
             titel:
                 'Ein Filmtitel muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
             bewertung: 'Eine Bewertung muss zwischen 0 und 5 liegen.',
-            genre: 'Das Genre eines Films kann nur DOKUMENTATION, KOMOEDIE, DRAMA, HORROR oder ACTION sein',
+            genre:
+                'Das Genre eines Films kann nur DOKUMENTATION, KOMOEDIE, DRAMA, HORROR oder ACTION sein',
             produktionsStudio:
                 'Das Produktionsstudio eines Filmes muss DISNEY, UNIVERSAL oder WARNER BROS sein.',
             preis: 'Der Preis darf nicht negativ sein.',
             rabatt: 'Der Rabatt muss ein Wert zwischen 0 und 1 sein.',
-            verfuegbarkeit: 'Die "verfuegbarkeit" muss auf true oder false gesetzt sein.',
+            verfuegbarkeit:
+                'Die "verfuegbarkeit" muss auf true oder false gesetzt sein.',
             datum: 'Das Datum muss im Format yyyy-MM-dd sein.',
             beschreibung: 'Die Beschreibung ist nicht korrekt.',
             website: 'Die URL der Homepage ist nicht korrekt.',

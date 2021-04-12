@@ -48,7 +48,8 @@ export const testdaten: FilmData[] = [
                 vorname: 'James',
             },
             {
-                nachname: 'Bet',
+                nachname: 'Beta',
+
                 vorname: 'Alpha',
             },
         ],
