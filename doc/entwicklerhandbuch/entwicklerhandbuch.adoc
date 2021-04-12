@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-= Entwicklerhandfilm
+= Entwicklerhandbuch
 Jürgen Zimmermann <Juergen.Zimmermann@HS-Karlsruhe.de>
 :doctype: book
 :toc: left
