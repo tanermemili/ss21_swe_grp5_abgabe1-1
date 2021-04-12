@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Aufruf:   node-ts port-forward.ts buch|mongodb|mailserver
+// Aufruf:   node-ts port-forward.ts film|mongodb|mailserver
 
 import { exec } from 'shelljs';
 import minimist from 'minimist';
@@ -28,8 +28,8 @@ const namespace = 'acme';
 //TODO: An Domäne anpassen
 switch (service) {
     case undefined:
-    case 'buch':
-        exec(`kubectl port-forward service/buch 3000 --namespace ${namespace}`);
+    case 'film':
+        exec(`kubectl port-forward service/film 3000 --namespace ${namespace}`);
         break;
 
     case 'mongodb':
@@ -41,5 +41,5 @@ switch (service) {
         break;
 
     default:
-        console.log('node-ts port-forward.ts buch|mongodb|mailserver');
+        console.log('node-ts port-forward.ts film|mongodb|mailserver');
 }
