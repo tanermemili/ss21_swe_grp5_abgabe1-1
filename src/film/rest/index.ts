@@ -1,7 +1,7 @@
 /**
  * Handler-Funktionen, um die REST-Schnittstelle mit Express zu realisieren. Die
  * einzelnen Handler-Funktionen delegieren an die jeweiligen Methoden der Klassen
- * {@linkcode BuchRequestHandler} und {@linkcode BuchFileRequestHandler}.
+ * {@linkcode FilmRequestHandler} und {@linkcode FilmFileRequestHandler}.
  * @packageDocumentation
  */
 
