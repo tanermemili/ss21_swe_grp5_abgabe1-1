@@ -58,8 +58,8 @@ package film.entity {
     + updatedAt?: number
     + titel: string
     + bewertung?: number
-    + genre?: FilmArt
-    + produktionsStudio: PrduktionsStudio
+    + genre?: Genre
+    + produktionsStudio: ProduktionsStudio
     + preis: number
     + rabatt?: number
     + verfuegbarkeit?: boolean
