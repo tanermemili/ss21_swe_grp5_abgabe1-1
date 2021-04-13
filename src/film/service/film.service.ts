@@ -214,6 +214,7 @@ export class FilmService {
         }
 
         logger.debug('FilmService.checkTitelExists(): ok');
+        return undefined;
     }
 
     /**
@@ -244,6 +245,8 @@ export class FilmService {
             );
             return result;
         }
+
+        return undefined;
     }
 
     // ==============================================================
@@ -273,6 +276,7 @@ export class FilmService {
         }
 
         logger.debug('FilmService.validateCreate(): ok');
+        return undefined;
     }
 
     /**
@@ -344,6 +348,7 @@ export class FilmService {
         }
 
         logger.debug('FilmService.validateUpdate(): ok');
+        return undefined;
     }
 }
 

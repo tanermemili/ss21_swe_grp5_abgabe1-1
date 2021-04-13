@@ -38,6 +38,7 @@ import type { Application } from 'express';
 import type { RequestListener } from 'http';
 import type { SecureContextOptions } from 'tls';
 import type { Server } from 'net';
+import { app } from './app';
 import { connection } from 'mongoose';
 import { createServer } from 'https';
 import ip from 'ip';
@@ -67,11 +68,11 @@ const printBanner = () => {
     // Heroku entfernt fuehrende Leerzeichen
     const banner = `
 
-    .    _    _  _____ _  __           __ _ _      
-    .   | |  | |/ ____| |/ /    /\    / _| (_)     
+    .    _    _  _____ _  __           __ _ _
+    .   | |  | |/ ____| |/ /    /\    / _| (_)
     .   | |__| | (___ | ' /    /  \  | |_| |___  __
     .   |  __  |\___ \|  <    / /\ \ |  _| | \ \/ /
-    .   | |  | |____) | . \  / ____ \| | | | |>  < 
+    .   | |  | |____) | . \  / ____ \| | | | |>  <
     .   |_|  |_|_____/|_|\_\/_/    \_\_| |_|_/_/\_\
 
     `;
@@ -96,9 +97,7 @@ const printBanner = () => {
 };
 
 const startServer = () => {
-    
-    //TODO: App hinzufügen, sobald implementiert
-    let app: any;
+
     let server: Application | Server;
     if (cloud === undefined) {
         const { cert, key } = nodeConfig;
@@ -108,7 +107,7 @@ const startServer = () => {
             cert,
             minVersion: 'TLSv1.3',
         };
-        
+
         // https://stackoverflow.com/questions/11744975/enabling-https-on-express-js#answer-11745114
 
         server = createServer(options, app as RequestListener);

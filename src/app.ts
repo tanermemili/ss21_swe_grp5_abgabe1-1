@@ -231,7 +231,7 @@ class App {
         const config: ApolloServerExpressConfig = {
             typeDefs,
             resolvers,
-            playground: enablePlayground,
+            playground: true,
             introspection: enablePlayground,
         };
         const apollo = new ApolloServer(config);
