@@ -247,6 +247,7 @@ rules:
   deprecation/deprecation: error
 
   eslint-comments/no-unused-disable: error
+  eslint-comments/disable-enable-pair: ["error", {"allowWholeFile": true}]
 
   # https://github.com/benmosher/eslint-plugin-import/issues/1667
   import/no-cycle:

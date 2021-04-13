@@ -13,7 +13,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 /**
  * Das Modul enthält die _Resolver_ für GraphQL.
  *
@@ -22,19 +21,33 @@
  * @packageDocumentation
  */
 
-import { FilmInvalid, FilmNotExists, FilmServiceError, TitelExists, VersionInvalid, VersionOutdated } from "../../auth/service/errors";
-import { FilmService } from "../service/film.service";
-import { logger } from "../../shared/logger";
-import { Film } from "../entity/film";
+import {
+    FilmInvalid,
+    FilmNotExists,
+    FilmServiceError,
+    TitelExists,
+    VersionInvalid,
+    VersionOutdated,
+} from './../service/errors';
+import type { Film } from './../entity';
+import { FilmService } from '../service/film.service';
+import { logger } from '../../shared';
 
-const filmService = new FilmService;
+const filmService = new FilmService();
 
+// https://www.apollographql.com/docs/apollo-server/data/resolvers
+// Zugriff auf Header-Daten, z.B. Token
+// https://www.apollographql.com/docs/apollo-server/migration-two-dot/#accessing-request-headers
+// https://www.apollographql.com/docs/apollo-server/security/authentication
+
+// Resultat mit id (statt _id) und version (statt __v)
+// __ ist bei GraphQL fuer interne Zwecke reserviert
 const withIdAndVersion = (film: Film) => {
     const result: any = film;
     result.id = film._id;
     result.version = film.__v;
     return film;
-}
+};
 
 const findFilmById = async (id: string) => {
     const film = await filmService.findById(id);
@@ -42,7 +55,7 @@ const findFilmById = async (id: string) => {
         return;
     }
     return withIdAndVersion(film);
-}
+};
 
 const findFilme = async (titel: string | undefined) => {
     const suchkriterium = titel === undefined ? {} : { titel };
@@ -59,22 +72,26 @@ interface IdCriteria {
 }
 
 const createFilm = async (film: Film) => {
-    film.veroeffentlichung = new Date(film.veroeffentlichung as string);
     const result = await filmService.create(film);
     logger.debug('resolvers createFilm(): result=%o', result);
     if (result instanceof FilmServiceError) {
         return;
     }
     return result;
-}
+};
 
 const logUpdateResult = (
-    result: FilmInvalid | FilmNotExists | TitelExists | VersionInvalid | VersionOutdated | number
+    result:
+        | FilmInvalid
+        | FilmNotExists
+        | TitelExists
+        | VersionInvalid
+        | VersionOutdated
+        | number,
 ) => {
     if (result instanceof FilmInvalid) {
         logger.debug('resolvers updateFilm(): validation msg = %o', result.msg);
-    }
-    else if (result instanceof TitelExists) {
+    } else if (result instanceof TitelExists) {
         logger.debug(
             'resolvers updateFilm(): vorhandener titel = %s',
             result.titel,
@@ -100,15 +117,15 @@ const logUpdateResult = (
             result,
         );
     }
-}
+};
 
 const updateFilm = async (film: Film) => {
     logger.debug(
         'resolvers updateFilm(): zu aktualisieren = %s',
         JSON.stringify(film),
     );
+    // nullish coalescing
     const version = film.__v ?? 0;
-    film.veroeffentlichung = new Date(film.veroeffentlichung as string);
     const result = await filmService.update(film, version.toString());
     logUpdateResult(result);
     return result;
@@ -128,7 +145,7 @@ const query = {
      * @param __namedParameters JSON-Objekt mit `titel` als Suchkriterium
      * @returns Promise mit einem JSON-Array der gefundenen Filme
      */
-    buecher: (_: unknown, { titel }: TitelCriteria) => findFilme(titel),
+    filme: (_: unknown, { titel }: TitelCriteria) => findFilme(titel),
 
     /**
      * Film suchen
@@ -149,7 +166,7 @@ const mutation = {
     createFilm: (_: unknown, film: Film) => createFilm(film),
 
     /**
-     * Vorhandenen {@linkcode Film} aktualisieren
+     * Vorhandenes {@linkcode Film} aktualisieren
      * @param _ nicht benutzt
      * @param film JSON-Objekt mit dem zu aktualisierenden Film
      * @returns Das aktualisierte Film als {@linkcode FilmData} in einem Promise,
@@ -167,7 +184,7 @@ const mutation = {
      * Film löschen
      * @param _ nicht benutzt
      * @param __namedParameters JSON-Objekt mit `id` zur Identifikation
-     * @returns true, falls der Film gelöscht wurde. Sonst false.
+     * @returns true, falls das Film gelöscht wurde. Sonst false.
      */
     deleteFilm: (_: unknown, { id }: IdCriteria) => deleteFilm(id),
 };
