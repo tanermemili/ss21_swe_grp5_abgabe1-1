@@ -6,7 +6,7 @@ node_modules
 # Uebersetzte oder generierte Dateien
 build
 dist
-doc/entwicklerhandfilm/html/*
+doc/entwicklerhandbuch/html/*
 doc/folien/*.html
 doc/api/*
 temp
