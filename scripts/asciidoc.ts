@@ -34,12 +34,12 @@ kroki.register(asciidoctor.Extensions);
 const options = {
     safe: 'safe',
     attributes: { linkcss: true },
-    base_dir: 'doc/entwicklerhandfilm',
+    base_dir: 'doc/entwicklerhandbuch',
     to_dir: 'html',
     mkdirs: true,
 };
 asciidoctor.convertFile(
-    join('doc', 'entwicklerhandfilm', 'entwicklerhandfilm.adoc'),
+    join('doc', 'entwicklerhandbuch', 'entwicklerhandbuch.adoc'),
     options,
 );
 console.log(
@@ -47,18 +47,18 @@ console.log(
         __dirname,
         '..',
         'doc',
-        'entwicklerhandfilm',
+        'entwicklerhandbuch',
         'html',
-        'entwicklerhandfilm.html',
+        'entwicklerhandbuch.html',
     )}`,
 );
 
 // https://asciidoctor.github.io/asciidoctor.js/master
 // const htmlString = asciidoctor.convert(
-//     fs.readFileSync(join('doc', 'entwicklerhandfilm.adoc')),
+//     fs.readFileSync(join('doc', 'entwicklerhandbuch.adoc')),
 //     { safe: 'safe', attributes: { linkcss: true }, base_dir: 'doc' },
 // );
-// const htmlFile = join('doc', 'entwicklerhandfilm.html');
+// const htmlFile = join('doc', 'entwicklerhandbuch.html');
 // fs.writeFileSync(htmlFile, htmlString);
 
 // console.log(`HTML-Datei ${join(__dirname, '..', htmlFile)}`);

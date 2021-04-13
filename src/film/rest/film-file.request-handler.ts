@@ -11,7 +11,7 @@ import {
     FilmFileServiceError,
     FilmNotExists,
     FileNotFound,
-    MultipleFiles
+    MultipleFiles,
 } from './../service';
 import { HttpStatus, logger } from '../../shared';
 import type { Request, Response } from 'express';
@@ -67,13 +67,13 @@ export class FilmFileRequestHandler {
 
     /**
      * Runterladen einer Binärdatei, ID muss in Pfad des Express Request-Objektes enthalten sein
-     * 
+     *
      *
      * Bei erfolgreicher Durchführung: Statuscode `200`
      * Falls kein Film mit der ID vorhanden:  Statuscode `412`
      * Film existiert, aber keine Binärdatei: Statuscode '404
-     * 
-     * 
+     *
+     *
      *
      * @param req Request-Objekt von Express.
      * @param res Leeres Response-Objekt von Express.
@@ -147,7 +147,3 @@ export class FilmFileRequestHandler {
         }
     }
 }
-
-
-
-
