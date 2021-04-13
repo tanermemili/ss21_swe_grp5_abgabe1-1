@@ -1,7 +1,3 @@
-// https://github.com/enriched/ts-json-schema/blob/master/src/JsonSchema.ts
-// Alternative JDT = JSON Type Definition
-// https://github.com/ajv-validator/ajv/blob/master/docs/json-type-definition.md
-
 interface CustomErrorMessages {
     properties: Record<string, string>;
 }

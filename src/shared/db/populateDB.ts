@@ -31,7 +31,6 @@ import { save } from './gridfs';
 import { testdaten } from './testdaten';
 
 const createCollection = async (db: Db) => {
-    // http://mongodb.github.io/node-mongodb-native/3.5/api/Db.html#dropCollection
     const collectionName = 'Film';
     logger.warn('Die Collection "%s" wird geloescht...', collectionName);
     let dropped = false;
@@ -48,7 +47,6 @@ const createCollection = async (db: Db) => {
         logger.warn('Die Collection "%s" wurde geloescht.', collectionName);
     }
 
-    // http://mongodb.github.io/node-mongodb-native/3.5/api/Db.html#createCollection
     logger.warn('Die Collection "%s" wird neu angelegt...', collectionName);
     const collection = await db.createCollection(collectionName);
     logger.warn(
@@ -56,7 +54,6 @@ const createCollection = async (db: Db) => {
         collection.collectionName,
     );
 
-    // http://mongodb.github.io/node-mongodb-native/3.5/api/Collection.html#insertMany
     const result = await collection.insertMany(testdaten);
     logger.warn('%d Datensaetze wurden eingefuegt.', result.insertedCount);
 
@@ -76,17 +73,9 @@ const uploadBinary = (db: Db, client: MongoClient) => {
     const filename = '00000000-0000-0000-0000-000000000001';
     logger.warn('uploadBinary(): "%s" wird eingelesen.', filename);
 
-    // https://mongodb.github.io/node-mongodb-native/3.5/tutorials/gridfs/streaming
     const bucket = new GridFSBucket(db);
     bucket.drop();
 
-    // bei "ESnext" statt "CommonJS": __dirname ist nicht vorhanden
-    // import { dirname } from 'path';
-    // import { fileURLToPath } from 'url';
-    // const filename = fileURLToPath(import.meta.url);
-    // const currentDir = dirname(filename);
-
-    /* global __dirname */
     const readable = createReadStream(resolve(__dirname, filenameBinary));
     const metadata = { contentType };
     save(readable, bucket, filename, { metadata }, client);

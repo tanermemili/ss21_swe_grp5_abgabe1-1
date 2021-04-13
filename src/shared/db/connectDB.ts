@@ -22,7 +22,6 @@ import type { ConnectOptions } from 'mongoose';
 import { dbConfig } from '../config';
 import { logger } from '../logger';
 
-
 const { url } = dbConfig;
 
 const useNewUrlParser = true;

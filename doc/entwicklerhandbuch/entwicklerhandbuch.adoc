@@ -1,17 +1,3 @@
-// Copyright (C) 2019 - present Juergen Zimmermann, Hochschule Karlsruhe
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 = Entwicklerhandbuch
 Jürgen Zimmermann <Juergen.Zimmermann@HS-Karlsruhe.de>
@@ -32,7 +18,7 @@ IMPORTANT: Copyright (C) 2020 - present Jürgen Zimmermann, Hochschule Karlsruhe
 
 === Der Applikationsserver im Überblick
 
-Im folgenden wird ein grober Überblick über den Applikationsserver gegeben. Ein Gast kann somit nur einen Film suchen und herunterladen, während ein Admin alle Use-Cases ausführen kann.
+Im folgenden wird ein grober Überblick über den Applikationsserver gegeben. Es gibt die Rollen Admin, Mitarbeiter, Kunde und Premium-Kunde. Die jeweiligen Use-Cases für die verschiedenen Rollen sind hier zu sehen. Ein Admin kann einen Film suchen, einen Film anlegen, einen Film ändern und/oder löschen und Dateien hoch- und herunterladen. Ein Mitarbeiter kann einen Film suchen und Dateien hoch- und herunterladen. Ein Kunden kann einen Film anschauen und suchen. Ein Premium-Kunde kann Film suchen, anschauen und herunterladen.
 
 .Use Cases
 [plantuml,use-cases,svg]
@@ -50,7 +36,7 @@ include::komponenten.puml[]
 
 === Die REST-Schnittstelle
 
-Dies sind verschiedenen Handler-Funktionen, die an der REST-Schnittstelle ausgeführt werden können.
+Dies sind verschiedenen Handler-Funktionen, die an der REST-Schnittstelle ausgeführt werden können. Ein eingehender Request eines Clients wird über die Router-Funktion an die Handlerfunktionen weitergeleitet.
 
 .Handler für die REST-Schnittstelle
 [plantuml,FilmHandler,svg]
@@ -60,7 +46,7 @@ include::FilmHandler.puml[]
 
 === Der Anwendungskern
 
-Der Anwendungskern beinhaltet die Service-Funktionen und die verschiedenen Entitäten.
+Der Anwendungskern beinhaltet die Service-Funktionen und die verschiedenen Entitäten. Man kann die Funktionen findById() und find() als Get-Methoden verstehen. Die create()-Funktion realisiert die Post-Methode. Update() kann man als Put-/Patch-Methode verstehen und delete() realisert die Delete-Methode. Somit werden im Anwendungskern die HTTP-Methoden durch die Service-Funktionen realisiert.
 
 .Anwendungskern mit Mongoose
 [plantuml,FilmService,svg]
@@ -70,7 +56,7 @@ include::FilmService.puml[]
 
 === Interface für Entities und das Mongoose-Model
 
-Ein Film hat 2 Enum-Properties (Genre und Produktionsstudio).
+Hier werden die Entities eines Filmes und deren Typ angezeigt. Ein Film hat dabei 2 Enum-Properties (Genre und Produktionsstudio). Die möglichen Werte eines Genres sind: Dokumentationen, Komödien und Dramen. Ein Produktionsstudio kann dabei die Werte: Disney, Universal, Warner Bros annehmen.
 
 .Entity, Model und Schema
 [plantuml,Film,svg]

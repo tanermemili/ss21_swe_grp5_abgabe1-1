@@ -31,11 +31,11 @@ export const jsonSchema: GenericJsonSchema = {
         },
         genre: {
             type: 'string',
-            enum: ['DOKUMENTATION', 'KOMOEDIE', 'DRAMA', 'HORROR', 'ACION', ''],
+            enum: ['DOKUMENTATION', 'DRAMA', 'KOMOEDIE', ''],
         },
         produktionsStudio: {
             type: 'string',
-            enum: ['DISNEY', 'UNIVERSAL', 'WARNER BROS', ''],
+            enum: ['DISNEY', 'UNIVERSAL', 'WARNERBROS', ''],
         },
         preis: {
             type: 'number',
@@ -50,7 +50,6 @@ export const jsonSchema: GenericJsonSchema = {
         veroeffentlichung: { type: 'string', format: 'date' },
         beschreibung: {
             type: 'string',
-            // TODO https://github.com/ajv-validator/ajv-formats/issues/14
             pattern: '^\\w.*',
         },
         website: { type: 'string', format: 'uri' },
@@ -70,7 +69,7 @@ export const jsonSchema: GenericJsonSchema = {
                 'Ein Filmtitel muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
             bewertung: 'Eine Bewertung muss zwischen 0 und 5 liegen.',
             genre:
-                'Das Genre eines Films kann nur DOKUMENTATION, KOMOEDIE, DRAMA, HORROR oder ACTION sein',
+                'Das Genre eines Films kann nur DOKUMENTATION, DRAMA oder KOMOEDIE sein',
             produktionsStudio:
                 'Das Produktionsstudio eines Filmes muss DISNEY, UNIVERSAL oder WARNER BROS sein.',
             preis: 'Der Preis darf nicht negativ sein.',
