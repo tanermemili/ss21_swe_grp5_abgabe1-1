@@ -43,6 +43,11 @@ export class TitelExists extends FilmServiceError {
 }
 
 /**
+ * Union-Type für Fehler beim Neuanlegen eines Buches.
+ */
+export type CreateError = FilmInvalid | TitelExists;
+
+/**
  * Fehlerklasse für eine ungültige Versionsnummer beim Update.
  */
 export class VersionInvalid extends FilmServiceError {
@@ -68,3 +73,43 @@ export class VersionOutdated extends FilmServiceError {
         super();
     }
 }
+
+/**
+ * Union-Type für Fehler beim Ändern eines Buches.
+ */
+export type UpdateError =
+    | FilmInvalid
+    | FilmNotExists
+    | TitelExists
+    | VersionInvalid
+    | VersionOutdated;
+
+/**
+ * Allgemeine Basisklasse für {@linkcode BuchFileService}
+ */
+export class FilmFileServiceError {} // eslint-disable-line @typescript-eslint/no-extraneous-class
+
+/**
+ * Klasse für eine nicht-vorhandenes Binärdatei.
+ */
+export class FileNotFound extends FilmFileServiceError {
+    constructor(readonly filename: string) {
+        super();
+    }
+}
+
+/**
+ * Klasse, falls es mehrere Binärdateien zu einem Buch gibt.
+ */
+export class MultipleFiles extends FilmFileServiceError {
+    constructor(readonly filename: string) {
+        super();
+    }
+}
+
+/**
+ * Union-Type für Fehler beim Lesen eines Buches.
+ */
+export type DownloadError = FileNotFound | FilmNotExists | MultipleFiles;
+
+/* eslint-enable max-classes-per-file */

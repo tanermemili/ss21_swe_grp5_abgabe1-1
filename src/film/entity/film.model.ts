@@ -64,11 +64,11 @@ export const filmSchema = new Schema<FilmDocument, Model<FilmDocument>>(
         _id: { type: String, default: uuid },
         titel: { type: String, required: true, unique: true },
         bewertung: { type: Number, min: 0, max: 5 },
-        genre: { type: String, enum: ['DOKUMENTATION', 'KOMOEDIE', 'DRAMA'] },
+        genre: { type: String, enum: ['DOKUMENTATION', 'DRAMA', 'KOMOEDIE'] },
         produktionsStudio: {
             type: String,
             required: true,
-            enum: ['TBD'],
+            enum: ['DISNEY', 'UNIVERSAL', 'WARNERBROS'],
         },
         preis: { type: Number, required: true },
         rabatt: Number,
