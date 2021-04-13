@@ -1,0 +1,17 @@
+{
+    "_id": "00000000-0000-0000-0000-000000000003",
+    "titel": "?!",
+    "bewertung": 5,
+    "genre": "DOKUMENTATION",
+    "produktionsStudio": "UNIVERSAL",
+    "preis": 9999,
+    "rabatt": 99,
+    "verfuegbarkeit": true,
+    "veroeffentlichung": "12345-123-123",
+    "beschreibung": "falsche-beschreibung",
+    "website": "anyHomepage",
+    "schlagwoerter": ["JAVASCRIPT"],
+    "schauspieler": ["Ab", "Cd"],
+    "regisseur": "",
+    "spieldauer": 102
+  }
