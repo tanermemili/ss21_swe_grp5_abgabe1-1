@@ -13,10 +13,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { QueryOptions } from 'mongoose';
+/* eslint-disable no-null/no-null, @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable max-lines */
+
 import type { Film, FilmData } from '../entity';
-import { FilmModel } from '../entity/film.model';
-import { validateFilm } from '../entity/validateFilm';
 import {
     FilmInvalid,
     FilmNotExists,
@@ -24,11 +24,166 @@ import {
     TitelExists,
     VersionInvalid,
     VersionOutdated,
-} from '../../auth/service/errors';
+} from './errors';
+import { FilmModel } from '../entity/film.model';
+import type { QueryOptions } from 'mongoose';
 import { logger } from '../../shared';
+import { validateFilm } from '../entity/validateFilm';
 
 export class FilmService {
     private static readonly UPDATE_OPTIONS: QueryOptions = { new: true };
+
+    // ==============================================================
+    //                           CREATE
+    // ==============================================================
+
+    /**
+     *
+     * @param film Der neu abzulegende Film
+     * @returns Die ID des neu angeleten Films oder im Fehlerfall
+     * - {@linkcode FilmInvalid} falls die Filmdaten gegen Constraints verstoßen
+     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
+     */
+    async create(film: Film): Promise<FilmInvalid | TitelExists | string> {
+        logger.debug('FilmService.create(): film=%o', film);
+        const validateResult = await this.validateCreate(film);
+        if (validateResult instanceof FilmServiceError) {
+            return validateResult;
+        }
+
+        const filmModel = new FilmModel(film);
+        const saved = await filmModel.save();
+        const id = saved._id!;
+        logger.debug('FilmService.create(): id=%s');
+
+        return id;
+    }
+
+    // ==============================================================
+    //                            READ
+    // ==============================================================
+
+    /**
+     * Einen Film asynchron anhand seiner ID suchen
+     * @param id ID des gesuchten Films
+     * @returns Den gefundenen Film vom Typ {@linkcode FilmData} oder undefined
+     */
+    async findById(id: string) {
+        logger.debug('FilmService.findById(): id=%s', id);
+
+        const film = await FilmModel.findById(id).lean<FilmData | null>();
+
+        logger.debug('FilmService.findById() Ergebnis: film=%o', film);
+
+        if (film === null) {
+            return;
+        }
+
+        this.deleteTimestamps(film);
+        return film;
+    }
+
+    /**
+     * Filme asynchron suchen
+     * @param query Die DB-Query als JSON-Objekt
+     * @returns Ein JSON Array mit den gefundenen Filmen oder ggf. ein leeres Array,
+     * wenn keine passenden Filme gefunden wurden.
+     */
+    async find(query?: any | undefined) {
+        logger.debug('FilmService.find(): query=%o', query);
+
+        if (query === undefined || Object.entries(query).length === 0) {
+            logger.debug('FilmService.find(): Suche alle Filme');
+
+            const filme = await FilmModel.find()
+                .sort('titel')
+                .lean<FilmData[]>();
+            for await (const film of filme) {
+                this.deleteTimestamps(film);
+            }
+            return filme;
+        }
+
+        const { titel, javascript, typescript, ...dbQuery } = query;
+
+        // Schutz vor DDOS unseres Servers/DB, da REGEX Prüfung von Strings aufwändig ist
+        const maxStringLength = 10;
+        if (titel !== undefined && titel.length < maxStringLength) {
+            dbQuery.titel = new RegExp(titel, 'iu'); // eslint-disable-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
+        }
+
+        logger.debug('FilmService.find(): dbQuery=%o', dbQuery);
+
+        const filme = await FilmModel.find(dbQuery).lean<FilmData[]>();
+
+        for await (const film of filme) {
+            this.deleteTimestamps(film);
+        }
+
+        return filme;
+    }
+
+    // ==============================================================
+    //                            UPDATE
+    // ==============================================================
+
+    /**
+     * Einen vorhandenen Film aktualisieren.
+     * @param film Der zu aktualisierende Film vom Typ {@linkcode Film}
+     * @param versionStr Die Versionsnummer für die optimistische Synchronisation
+     * @returns Die neue Versionsnummer gemäß optimistischer Synchronisation oder im Fehlerfall
+     * - {@linkcode FilmInvalid} falls Constraints verletzt sind
+     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
+     * - {@linkcode FilmNotExists} falls der Film nicht existiert
+     * - {@linkcode VersionInvalid} falls die Versionsnummer nicht aktuell ist
+     */
+    async update(
+        film: Film,
+        versionStr: string,
+    ): Promise<
+        FilmInvalid | FilmNotExists | TitelExists | VersionInvalid | number
+    > {
+        logger.debug('FilmService.update(): film=%o', film);
+        logger.debug('FilmService.update(): versionStr=%s', versionStr);
+
+        const validateResult = await this.validateUpdate(film, versionStr);
+        if (validateResult instanceof FilmServiceError) {
+            return validateResult;
+        }
+
+        const filmModel = new FilmModel(film);
+        const updated = await FilmModel.findByIdAndUpdate(
+            film._id,
+            filmModel,
+            FilmService.UPDATE_OPTIONS,
+        ).lean<FilmData | null>();
+
+        if (updated === null) {
+            return new FilmNotExists(film._id);
+        }
+
+        const version = updated.__v!;
+        logger.debug('FilmService.update(): version=%d', version);
+
+        return Promise.resolve(version);
+    }
+
+    // ==============================================================
+    //                           DELETE
+    // ==============================================================
+
+    /**
+     * Ein Film asynchron anhand der ID löschen.
+     * @param id Die ID des Films
+     * @returns true, falls der Film vorhanden war und gelöscht wurde. Ansonsten false.
+     */
+    async delete(id: string) {
+        logger.debug('FilmService.delete(): id=%s', id);
+
+        const deleted = await FilmModel.findByIdAndDelete(id).lean();
+        logger.debug('FilmService.delete(): deleted=%o', deleted);
+        return deleted !== null;
+    }
 
     // ==============================================================
     //                           Utility
@@ -190,155 +345,7 @@ export class FilmService {
 
         logger.debug('FilmService.validateUpdate(): ok');
     }
-
-    // ==============================================================
-    //                           CREATE
-    // ==============================================================
-
-    /**
-     *
-     * @param film Der neu abzulegende Film
-     * @returns Die ID des neu angeleten Films oder im Fehlerfall
-     * - {@linkcode FilmInvalid} falls die Filmdaten gegen Constraints verstoßen
-     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
-     */
-    async create(film: Film): Promise<FilmInvalid | TitelExists | string> {
-        logger.debug('FilmService.create(): film=%o', film);
-        const validateResult = await this.validateCreate(film);
-        if (validateResult instanceof FilmServiceError) {
-            return validateResult;
-        }
-
-        const filmModel = new FilmModel(film);
-        const saved = await filmModel.save();
-        const id = saved._id!;
-        logger.debug('FilmService.create(): id=%s');
-
-        return id;
-    }
-
-    // ==============================================================
-    //                            READ
-    // ==============================================================
-
-    /**
-     * Einen Film asynchron anhand seiner ID suchen
-     * @param id ID des gesuchten Films
-     * @returns Den gefundenen Film vom Typ {@linkcode FilmData} oder undefined
-     */
-    async findById(id: string) {
-        logger.debug('FilmService.findById(): id=%s', id);
-
-        const film = await FilmModel.findById(id).lean<FilmData | null>();
-
-        logger.debug('FilmService.findById() Ergebnis: film=%o', film);
-
-        if (film === null) {
-            return;
-        }
-
-        this.deleteTimestamps(film);
-        return film;
-    }
-
-    /**
-     * Filme asynchron suchen
-     * @param query Die DB-Query als JSON-Objekt
-     * @returns Ein JSON Array mit den gefundenen Filmen oder ggf. ein leeres Array,
-     * wenn keine passenden Filme gefunden wurden.
-     */
-    async find(query?: any | undefined) {
-        logger.debug('FilmService.find(): query=%o', query);
-
-        if (query === undefined || Object.entries(query).length === 0) {
-            logger.debug('FilmService.find(): Suche alle Filme');
-
-            const filme = await FilmModel.find()
-                .sort('titel')
-                .lean<FilmData[]>();
-            for await (const film of filme) {
-                this.deleteTimestamps(film);
-            }
-            return filme;
-        }
-
-        const { titel, javascript, typescript, ...dbQuery } = query;
-
-        // Schutz vor DDOS unseres Servers/DB, da REGEX Prüfung von Strings aufwändig ist
-        if (titel !== undefined && titel.length < 10) {
-            dbQuery.titel = new RegExp(titel, 'iu'); // eslint-disable-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
-        }
-
-        logger.debug('FilmService.find(): dbQuery=%o', dbQuery);
-
-        const filme = await FilmModel.find(dbQuery).lean<FilmData[]>();
-
-        for await (const film of filme) {
-            this.deleteTimestamps(film);
-        }
-
-        return filme;
-    }
-
-    // ==============================================================
-    //                            UPDATE
-    // ==============================================================
-
-    /**
-     * Einen vorhandenen Film aktualisieren.
-     * @param film Der zu aktualisierende Film vom Typ {@linkcode Film}
-     * @param versionStr Die Versionsnummer für die optimistische Synchronisation
-     * @returns Die neue Versionsnummer gemäß optimistischer Synchronisation oder im Fehlerfall
-     * - {@linkcode FilmInvalid} falls Constraints verletzt sind
-     * - {@linkcode TitelExists} falls der Filmtitel bereits existiert
-     * - {@linkcode FilmNotExists} falls der Film nicht existiert
-     * - {@linkcode VersionInvalid} falls die Versionsnummer nicht aktuell ist
-     */
-    async update(
-        film: Film,
-        versionStr: string,
-    ): Promise<
-        FilmInvalid | FilmNotExists | TitelExists | VersionInvalid | number
-    > {
-        logger.debug('FilmService.update(): film=%o', film);
-        logger.debug('FilmService.update(): versionStr=%s', versionStr);
-
-        const validateResult = await this.validateUpdate(film, versionStr);
-        if (validateResult instanceof FilmServiceError) {
-            return validateResult;
-        }
-
-        const filmModel = new FilmModel(film);
-        const updated = await FilmModel.findByIdAndUpdate(
-            film._id,
-            filmModel,
-            FilmService.UPDATE_OPTIONS,
-        ).lean<FilmData | null>();
-
-        if (updated === null) {
-            return new FilmNotExists(film._id);
-        }
-
-        const version = updated.__v!;
-        logger.debug('FilmService.update(): version=%d', version);
-
-        return Promise.resolve(version);
-    }
-
-    // ==============================================================
-    //                           DELETE
-    // ==============================================================
-
-    /**
-     * Ein Film asynchron anhand der ID löschen.
-     * @param id Die ID des Films
-     * @returns true, falls der Film vorhanden war und gelöscht wurde. Ansonsten false.
-     */
-    async delete(id: string) {
-        logger.debug('FilmService.delete(): id=%s', id);
-
-        const deleted = await FilmModel.findByIdAndDelete(id).lean();
-        logger.debug('FilmService.delete(): deleted=%o', deleted);
-        return deleted !== null;
-    }
 }
+
+/* eslint-enable no-null/no-null, @typescript-eslint/no-unsafe-assignment */
+/* eslint-enable max-lines */
