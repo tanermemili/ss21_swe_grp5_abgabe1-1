@@ -50,13 +50,6 @@ export const connectMongoDB = async () => {
  * @param client ein `MongoClient`-Objekt mit einer geöffneten DB-Verbindung
  */
 export const closeMongoDBClient = (client: MongoClient): void => {
-    // NICHT: async, weil die Funktion fuer Request-Events beim Hochladen und
-    // fuer GridFS-Events beim Herunterladen verwendet wird
-
-    // IIFE (= Immediately Invoked Function Expression) wegen await
-    // https://developer.mozilla.org/en-US/docs/Glossary/IIFE
-    // https://github.com/typescript-eslint/typescript-eslint/issues/647
-    // https://github.com/typescript-eslint/typescript-eslint/pull/1799
     (async () => {
         try {
             await client.close();
