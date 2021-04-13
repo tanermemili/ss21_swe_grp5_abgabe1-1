@@ -175,10 +175,10 @@ pipeline {
                   //]
 
                   publishHTML target : [
-                    reportDir: 'doc/entwicklerhandfilm/html',
-                    reportFiles: 'entwicklerhandfilm.html',
-                    reportName: 'Entwicklerhandfilm',
-                    reportTitles: 'Entwicklerhandfilm'
+                    reportDir: 'doc/entwicklerhandbuch/html',
+                    reportFiles: 'entwicklerhandbuch.html',
+                    reportName: 'Entwicklerhandbuch',
+                    reportTitles: 'Entwicklerhandbuch'
                   ]
 
                   //publishHTML target : [
