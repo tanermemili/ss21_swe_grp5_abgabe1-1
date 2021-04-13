@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -13,12 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * Das Modul enthält die _Resolver_ und _Typdefinitionen_ für GraphQL.
- * Die Typdefinitionen sind mit einem _Tagged Template String_ für Apollo
- * realisiert.
- * @packageDocumentation
- */
+import type { User } from '../auth/service/user.service';
 
-export * from './resolvers';
-export * from './typeDefs';
+declare global {
+    namespace Express {
+        export interface Request {
+            user?: User;
+        }
+    }
+}

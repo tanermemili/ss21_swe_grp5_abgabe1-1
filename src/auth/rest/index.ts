@@ -1,4 +1,6 @@
 /*
+ * Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,11 +16,10 @@
  */
 
 /**
- * Das Modul enthält die _Resolver_ und _Typdefinitionen_ für GraphQL.
- * Die Typdefinitionen sind mit einem _Tagged Template String_ für Apollo
- * realisiert.
+ * Das Modul besteht aus den Handler-Funktionen für die Authentifizierung und
+ * die Autorisierung an der REST-Schnittstelle.
  * @packageDocumentation
  */
 
-export * from './resolvers';
-export * from './typeDefs';
+export * from './authentication.request-handler';
+export * from './authorization.request-handler';

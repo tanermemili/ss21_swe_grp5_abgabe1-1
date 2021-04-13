@@ -13,12 +13,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import type { ValidationErrorMsg } from '../../film/entity';
+/* eslint-disable max-classes-per-file */
+import type { ValidationErrorMsg } from '../entity';
 
 /**
  * Allgemeine Basisklasse für {@linkcode FilmService}
  */
-export class FilmServiceError {}
+export class FilmServiceError {} // eslint-disable-line @typescript-eslint/no-extraneous-class
 
 /**
  * Klasse für fehlerhafte Filmdaten. Die Fehlermeldungen sind in der Property "msg" gekapselt.

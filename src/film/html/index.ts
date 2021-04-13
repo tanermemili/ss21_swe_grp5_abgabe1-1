@@ -1,4 +1,5 @@
 /*
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,11 +15,21 @@
  */
 
 /**
- * Das Modul enthält die _Resolver_ und _Typdefinitionen_ für GraphQL.
- * Die Typdefinitionen sind mit einem _Tagged Template String_ für Apollo
- * realisiert.
+ * Das Modul enthält die Funktionen für EJS einschließlich für die Startseite.
  * @packageDocumentation
  */
 
-export * from './resolvers';
-export * from './typeDefs';
+import type { Request, Response } from 'express';
+
+/**
+ * Funktion für EJS für die Startseite ("index").
+ *
+ * @param req Request-Objekt von Express mit der URL für EJS
+ * @param res Response-Objekt von Express
+ */
+export const index = (_: Request, res: Response) => {
+    res.render('index', { title: 'Beispiel' });
+};
+
+export * from './neuer-film';
+export * from './suche';

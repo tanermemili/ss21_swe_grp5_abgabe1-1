@@ -1,4 +1,5 @@
 /*
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,11 +15,24 @@
  */
 
 /**
- * Das Modul enthält die _Resolver_ und _Typdefinitionen_ für GraphQL.
- * Die Typdefinitionen sind mit einem _Tagged Template String_ für Apollo
- * realisiert.
+ * Das Modul besteht aus der Suchfunktion für EJS.
  * @packageDocumentation
  */
 
-export * from './resolvers';
-export * from './typeDefs';
+import type { Request, Response } from 'express';
+import { FilmService } from '../service/film.service';
+import { logger } from './../../shared/logger';
+
+const filmService = new FilmService();
+
+/**
+ * Asynchrone Suchfunktion für EJS, um alle Bücher zu suchen.
+ *
+ * @param req Request-Objekt von Express mit der URL für EJS
+ * @param res Response-Objekt von Express
+ */
+export const suche = async (req: Request, res: Response) => {
+    logger.error('suche(): %s', req.url);
+    const filme = await filmService.find();
+    res.render('suche', { title: 'Suche', filme });
+};

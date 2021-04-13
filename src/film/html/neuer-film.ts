@@ -1,4 +1,5 @@
 /*
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,11 +15,17 @@
  */
 
 /**
- * Das Modul enthält die _Resolver_ und _Typdefinitionen_ für GraphQL.
- * Die Typdefinitionen sind mit einem _Tagged Template String_ für Apollo
- * realisiert.
+ * Das Modul besteht aus der Funktion für EJS, um ein neues Buch anzulegen.
  * @packageDocumentation
  */
 
-export * from './resolvers';
-export * from './typeDefs';
+import type { Request, Response } from 'express';
+
+/**
+ * Funktion für EJS, um ein neues Buch anzulegen
+ * @param _ nicht-benutztes Request-Objekt von Express
+ * @param res Response-Objekt von Express
+ */
+export const neuerFilm = (_: Request, res: Response) => {
+    res.render('neuer-film', { title: 'Neuer Film' });
+};
