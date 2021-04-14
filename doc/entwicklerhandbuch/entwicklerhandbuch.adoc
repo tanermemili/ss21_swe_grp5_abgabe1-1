@@ -1,3 +1,17 @@
+// Copyright (C) 2019 - present Juergen Zimmermann, Hochschule Karlsruhe
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 = Entwicklerhandbuch
 Jürgen Zimmermann <Juergen.Zimmermann@HS-Karlsruhe.de>
@@ -8,6 +22,13 @@ Jürgen Zimmermann <Juergen.Zimmermann@HS-Karlsruhe.de>
 :sectnums:
 :source-highlighter: coderay
 :icons: font
+// :kroki-server-url: https://kroki.io
+
+// https://github.com/asciidoctor/asciidoctorj
+// https://github.com/asciidoctor/asciidoctor-diagram
+// http://de.plantuml.com/classes.html
+// http://de.plantuml.com/component.html
+// https://github.com/odrotbohm/asciidoctor-plantuml
 
 IMPORTANT: Copyright (C) 2020 - present Jürgen Zimmermann, Hochschule Karlsruhe. +
            Free use of this software is granted under the terms of the
@@ -18,7 +39,7 @@ IMPORTANT: Copyright (C) 2020 - present Jürgen Zimmermann, Hochschule Karlsruhe
 
 === Der Applikationsserver im Überblick
 
-Im folgenden wird ein grober Überblick über den Applikationsserver gegeben. Es gibt die Rollen Admin, Mitarbeiter, Kunde und Premium-Kunde. Die jeweiligen Use-Cases für die verschiedenen Rollen sind hier zu sehen. Ein Admin kann einen Film suchen, einen Film anlegen, einen Film ändern und/oder löschen und Dateien hoch- und herunterladen. Ein Mitarbeiter kann einen Film suchen und Dateien hoch- und herunterladen. Ein Kunden kann einen Film anschauen und suchen. Ein Premium-Kunde kann Film suchen, anschauen und herunterladen.
+Im folgenden wird ein grober Überblick über den Applikationsserver gegeben. Es gibt die Rollen Admin, Mitarbeiter, Kunde und PremiumKunde. Die jeweiligen UseCases für die verschiedenen Rollen sind hier zu sehen. Ein Admin kann einen Film suchen, einen Film anlegen, einen Film ändern oder löschen und Dateien hoch- und herunterladen. Ein Mitarbeiter kann einen Film suchen und Dateien hoch- und herunterladen. Ein Kunde kann einen Film anschauen und suchen. Ein Premium-Kunde kann Film suchen, anschauen und die Datei herunterladen.
 
 .Use Cases
 [plantuml,use-cases,svg]
@@ -39,7 +60,7 @@ include::komponenten.puml[]
 Dies sind verschiedenen Handler-Funktionen, die an der REST-Schnittstelle ausgeführt werden können. Ein eingehender Request eines Clients wird über die Router-Funktion an die Handlerfunktionen weitergeleitet.
 
 .Handler für die REST-Schnittstelle
-[plantuml,FilmHandler,svg]
+[plantuml,BuchHandler,svg]
 ----
 include::FilmHandler.puml[]
 ----
@@ -49,7 +70,7 @@ include::FilmHandler.puml[]
 Der Anwendungskern beinhaltet die Service-Funktionen und die verschiedenen Entitäten. Man kann die Funktionen findById() und find() als Get-Methoden verstehen. Die create()-Funktion realisiert die Post-Methode. Update() kann man als Put-/Patch-Methode verstehen und delete() realisert die Delete-Methode. Somit werden im Anwendungskern die HTTP-Methoden durch die Service-Funktionen realisiert.
 
 .Anwendungskern mit Mongoose
-[plantuml,FilmService,svg]
+[plantuml,BuchService,svg]
 ----
 include::FilmService.puml[]
 ----
@@ -59,7 +80,7 @@ include::FilmService.puml[]
 Hier werden die Entities eines Filmes und deren Typ angezeigt. Ein Film hat dabei 2 Enum-Properties (Genre und Produktionsstudio). Die möglichen Werte eines Genres sind: Dokumentationen, Komödien und Dramen. Ein Produktionsstudio kann dabei die Werte: Disney, Universal, Warner Bros annehmen.
 
 .Entity, Model und Schema
-[plantuml,Film,svg]
+[plantuml,Buch,svg]
 ----
 include::Film.puml[]
 ----
