@@ -37,7 +37,7 @@ export const users: User[] = [
         username: 'admin',
         password,
         email: 'admin@acme.com',
-        roles: ['admin', 'mitarbeiter', 'abteilungsleiter', 'kunde'],
+        roles: ['admin', 'mitarbeiter', 'premiumkunde', 'kunde'],
     },
     {
         id: '20000000-0000-0000-0000-000000000002',

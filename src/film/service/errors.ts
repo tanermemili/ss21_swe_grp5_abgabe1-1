@@ -43,7 +43,7 @@ export class TitelExists extends FilmServiceError {
 }
 
 /**
- * Union-Type für Fehler beim Neuanlegen eines Buches.
+ * Union-Type für Fehler beim Neuanlegen eines Films.
  */
 export type CreateError = FilmInvalid | TitelExists;
 
@@ -75,7 +75,7 @@ export class VersionOutdated extends FilmServiceError {
 }
 
 /**
- * Union-Type für Fehler beim Ändern eines Buches.
+ * Union-Type für Fehler beim Ändern eines Films.
  */
 export type UpdateError =
     | FilmInvalid
@@ -85,7 +85,7 @@ export type UpdateError =
     | VersionOutdated;
 
 /**
- * Allgemeine Basisklasse für {@linkcode BuchFileService}
+ * Allgemeine Basisklasse für {@linkcode FilmFileService}
  */
 export class FilmFileServiceError {} // eslint-disable-line @typescript-eslint/no-extraneous-class
 
@@ -99,7 +99,7 @@ export class FileNotFound extends FilmFileServiceError {
 }
 
 /**
- * Klasse, falls es mehrere Binärdateien zu einem Buch gibt.
+ * Klasse, falls es mehrere Binärdateien zu einem Film gibt.
  */
 export class MultipleFiles extends FilmFileServiceError {
     constructor(readonly filename: string) {
@@ -108,7 +108,7 @@ export class MultipleFiles extends FilmFileServiceError {
 }
 
 /**
- * Union-Type für Fehler beim Lesen eines Buches.
+ * Union-Type für Fehler beim Lesen eines Films.
  */
 export type DownloadError = FileNotFound | FilmNotExists | MultipleFiles;
 
