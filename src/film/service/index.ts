@@ -14,8 +14,8 @@
  */
 
 /**
- * Das Modul besteht aus den Klassen {@linkcode BuchFileService} und
- * {@linkcode BuchService}, um Bücher und ihre zugehörige Binärdateien in
+ * Das Modul besteht aus den Klassen {@linkcode FilmFileService} und
+ * {@linkcode FilmService}, um Bücher und ihre zugehörige Binärdateien in
  * MongoDB abzuspeichern, auszulesen, zu ändern und zu löschen einschließlich
  * der Klassen für die Fehlerbehandlung.
  * @packageDocumentation

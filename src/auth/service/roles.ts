@@ -23,4 +23,4 @@
 /**
  * Ein JSON-Array mit den vorhandenen Rollen.
  */
-export const roles = ['admin', 'mitarbeiter', 'abteilungsleiter', 'kunde'];
+export const roles = ['admin', 'mitarbeiter', 'premiumkunde', 'kunde'];
