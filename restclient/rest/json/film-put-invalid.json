@@ -1,0 +1,11 @@
+{
+  "titel": "Neuer Film",
+  "bewertung": 1,
+  "genre": "---",
+  "produktionsStudio": "ohne",
+  "preis": 99.9,
+  "rabatt": 0.3,
+  "verfuegbarkeit": true,
+  "beschreibung": "invalide Angaben",
+  "website": "https://test.de/"
+}
