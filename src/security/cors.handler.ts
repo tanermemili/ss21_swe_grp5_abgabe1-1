@@ -28,22 +28,25 @@ import cors from 'cors';
 /**
  * Funktion für die Handhabung von CORS.
  */
+
+console.log('CORS handler aufgerufen');
 export const corsHandler =
     // CORS = Cross Origin Resource Sharing
     //   http://www.html5rocks.com/en/tutorials/cors
     //   https://www.w3.org/TR/cors
+
     cors({
-        origin: 'https://localhost:4200',
+        origin: '*',
         // nachfolgende Optionen nur fuer OPTIONS:
-        methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         allowedHeaders: [
             'Origin',
             'Content-Type',
             'Accept',
             'Authorization',
-            // 'Access-Control-Allow-Origin',
-            // 'Access-Control-Allow-Methods',
-            // 'Access-Control-Allow-Headers',
+            'Access-Control-Allow-Origin',
+            'Access-Control-Allow-Methods',
+            'Access-Control-Allow-Headers',
             'Allow',
             'Content-Length',
             'Date',
