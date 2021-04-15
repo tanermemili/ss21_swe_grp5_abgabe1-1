@@ -16,7 +16,6 @@
 ---
 # https://kubernetes.io/docs/concepts/services-networking/connect-applications-service
 # https://kubernetes.io/docs/concepts/services-networking/service
-#Todo: An Domäne anpassen
 apiVersion: v1
 kind: Service
 metadata:

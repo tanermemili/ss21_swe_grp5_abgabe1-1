@@ -19,7 +19,7 @@
 
 # https://skaffold.dev/docs/references/yaml
 
-#TODO: An Domäne anpassen
+# TODO: Update to v2beta13
 apiVersion: skaffold/v2beta12
 kind: Config
 metadata:
