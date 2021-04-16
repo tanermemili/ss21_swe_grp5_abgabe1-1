@@ -1,0 +1,1138 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>API Dokumentation Gruppe 5</title>
+	<meta name="description" content="Documentation for beispiel">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">API Dokumentation Gruppe 5</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>API Dokumentation Gruppe 5</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#hinweise-zum-programmierbeispiel" id="hinweise-zum-programmierbeispiel" style="color: inherit; text-decoration: none;">
+					<h1>Hinweise zum Programmierbeispiel</h1>
+				</a>
+				<!--
+  Copyright (C) 2020 - present Juergen Zimmermann, Hochschule Karlsruhe
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+				<p><a href="mailto:Juergen.Zimmermann@HS-Karlsruhe.de">Kontakt: Gruppe 5</a></p>
+				<blockquote>
+					<p>Diese Datei ist in Markdown geschrieben und kann mit <code>&lt;Strg&gt;&lt;Shift&gt;v</code> in
+						Visual Studio Code leicht gelesen werden. Dazu wird die Extension
+						<em>Markdown Preview Mermaid Support</em> empfohlen, um UML-Diagramme in der Syntax
+					von <em>Mermaid</em> (wie bei PlantUML) visualisieren zu können.</p>
+					<p>Näheres zu Markdown gibt es z.B. bei <a href="https://www.markdownguide.org/">Markdown Guide</a></p>
+					<p>Nur in den ersten beiden Vorlesungswochen kann es Unterstützung bei
+					Installationsproblemen geben.</p>
+				</blockquote>
+				<a href="#inhalt" id="inhalt" style="color: inherit; text-decoration: none;">
+					<h2>Inhalt</h2>
+				</a>
+				<ul>
+					<li><a href="#download--und-ggf.-Upload-Geschwindigkeit">Download- und ggf. Upload-Geschwindigkeit</a></li>
+					<li><a href="#vorbereitung-der-Installation">Vorbereitung der Installation</a></li>
+					<li><a href="#eigener-Namespace-in-Kubernetes">Eigener Namespace in Kubernetes</a></li>
+					<li><a href="#mongoDB-und-Mailserver">MongoDB und Mailserver</a><ul>
+							<li><a href="#skaffold-f%C3%BCr-MongoDB-und-Mailserver">Skaffold für MongoDB und Mailserver</a></li>
+							<li><a href="#installation-mit-Kustomize-(ohne-Skaffold)-f%C3%BCr-MongoDB-und-Mailserver">Installation mit Kustomize (ohne Skaffold) für MongoDB und Mailserver</a></li>
+							<li><a href="#Deinstallieren-mit-Kustomize-(ohne-Skaffold)-f%C3%BCr-MongoDB-und-Mailserver">Deinstallieren mit Kustomize (ohne Skaffold) für MongoDB und Mailserver</a></li>
+						</ul>
+					</li>
+					<li><a href="#Administration-des-Kubernetes-Clusters">Administration des Kubernetes-Clusters</a></li>
+					<li><a href="#node-Best-Practices">Node Best Practices</a></li>
+					<li><a href="#starten-des-Appservers-(mit-Node-und-Express)">Starten des Appservers (mit Node und Express)</a><ul>
+							<li><a href="#Entwicklung-mit-nodemon-und-ts-node-in-einer-Powershell">Entwicklung mit nodemon und ts-node in einer Powershell</a></li>
+							<li><a href="#rEST-Client-f%C3%BCr-eine-REST--und-eine-GraphQL-Schnittstelle">REST Client für eine REST- und eine GraphQL-Schnittstelle</a></li>
+							<li><a href="#playground-f%C3%BCr-eine-GraphQL-Schnittstelle">Playground für eine GraphQL-Schnittstelle</a><ul>
+									<li><a href="#schema-Introspection">Schema Introspection</a></li>
+									<li><a href="#playground-bei-Heroku">Playground bei Heroku</a></li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#tests-aufrufen">Tests aufrufen</a></li>
+					<li><a href="#docker-Image-f%C3%BCr-Kubernetes">Docker-Image für Kubernetes</a></li>
+					<li><a href="#deployment-in-Kubernetes">Deployment in Kubernetes</a><ul>
+							<li><a href="#mongoDB-und-Mailserver-als-Voraussetzung">MongoDB und Mailserver als Voraussetzung</a></li>
+							<li><a href="#deployment-mit-kubectl-und-Kustomize">Deployment mit kubectl und Kustomize</a></li>
+							<li><a href="#continuous-Deployment-mit-Skaffold">Continuous Deployment mit Skaffold</a></li>
+						</ul>
+					</li>
+					<li><a href="#codeanalyse-durch-ESLint-und-SonarQube">Codeanalyse durch ESLint und SonarQube</a></li>
+					<li><a href="#sicherheitsanalyse-durch-snyk">Sicherheitsanalyse durch snyk</a></li>
+					<li><a href="#asciiDoctor-und-PlantUML">AsciiDoctor und PlantUML</a><ul>
+							<li><a href="#preview-von-PlantUML-Dateien">Preview von PlantUML-Dateien</a></li>
+							<li><a href="#einstellungen-f%C3%BCr-Preview-von-AsciiDoctor-Dateien">Einstellungen für Preview von AsciiDoctor-Dateien</a></li>
+							<li><a href="#preview-von-AsciiDoctor-Dateien">Preview von AsciiDoctor-Dateien</a></li>
+							<li><a href="#dokumentation-im-Format-HTML">Dokumentation im Format HTML</a></li>
+						</ul>
+					</li>
+					<li><a href="#continuous-Integration-mit-Jenkins">Continuous Integration mit Jenkins</a><ul>
+							<li><a href="#aufruf-mit-Webbrowser">Aufruf mit Webbrowser</a></li>
+							<li><a href="#bash-zur-evtl.-Fehlersuche-im-laufenden-Jenkins-Container">Bash zur evtl. Fehlersuche im laufenden Jenkins-Container</a></li>
+							<li><a href="#evtl.-Installation-in-Kubernetes">Evtl. Installation in Kubernetes</a></li>
+						</ul>
+					</li>
+					<li><a href="#evtl.-%C3%9Cbersetzung-durch-den-TypeScript-Compiler-in-einer-Powershell">Evtl. Übersetzung durch den TypeScript-Compiler in einer Powershell</a></li>
+					<li><a href="#monitoring-durch-clinic">Monitoring durch clinic</a></li>
+					<li><a href="#empfohlene-Entwicklungsumgebung">Empfohlene Entwicklungsumgebung</a><ul>
+							<li><a href="#visual-Studio-Code-oder-WebStorm">Visual Studio Code oder WebStorm</a></li>
+						</ul>
+					</li>
+					<li><a href="#atlas">Atlas</a><ul>
+							<li><a href="#atlas-von-MongoDB">Atlas von MongoDB</a></li>
+							<li><a href="#registrierung-bei-Atlas">Registrierung bei Atlas</a></li>
+							<li><a href="#einloggen">Einloggen</a></li>
+							<li><a href="#projekt-erstellen">Projekt erstellen</a></li>
+							<li><a href="#cluster-erstellen">Cluster erstellen</a></li>
+							<li><a href="#dB-Benutzer-erstellen">DB-Benutzer erstellen</a></li>
+							<li><a href="#zul%C3%A4ssige-IP-Adressen-f%C3%BCr-die-DB-Clients">Zulässige IP-Adressen für die DB-Clients</a></li>
+							<li><a href="#URL-f%C3%BCr-k%C3%BCnftige-DB-Verbindungen">URL für künftige DB-Verbindungen</a></li>
+							<li><a href="#ausloggen-bei-Atlas">Ausloggen bei Atlas</a></li>
+							<li><a href="#datenbank-acme-erstellen">Datenbank acme erstellen</a></li>
+							<li><a href="#compass-(oder-das-Plugin-MongoDB-for-VS-Code)-f%C3%BCr-Atlas">Compass (oder das Plugin MongoDB for VS Code) für Atlas</a></li>
+							<li><a href="#webbrowser-statt-Compass">Webbrowser statt Compass</a></li>
+						</ul>
+					</li>
+					<li><a href="#heroku">Heroku</a><ul>
+							<li><a href="#heroku-von-Salesforce">Heroku von Salesforce</a></li>
+							<li><a href="#dyno,-slug-und-buildpack">dyno, slug und buildpack</a></li>
+							<li><a href="#registrierung-bei-Heroku">Registrierung bei Heroku</a></li>
+							<li><a href="#einmalig:-Git-Repository-erstellen">Einmalig: Git-Repository erstellen</a></li>
+							<li><a href="#einloggen-und-Token-erstellen-mit-der-Heroku-CLI">Einloggen und Token erstellen mit der Heroku CLI</a></li>
+							<li><a href="#leere-Anwendung-f%C3%BCr-Heroku-erstellen">Leere Anwendung für Heroku erstellen</a></li>
+							<li><a href="#umgebungsvariable-f%C3%BCr-Heroku">Umgebungsvariable für Heroku</a></li>
+							<li><a href="#deployment-f%C3%BCr-Heroku">Deployment für Heroku</a></li>
+							<li><a href="#status-Informationen-zu-Heroku">Status-Informationen zu Heroku</a></li>
+							<li><a href="#verf%C3%BCgbarkeit-der-eigenen-Heroku-Anwendung">Verfügbarkeit der eigenen Heroku-Anwendung</a></li>
+							<li><a href="#heroku-Console">Heroku-Console</a></li>
+							<li><a href="#dashboard-f%C3%BCr-die-Verwaltung-der-eigenen-Heroku-Anwendung(en)">Dashboard für die Verwaltung der eigenen Heroku-Anwendung(en)</a></li>
+							<li><a href="#sonstige-Heroku-Kommandos">Sonstige Heroku-Kommandos</a></li>
+						</ul>
+					</li>
+					<li><a href="#debugging-mit-VS-Code">Debugging mit Visual Studio Code</a></li>
+					<li><a href="#empfohlene-Code-Konventionen">Empfohlene Code-Konventionen</a><ul>
+							<li><a href="#JSON5.stringify()-statt-JSON.stringify()">JSON5.stringify() statt JSON.stringify()</a></li>
+						</ul>
+					</li>
+				</ul>
+				<hr>
+				<a href="#download--und-ggf-upload-geschwindigkeit" id="download--und-ggf-upload-geschwindigkeit" style="color: inherit; text-decoration: none;">
+					<h2>Download- und ggf. Upload Geschwindigkeit</h2>
+				</a>
+				<p>In einem Webbrowser kann man z.B. mit der URL <code>https://speed.cloudflare.com</code> die
+				Download- und die Upload-Geschwindigkeit testen.</p>
+				<p>Alternativ kann man durch das Kommando <code>fast</code> in einer Powershell die aktuelle
+				Download-Geschwindigkeit ermitteln.</p>
+				<p>Mit der zusätzlichen Option <code>--upload</code> kann zusätzlich die aktuelle
+				Upload-Geschwindigkeit ermittelt werden.</p>
+				<hr>
+				<a href="#vorbereitung-der-installation" id="vorbereitung-der-installation" style="color: inherit; text-decoration: none;">
+					<h2>Vorbereitung der Installation</h2>
+				</a>
+				<ul>
+					<li><p>Das Beispiel <em>nicht</em> in einem Pfad mit <em>Leerzeichen</em> installieren.
+							Viele Javascript-Bibliotheken werden unter Linux entwickelt und dort benutzt
+							man keine Leerzeichen in Pfaden. Ebenso würde ich das Beispiel nicht auf dem
+						<em>Desktop</em> auspacken bzw. installieren.</p>
+					</li>
+					<li><p>Bei <a href="https://github.com">GitHub</a> registrieren, falls man dort noch nicht
+						registriert ist.</p>
+					</li>
+				</ul>
+				<hr>
+				<a href="#eigener-namespace-in-kubernetes" id="eigener-namespace-in-kubernetes" style="color: inherit; text-decoration: none;">
+					<h2>Eigener Namespace in Kubernetes</h2>
+				</a>
+				<p>Ein neuer Namespace in Kubernetes, z.B. <code>acme</code>, wird durch folgendes Kommando
+				angelegt:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    kubectl create namespace acme</span>
+</code></pre>
+				<hr>
+				<a href="#mongodb-und-mailserver" id="mongodb-und-mailserver" style="color: inherit; text-decoration: none;">
+					<h2>MongoDB und Mailserver</h2>
+				</a>
+				<a href="#skaffold-für-mongodb-und-mailserver" id="skaffold-für-mongodb-und-mailserver" style="color: inherit; text-decoration: none;">
+					<h3>Skaffold für MongoDB und Mailserver</h3>
+				</a>
+				<p>Zunächst müssen <em>MongoDB</em> und der <em>Mailserver</em> als (Backend-) Server gestartet
+					werden, was mit <em>Skaffold</em> gemacht werden kann. Wenn die Umgebungsvariable
+					<code>SKAFFOLD_PROFILE</code> auf den Wert <code>dev</code> gesetzt ist, dann wird das Profile <code>dev</code>
+					verwendet, welches das Kustomize-Overlay <code>dev</code> aufruft. Das Deployment kann
+				auf einem Notebook mehrere Minuten dauern.</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    cd backend</span>
+<span style="color: #000000">    skaffold deploy --port-forward</span>
+</code></pre>
+				<p>Das Deployment wird mit dem Unterkommando <code>delete</code> wieder entfernt. Dabei muss
+					man manuell das <em>PersistentVolumeClaim</em> mit dem Namen <code>data-volume-mongodb-0</code>
+				löschen, das durch das <em>StatefulSet</em> <code>mongodb</code> implizit erstellt wurde.</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    skaffold delete</span>
+</code></pre>
+				<a href="#installation-mit-kustomize-ohne-skaffold-für-mongodb-und-mailserver" id="installation-mit-kustomize-ohne-skaffold-für-mongodb-und-mailserver" style="color: inherit; text-decoration: none;">
+					<h3>Installation mit Kustomize (ohne Skaffold) für MongoDB und Mailserver</h3>
+				</a>
+				<p>Die beiden Server können auch direkt mit <em>Kustomize</em> gestartet werden:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    cd backend\dev</span>
+<span style="color: #000000">    kustomize build | kubectl apply </span><span style="color: #000000">-f</span><span style="color: #000000"> -</span>
+</code></pre>
+				<p>Falls dann Port-Forwarding benötigt wird, so muss dieses für jeden Server in
+				jeweils einer PowerShell eingerichtet werden:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run port-forward mongodb</span>
+<span style="color: #000000">    npm run port-forward mailserver</span>
+</code></pre>
+				<a href="#deinstallieren-mit-kustomize-ohne-skaffold-für-mongodb-und-mailserver" id="deinstallieren-mit-kustomize-ohne-skaffold-für-mongodb-und-mailserver" style="color: inherit; text-decoration: none;">
+					<h3>Deinstallieren mit Kustomize (ohne Skaffold) für MongoDB und Mailserver</h3>
+				</a>
+				<p>Um MongoDB und den Mailserver zu deinstallieren, wird wiederum <code>kubectl</code> mit
+				<em>Kustomize</em> verwendet:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    cd backend\dev</span>
+<span style="color: #000000">    kustomize build | kubectl delete </span><span style="color: #000000">-f</span><span style="color: #000000"> -</span>
+</code></pre>
+				<p>Anschließend muss man noch manuell das <em>PersistentVolumeClaim</em> mit dem Namen
+					<code>data-volume-mongodb-0</code> löschen, das durch das <em>StatefulSet</em> <code>mongodb</code> implizit
+				erstellt wurde.</p>
+				<hr>
+				<a href="#administration-des-kubernetes-clusters" id="administration-des-kubernetes-clusters" style="color: inherit; text-decoration: none;">
+					<h2>Administration des Kubernetes-Clusters</h2>
+				</a>
+				<p>Zur Administration des Kubernetes-Clusters ist für Entwickler*innen m.E. <em>Lens</em>
+				von Mirantis oder <em>Octant</em> von VMware Tanzu oder <em>Kui</em> von IBM gut geeignet.</p>
+				<hr>
+				<a href="#node-best-practices" id="node-best-practices" style="color: inherit; text-decoration: none;">
+					<h2>Node Best Practices</h2>
+				</a>
+				<p>Sehr empfehlenswert ist <a href="https://github.com/goldbergyoni/nodebestpractices">https://github.com/goldbergyoni/nodebestpractices</a></p>
+				<hr>
+				<a href="#starten-des-appservers-mit-node-und-express" id="starten-des-appservers-mit-node-und-express" style="color: inherit; text-decoration: none;">
+					<h2>Starten des Appservers (mit Node und Express)</h2>
+				</a>
+				<a href="#entwicklung-mit-nodemon-und-ts-node-in-einer-powershell" id="entwicklung-mit-nodemon-und-ts-node-in-einer-powershell" style="color: inherit; text-decoration: none;">
+					<h3>Entwicklung mit nodemon und ts-node in einer Powershell</h3>
+				</a>
+				<p>Durch <em>nodemon</em> (= Node Monitor) wird der Appserver so gestartet, dass er z.B.
+					JavaScript-Dateien im laufenden Betrieb nachlädt, wenn sie später aktualisiert
+					werden. Zusätzlich wird <em>ts-node</em> verwendet, damit geänderte TypeScript-Dateien
+					sofort in JavaScript-Dateien übersetzt werden. Eine explizite Übersetzung der
+				TypeScript-Dateien (s.o.) ist also <em>nicht</em> notwendig!</p>
+				<p>Beim Starten des Appservers wird mit <em>mongoose</em> auf <em>MongoDB</em> zugegriffen.
+					Der Benutzername und das Passwort sind in der Datei <code>src\shared\config\db.ts</code>
+				(Zeile 40) auf <code>admin</code> und <code>p</code> voreingestellt.</p>
+				<p>Für sowohl MongoDB als auch den Mailserver muss <em>Port-Forwarding</em> (s.o.)
+					aktiviert sein. Außerdem müssen in <code>.env</code> die Umgebungsvariablen <code>DB_HOST</code> und
+					<code>MAIL_HOST</code> auskommentiert sein, damit jeweils der Defaultwert <code>localhost</code>
+					verwendet wird. Durch die Umgebungsvariable <code>DB_POPULATE</code> und
+					<code>DB_POPULATE_FILES</code> wird festgelegt, ob die (Test-) DB <code>acme</code> neu geladen wird
+					und ob dabei auch Binärdateien für z.B. Bilder oder Videos neu geladen werden.
+					Wenn man Binärdateien abspeichern möchte, dann benötigt man in der DB <code>acme</code> die
+					beiden Collections <code>fs.files</code> und <code>fs.chunks</code>, die man z.B. mit <em>MongoDB
+				Compass</em> innerhalb von <code>acme</code> neu anlegen kann.</p>
+				<p>Wenn man MongoDB mit <em>Atlas</em> (s.u.) statt der lokalen Kubernetes- bzw.
+					Docker-Installation benutzen möchte, muss man in der Datei <code>.env</code> die
+					Konfigurationsdaten für Atlas eintragen und die jeweiligen Kommentare entfernen.
+					Es ist empfehlenswert, zuerst das Beispiel mit einer lokalen
+				MongoDB-Installation zum Laufen zu bringen, um die Fehlerquellen zu reduzieren.</p>
+				<p>Mit dem nachfolgenden Kommando startet man den Appserver mit <em>nodemon</em> und
+				<em>ts-node</em>, der eine REST-Schnittstelle und eine GraphQL-Schnittstelle hat:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run start:dev</span>
+</code></pre>
+				<a href="#rest-client-für-eine-rest--und-eine-graphql-schnittstelle" id="rest-client-für-eine-rest--und-eine-graphql-schnittstelle" style="color: inherit; text-decoration: none;">
+					<h3>REST Client für eine REST- und eine GraphQL-Schnittstelle</h3>
+				</a>
+				<p>Im Unterverzeichnis <code>restclient</code> befinden sich in den Unterverzeichnissen <code>rest</code>
+					und <code>graphql</code> mehrere Dateien mit der Extension <code>.rest</code> oder <code>.http</code>.
+					In diesen Dateien sind Interaktionsmöglichkeiten für die REST- und die
+				GraphQL-Schnittstelle.</p>
+				<p>Wenn man eine dieser Dateien in VS Code öffnet, dann sieht man bei jedem
+					Beispiel bzw. Abschnitt, der mit <code>###</code> beginnt, eine künstliche Zeile mit
+					<em>Send Request</em> (keine Zeilennummer!). Auf <em>Send Request</em> kann man klicken und
+					der Request wird ausgeführt, wozu natürlich der Server erfolgreich gestartet
+				sein sollte.</p>
+				<a href="#playground-für-eine-graphql-schnittstelle" id="playground-für-eine-graphql-schnittstelle" style="color: inherit; text-decoration: none;">
+					<h3>Playground für eine GraphQL-Schnittstelle</h3>
+				</a>
+				<p>Falls die Umgebungsvariable <code>NODE_ENV</code> <em>nicht</em> auf <code>production</code> gesetzt ist,
+					stellt der <em>Apollo-Server</em> die URI für die GraphQL-Schnittstelle auch als
+					<em>Playground</em> zur Verfügung. Die URI kann dann in einem Webbrowser aufgerufen
+					werden, so dass man Autovervollständigen beim Absetzen von <em>Queries</em> und
+				<em>Mutations</em> hat.</p>
+				<p>Die URL für GraphQL lautet im vorliegenden Beispiel
+					<code>https://localhost:3000/graphql</code>. Beispielhafte <em>Queries</em> und <em>Mutations</em> für
+					GraphQL gibt es in den Dateien <code>restclient\graphql\filme.query.http</code> und
+				<code>restclient\graphql\filme.mutation.http</code>.</p>
+				<a href="#schema-introspection" id="schema-introspection" style="color: inherit; text-decoration: none;">
+					<h4>Schema Introspection</h4>
+				</a>
+				<p>Schema Introspection ist ein Feature von GraphQL
+					<a href="http://spec.graphql.org/June2018/#sec-Introspection">http://spec.graphql.org/June2018/#sec-Introspection</a>, damit ein GraphQL-Client
+					durch eine GraphQL-Query das Schema abgefragt werden kann, d.h. welche Queries
+				und Mutations mit welchen Typ-Definitionen es gibt.</p>
+				<p>Defaultmäßig ist im Playground <em>Schema Introspection</em> aktiviert und der
+					Webbrowser sendet alle 2 Sekunden GraphQL-Queries - also POST-Requests -, um
+				abzufragen, ob sich das GraphQL-Schema geändert hat.</p>
+				<p>Solange der Webbrowser geöffnet ist, sieht man deshalb alle 2 Sekunden in der
+				Konsole des Servers einen neuen zusätzlichen Log-Eintrag wie z.B.</p>
+				<pre><code class="language-text">POST /graphql 200 5.766 ms - -
+</code></pre>
+				<p>Man kann das <em>Schema Polling</em> wahlweise ganz abschalten oder das Intervall
+					erhöhen, indem man rechts oben auf das Icon für <em>Settings</em> klickt und die
+					Property <code>schema.polling.enable</code> auf <code>true</code> setzt oder die Property
+					<code>schema.polling.interval</code> auf einen anderen Wert als <code>2000</code> setzt. Die
+					Properties sind auf der Webseite
+				<a href="https://github.com/prisma-labs/graphql-playground#settings">https://github.com/prisma-labs/graphql-playground#settings</a> beschrieben.</p>
+				<a href="#playground-bei-heroku" id="playground-bei-heroku" style="color: inherit; text-decoration: none;">
+					<h4>Playground bei Heroku</h4>
+				</a>
+				<p>Wenn man den Playground bei Heroku (s.u.) mit z.B.
+					<code>https://gener-iert-12345.herokuapp.com/graphql</code> verwenden möchte, dann muss man
+					bei Heroku die Umgebungsvariable <code>NODE_ENV</code> auf <code>development</code> setzen. Dadurch
+					werden aber bei Deployment die <em>devDependencies</em> <em>NICHT</em> entfernt, was zu einem
+				deutlich größeren Softwarepaket bei Deployment führt.</p>
+				<hr>
+				<a href="#tests-aufrufen" id="tests-aufrufen" style="color: inherit; text-decoration: none;">
+					<h2>Tests aufrufen</h2>
+				</a>
+				<p>Folgende Voraussetzungen müssen erfüllt sein:</p>
+				<ul>
+					<li>Der MongoDB-Server (lokal oder bei Atlas) und der Mailserver müssen gestartet
+					sein.</li>
+					<li>Port-Forwarding muss für die lokal laufenden Server aktiviert sein.</li>
+					<li>Der Appserver darf <em>nicht gestartet</em> sein.</li>
+				</ul>
+				<p>Dazu sind folgende Vorkehrungen notwendig:</p>
+				<ul>
+					<li>In <code>helmfile.yaml</code> muss beim Release <code>microservice</code> in der Zeile
+					<code>#installed: false</code> das Kommentarzeichen entfernt sein.</li>
+					<li>In <code>.env</code> müssen die Umgebungsvariable <code>DB_HOST</code> und <code>MAIL_HOST</code>
+					auskommentiert sein, damit jeweils der Defaultwert <code>localhost</code> verwendet wird.</li>
+				</ul>
+				<p>Nun kann man die Tests folgendermaßen in einer Powershell aufrufen:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm t</span>
+</code></pre>
+				<hr>
+				<a href="#docker-image-für-kubernetes" id="docker-image-für-kubernetes" style="color: inherit; text-decoration: none;">
+					<h2>Docker-Image für Kubernetes</h2>
+				</a>
+				<p>Mittels der Datei <code>Dockerfile</code> kann man ein Docker Image erstellen. Das
+					resultierende Image basiert auf einem <em>distroless</em> Image für Node und enthält
+					<em>keine</em> Shell. Ob das <code>Dockerfile</code> gemäß <em>Best Practices</em> erstellt wurde, kann
+				man in einer PowerShell mit folgendem Kommando überprüfen:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    </span><span style="color: #795E26">Get-Content</span><span style="color: #000000"> Dockerfile | docker run --rm --interactive hadolint/hadolint:v1.</span><span style="color: #098658">23.0</span>
+</code></pre>
+				<p>Um das Image für Kubernetes korrekt zu bauen, müssen in <code>.env</code> die Rechnernamen
+					für MongoDB und den Mailserver gesetzt werden, damit nicht der Defaultwert
+					localhost, sondern die Kubernetes-internen Rechnernamen verwendet werden.
+				Außerdem muss in <code>.env</code> noch der Linux-Pfad für das Logging gesetzt werden.</p>
+				<p>Durch das Skript <code>docker-build.ts</code> wird mit Hilfe der Datei
+				<code>Dockerfile</code> das Docker-Image <code>juergenzimmermann/film:1.0.0</code> gebaut:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run docker-build</span>
+</code></pre>
+				<hr>
+				<a href="#deployment-in-kubernetes" id="deployment-in-kubernetes" style="color: inherit; text-decoration: none;">
+					<h2>Deployment in Kubernetes</h2>
+				</a>
+				<a href="#mongodb-und-mailserver-als-voraussetzung" id="mongodb-und-mailserver-als-voraussetzung" style="color: inherit; text-decoration: none;">
+					<h3>MongoDB und Mailserver als Voraussetzung</h3>
+				</a>
+				<p>Voraussetzung für das Deployment des Microservice ist, dass der MongoDB-Server
+				und Mailserver erfolgreich gestartet sind (s.o.).</p>
+				<a href="#deployment-mit-kubectl-und-kustomize" id="deployment-mit-kubectl-und-kustomize" style="color: inherit; text-decoration: none;">
+					<h3>Deployment mit kubectl und Kustomize</h3>
+				</a>
+				<p>Im Verzeichnis <code>kubernetes\dev</code> ist eine Konfiguration für die Entwicklung
+					des Appservers. Wenn das Docker-Image erstellt ist (s.o.), kann das Deployment
+					in Kubernetes folgendermaßen durchgeführt werden, was man z.B. mit <em>Lens</em> ode
+					<em>Octant</em> inspizieren kann. Dabei wird die Logdatei im internen Verzeichnis
+					<code>/var/log/node</code> angelegt, welches durch <em>Mounting</em> dem Windows-Verzeichnis
+					<code>C:\Zimmermann\volumes\film</code> entspricht und mit <em>Schreibberechtigung</em> existieren
+				muss.</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    cd kubernetes\dev</span>
+<span style="color: #000000">    kustomize build | kubectl apply </span><span style="color: #000000">-f</span><span style="color: #000000"> -</span>
+</code></pre>
+				<p>Das Deployment kann durch <code>kubectl</code> wieder aus Kubernetes entfernt werden:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    kustomize build | kubectl delete </span><span style="color: #000000">-f</span><span style="color: #000000"> -</span>
+</code></pre>
+				<a href="#continuous-deployment-mit-skaffold" id="continuous-deployment-mit-skaffold" style="color: inherit; text-decoration: none;">
+					<h3>Continuous Deployment mit Skaffold</h3>
+				</a>
+				<p>Um im Rahmen von <em>Continuous Deployment</em> das Image mit dem Tag <code>1.0.0</code> zu bauen
+					und in Kubernetes zu deployen, muss die Umgebungsvariable <code>TAG</code> auf den Wert
+					<code>1.0.0</code> gesetzt werden. Weiterhin gibt es in Skaffold die Möglichkeit,
+					<em>Profile</em> zu definieren, um z.B. verschiedene Overlays in Kustomize zu
+					verwenden. Dazu ist in skaffold.yaml beispielsweise konfiguriert, dass die
+					Umgebungsvariable <code>SKAFFOLD_PROFILE</code> auf <code>dev</code> gesetzt sein muss, um das
+				Kustomize-Overlay <code>dev</code> zu verwenden.</p>
+				<p>Continuous Deployment mit Beobachtung von Code-Änderungen wird mit Skaffold
+					folgendermaßen durchgeführt und kann mit <code>&lt;Strg&gt;C</code> abgebrochen bzw.
+					zurückgerollt werden. Die Option <code>--port-forward</code> bewirkt dabei, dass das
+				Port-Forwarding, das in <code>skaffold.yaml</code> konfiguriert ist, auch ausgeführt wird.</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    </span><span style="color: #001080">$env:TAG</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;1.0.0&#039;</span>
+<span style="color: #000000">    skaffold dev --port-forward</span>
+</code></pre>
+				<hr>
+				<a href="#codeanalyse-durch-eslint-und-sonarqube" id="codeanalyse-durch-eslint-und-sonarqube" style="color: inherit; text-decoration: none;">
+					<h2>Codeanalyse durch ESLint und SonarQube</h2>
+				</a>
+				<p><em>ESLint</em> wird durch folgendes npm-Skript ausgeführt:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run eslint</span>
+</code></pre>
+				<p>Für eine statische Codeanalyse durch <em>SonarQube</em> muss zunächst der
+					SonarQube-Server mit <em>Docker Compose</em> als Docker-Container gestartet werden,
+				wozu die Konfigurationsdatei <code>sonar.yaml</code> verwendet wird:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    docker-compose </span><span style="color: #000000">-f</span><span style="color: #000000"> sonar.yaml up</span>
+</code></pre>
+				<p>Wenn der Server zum ersten Mal gestartet wird, ruft man in einem Webbrowser die
+					URL <code>http://localhost:9000</code> auf. In der Startseite muss man sich einloggen und
+					verwendet dazu als Loginname <code>admin</code> und ebenso als Password <code>admin</code>. Danach
+					wird man weitergeleitet, um das initiale Passwort zu ändern. Den Loginnamen und
+					das neue Passwort trägt man dann in der Datei <code>sonar-project.properties</code> im
+				Wurzelverzeichnis bei den Properties <code>sonar.login</code> und <code>sonar.password</code> ein.</p>
+				<p>Nachdem der Server gestartet ist, wird der SonarQube-Scanner in einer zweiten
+					PowerShell ebenfalls mit <em>Docker Swarm</em> gestartet, wozu die Konfigurationsdatei
+				<code>sonar-scanner.yaml</code> verwendet wird:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    docker-compose </span><span style="color: #000000">-f</span><span style="color: #000000"> sonar-scanner.yaml up</span>
+</code></pre>
+				<p>Der Scan-Vorgang kann evtl. <strong>lange</strong> dauern.</p>
+				<hr>
+				<a href="#sicherheitsanalyse-durch-snyk" id="sicherheitsanalyse-durch-snyk" style="color: inherit; text-decoration: none;">
+					<h2>Sicherheitsanalyse durch snyk</h2>
+				</a>
+				<p>Zunächst muss man sich bei <a href="https://app.snyk.io/account">https://app.snyk.io/account</a> registrieren und dort
+					auch einen Token besorgen. Danach kann man sich folgendermaßen authentifizieren
+				und das Projekt auf Sicherheitslücken überprüfen</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    synk auth &lt;MEIN_TOKEN&gt;</span>
+<span style="color: #000000">    snyk test</span>
+</code></pre>
+				<a href="#asciidoctor-und-plantuml" id="asciidoctor-und-plantuml" style="color: inherit; text-decoration: none;">
+					<h2>AsciiDoctor und PlantUML</h2>
+				</a>
+				<p>Mit AsciiDoctor und PlantUML ist die Dokumentation geschrieben.</p>
+				<a href="#preview-von-plantuml-dateien" id="preview-von-plantuml-dateien" style="color: inherit; text-decoration: none;">
+					<h3>Preview von PlantUML-Dateien</h3>
+				</a>
+				<p>Durch das Tastaturkürzel <code>&lt;Alt&gt;d</code>. Dazu ist eine Internet-Verbindung notwendig.
+				Beispiele für PlantUML und AsciiDoctor sind im Unterverzeichnis <code>doc</code>.</p>
+				<a href="#einstellungen-für-preview-von-asciidoctor-dateien" id="einstellungen-für-preview-von-asciidoctor-dateien" style="color: inherit; text-decoration: none;">
+					<h3>Einstellungen für Preview von AsciiDoctor-Dateien</h3>
+				</a>
+				<p>Zunächst müssen einmalig die Einstellungen (<em>Settings</em>) von VS Code geändert
+					werden. Dazu geht man über zum Menüpunkt <em>Datei &gt; Einstellungen &gt; Einstellungen</em>
+					und gibt im Suchfeld <code>asciidoc.use_kroki</code> ein. Nun setzt man den Haken bei
+				<em>Enable kroki integration to generate diagrams</em>.</p>
+				<p>Wenn man zum ersten Mal eine <code>.adoc</code>-Datei im Editor öffnet, muss man noch
+					die Verbindung zum PlantUML-Server zulassen, damit die eingebundenen
+					<code>.puml</code>-Dateien in <code>.svg</code>-Dateien konvertiert werden. Dazu gibt man zunächst
+					das <code>&lt;F1&gt;</code> ein und schickt im Eingabefeld das Kommando
+					<em>AsciiDoc: Change Preview Security Settings</em> durch <code>&lt;Enter&gt;</code> ab.
+				Danach wählt man den Unterpunkt <em>Allow insecure content</em> aus.</p>
+				<a href="#preview-von-asciidoctor-dateien" id="preview-von-asciidoctor-dateien" style="color: inherit; text-decoration: none;">
+					<h3>Preview von AsciiDoctor-Dateien</h3>
+				</a>
+				<p>Durch das Tastaturkürzel <code>&lt;Strg&gt;&lt;Shift&gt;v</code>. Dazu ist eine Internet-Verbindung
+				notwendig.</p>
+				<a href="#dokumentation-im-format-html" id="dokumentation-im-format-html" style="color: inherit; text-decoration: none;">
+					<h3>Dokumentation im Format HTML</h3>
+				</a>
+				<p>Die Dokumentation im Format HTML wird in einer Powershell folgendermaßen
+				im Verzeichnis <code>doc\html</code> erstellt:</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run asciidoc</span>
+</code></pre>
+				<a href="#continuous-integration-mit-jenkins" id="continuous-integration-mit-jenkins" style="color: inherit; text-decoration: none;">
+					<h2>Continuous Integration mit Jenkins</h2>
+				</a>
+				<p>Jenkins wird nicht in Kubernetes, sondern direkt mit <em>Docker Compose</em> genutzt.
+					Dadurch muss Jenkins nicht immer laufen und kann bei Bedarf gestartet und wieder
+				heruntergefahren werden.</p>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    docker-compose </span><span style="color: #000000">-f</span><span style="color: #000000"> jenkins.yaml up</span>
+</code></pre>
+				<p>Mit Docker Dashboad kann man die beiden Container für Jenkins selbst und für die
+				Bereitstellung von Zertifikaten herunterfahren.</p>
+				<a href="#aufruf-mit-webbrowser" id="aufruf-mit-webbrowser" style="color: inherit; text-decoration: none;">
+					<h3>Aufruf mit Webbrowser</h3>
+				</a>
+				<p>Mit der URL <a href="https://localhost:9090">https://localhost:9090</a> kann man von einem Webbrowser auf das
+					Jenkins-Image zugreifen. Der Benutzername ist <code>admin</code> und das Passwort
+				<code>Software Engineering WI.</code>.</p>
+				<a href="#bash-zur-evtl-fehlersuche-im-laufenden-jenkins-container" id="bash-zur-evtl-fehlersuche-im-laufenden-jenkins-container" style="color: inherit; text-decoration: none;">
+					<h3>Bash zur evtl. Fehlersuche im laufenden Jenkins-Container</h3>
+				</a>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    docker-compose </span><span style="color: #000000">-f</span><span style="color: #000000"> jenkins.yaml exec jenkins bash</span>
+</code></pre>
+				<a href="#evtl-installation-in-kubernetes" id="evtl-installation-in-kubernetes" style="color: inherit; text-decoration: none;">
+					<h3>Evtl. Installation in Kubernetes</h3>
+				</a>
+				<p>Siehe <a href="https://www.jenkins.io/doc/book/installing/kubernetes">https://www.jenkins.io/doc/book/installing/kubernetes</a></p>
+				<a href="#evtl-übersetzung-durch-den-typescript-compiler-in-einer-powershell" id="evtl-übersetzung-durch-den-typescript-compiler-in-einer-powershell" style="color: inherit; text-decoration: none;">
+					<h2>Evtl. Übersetzung durch den TypeScript-Compiler in einer Powershell</h2>
+				</a>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    npm run tsc</span>
+</code></pre>
+				<a href="#monitoring-durch-clinic" id="monitoring-durch-clinic" style="color: inherit; text-decoration: none;">
+					<h2>Monitoring durch clinic</h2>
+				</a>
+				<p>Für Monitoring kann man z.B. <code>clinic</code> nutzen, indem man zunächst dem TypeScript-Compiler
+				durch <code>npm run tsc</code> aufruft und danach <code>npm run clinic</code>.</p>
+				<a href="#empfohlene-entwicklungsumgebung" id="empfohlene-entwicklungsumgebung" style="color: inherit; text-decoration: none;">
+					<h2>Empfohlene Entwicklungsumgebung</h2>
+				</a>
+				<a href="#visual-studio-code-oder-webstorm" id="visual-studio-code-oder-webstorm" style="color: inherit; text-decoration: none;">
+					<h3>Visual Studio Code oder WebStorm</h3>
+				</a>
+				<p><a href="https://code.visualstudio.com/Download">Visual Studio Code</a> kann man
+				kostenfrei herunterladen.</p>
+				<blockquote>
+					<p>Tipps:</p>
+					<ul>
+						<li><code>&lt;Strg&gt;kc</code> : Markierte Zeilen werden auskommentiert (wie bei Visual Studio)</li>
+						<li><code>&lt;Strg&gt;ku</code> : Bei markierten Zeilen wird der Kommentar entfernt</li>
+						<li><code>&lt;F1&gt;</code>: Die Kommandopalette erscheint</li>
+						<li><code>&lt;Strg&gt;&lt;Shift&gt;v</code>: Vorschau für MarkDown und AsciiDoctor</li>
+						<li><code>&lt;Alt&gt;d</code>: Vorschau für PlantUml</li>
+					</ul>
+				</blockquote>
+				<p>Für WebStorm gibt es bei <a href="http://jetbrains.com/student">JetBrains</a> auf
+					Initiative von Jürgen Zimmermann eine Studenten-Lizenz, die für 1 Jahr gültig
+				ist.</p>
+				<a href="#atlas" id="atlas" style="color: inherit; text-decoration: none;">
+					<h2>Atlas</h2>
+				</a>
+				<a href="#atlas-von-mongodb" id="atlas-von-mongodb" style="color: inherit; text-decoration: none;">
+					<h3>Atlas von MongoDB</h3>
+				</a>
+				<p>Atlas ist vom Unternehmen <a href="https://www.mongodb.com/cloud/atlas">MongoDB, Inc.</a>
+					und bietet <em>Database as a Service</em>. Als zugrundeliegende Infrastruktur kann
+					zwischen <em>AWS</em> (Amazon Web Services), <em>Microsoft Azure</em> und
+				<em>GCP</em> (= Google Cloud Platform) gewählt werden.</p>
+				<p>Atlas ist ursprünglich von Unternehmen <em>mLab</em>, das 2018 von MongoDB, Inc.
+				übernommen wurde.</p>
+				<a href="#registrierung-bei-atlas" id="registrierung-bei-atlas" style="color: inherit; text-decoration: none;">
+					<h3>Registrierung bei Atlas</h3>
+				</a>
+				<p>Zu Beginn muss man sich unter <a href="https://cloud.mongodb.com">https://cloud.mongodb.com</a> registrieren und
+					füllt das Registrierungsformular mit Emailadresse (als künftiger <em>Username</em>),
+				Passwort und &quot;Company Name&quot; (als zukünftige <em>Organization</em>) aus.</p>
+				<a href="#einloggen" id="einloggen" style="color: inherit; text-decoration: none;">
+					<h3>Einloggen</h3>
+				</a>
+				<p>Bei <a href="https://cloud.mongodb.com">https://cloud.mongodb.com</a> kann man sich jetzt mit der mit der
+				<em>Emailadresse</em> als <em>Username</em> einloggen.</p>
+				<a href="#projekt-erstellen" id="projekt-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>Projekt erstellen</h3>
+				</a>
+				<p>Nachdem man sich eingeloggt hat und unterhalb von <em>Organization</em> den Menüpunkt
+					<em>Projects</em> ausgewählt hat, erstellt man ein Projekt, indem der Button
+					<em>New Project</em> angeklickt wird. Für das Projekt muss man einen Namen angeben.
+					Der Projektname ist nur für Verwaltungszwecke und hat keine Auswirkungen auf
+					die spätere &quot;Connection URL&quot; der DB.
+					Man kann auch weitere &quot;Member&quot; mit ihrer Emailadresse hinzufügen, was aber
+				nicht erforderlich ist.</p>
+				<p>Mit dem Button <em>Create Project</em> wird das Projekt nun angelegt.</p>
+				<a href="#cluster-erstellen" id="cluster-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>Cluster erstellen</h3>
+				</a>
+				<p>Nachdem das Projekt erstellt ist, wird ein Cluster angelegt, indem man auf den
+					Button <em>Build a Cluster</em> klickt. Nun kann man durch den Button
+					<em>Create a Cluster</em> unterhalb von &quot;Shared Clusters&quot; einen kostenlosen Cluster
+				anlegen.</p>
+				<p>Danach wählt man den &quot;Provider&quot;, z.B. <em>aws</em> (Amazon Web Services), und die
+					&quot;Region&quot;, z.B. Frankfurt, aus. Durch den Button <em>Create Cluster</em> wird der
+					kostenlose Cluster mit dem Namen <code>Cluster0</code> schließlich angelegt, was einige
+				Minuten dauern kann.</p>
+				<a href="#db-benutzer-erstellen" id="db-benutzer-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>DB-Benutzer erstellen</h3>
+				</a>
+				<p>Jetzt wählt man das Untermenü <em>SECURITY &gt; Database Access</em> aus, um einen
+				DB-Benutzer zu erstellen. Dort klickt man auf den Button _Add New Database User.</p>
+				<p>Im Formular füllt man die beiden Felder für &quot;Username&quot; und &quot;Password&quot; aus.
+					Danach schickt man mit dem Button <em>Add User</em> das Formular ab und wartet,
+				bis die Statusmeldung &quot;We are deploying your changes&quot; verschwunden ist.</p>
+				<a href="#zulässige-ip-adressen-für-die-db-clients" id="zulässige-ip-adressen-für-die-db-clients" style="color: inherit; text-decoration: none;">
+					<h3>Zulässige IP-Adressen für die DB-Clients</h3>
+				</a>
+				<p>Jetzt wählt man das Untermenü <em>SECURITY &gt; Network Access</em> aus, um zu
+					konfigurieren, welche IP-Adressen für die DB-Clients zulässig sein sollen
+					(&quot;Whitelist&quot;). Dazu klickt man auf den Button <em>Add IP Address</em>.
+					Nun klickt man unächst den Button <em>Allow Access from anywhere</em> und danach den
+				Button <em>Confirm</em>.</p>
+				<p>Das vereinfacht den Zugang von einer Cloud, wie z.B. <em>Heroku</em> oder  <em>OpenShift</em>
+				sowie bei dynamischen IP-Adressen in einem öffentlichen WLAN.</p>
+				<a href="#url-für-künftige-db-verbindungen" id="url-für-künftige-db-verbindungen" style="color: inherit; text-decoration: none;">
+					<h3>URL für künftige DB-Verbindungen</h3>
+				</a>
+				<p>Jetzt wählt man das Untermenü <em>DATA STORAGE &gt; Clusters</em> aus, um die URL
+					für künftige DB-Verbindungen zu erhalten. Dazu klickt man zunächst auf den
+					Button <em>Connect</em> und dann auf den Menüpunkt <em>Connect Your Application</em>.
+					Nun kann man auf den Button <em>Copy</em> klicken und hat die URL im &quot;Copy Buffer&quot;,
+					so dass man die URL mit <code>&lt;Strg&gt;v</code> kopieren bzw. sichern kann. Die URL sieht
+				im Prinzip so aus:</p>
+				<pre><code class="language-text">    mongodb+srv://...:&lt;password&gt;@cluster0-?????.mongodb.net/test?retryWrites=true&amp;w=majority
+</code></pre>
+				<p><em>CAVEAT</em>: Das eigene Passwort wird aus Sicherheitsgründen nicht angezeigt,
+					sondern der Platzhalter <code>&lt;password&gt;</code>. Diesen Platzhalter muss man natürlich
+				ersetzen, wenn man die URL im eigenen Appserver (als DB-Client) nutzt.</p>
+				<a href="#ausloggen-bei-atlas" id="ausloggen-bei-atlas" style="color: inherit; text-decoration: none;">
+					<h3>Ausloggen bei Atlas</h3>
+				</a>
+				<p>Rechts oben kann man sich über den Menüpunkt <em>Sign Out</em> ausloggen.</p>
+				<a href="#datenbank-acme-erstellen" id="datenbank-acme-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>Datenbank acme erstellen</h3>
+				</a>
+				<p>Um nicht die DB <code>test</code> (s.o. in der URL) im künftigen Appserver zu benutzen,
+					erstellt man in einer Powershell mit der Mongo CLI eine eigene DB (z.B. <code>acme</code>)
+				mit einer leeren Collection (z.B. <code>film</code>):</p>
+				<pre><code class="language-text">    mongo &quot;mongodb+srv://&lt;&lt;MEINE_KENNUNG&gt;&gt;:&lt;&lt;MEIN_PASSWORT_&gt;&gt;@cluster0-....mongodb.net/test?w=majority&quot;
+        use acme
+        db.createCollection(&#039;film&#039;)
+        exit
+</code></pre>
+				<p>Bei einer DB-URL ist <code>retryWrites=true</code> der Default-Wert und kann deshalb
+				weggelassen werden.</p>
+				<a href="#compass-oder-das-plugin-mongodb-for-vs-code-für-atlas" id="compass-oder-das-plugin-mongodb-for-vs-code-für-atlas" style="color: inherit; text-decoration: none;">
+					<h3>Compass (oder das Plugin MongoDB for VS Code) für Atlas</h3>
+				</a>
+				<p>In Compass muss man für Atlas bei den Verbindungseinstellungen folgende Werte
+				in den Eingabefeldern eingeben bzw. auswählen:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Eingabefeld</th>
+							<th>Wert</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><em>Hostname</em></td>
+							<td><code>cluster0-?????.mongodb.net</code></td>
+						</tr>
+						<tr>
+							<td><em>Authentication</em></td>
+							<td><code>Username / Password</code> statt <code>SCRAM-SHA-256</code></td>
+						</tr>
+						<tr>
+							<td><em>Replica Set Name</em></td>
+							<td><code>Cluster0-shard-0</code></td>
+						</tr>
+						<tr>
+							<td><em>SSL</em></td>
+							<td><code>System CA / Atlas Deployment</code></td>
+						</tr>
+				</tbody></table>
+				<a href="#webbrowser-statt-compass" id="webbrowser-statt-compass" style="color: inherit; text-decoration: none;">
+					<h3>Webbrowser statt Compass</h3>
+				</a>
+				<p>Wenn man bei <a href="https://cloud.mongodb.com">https://cloud.mongodb.com</a> eingeloggt ist und den Menüpunkt
+					<em>Clusters</em> ausgewählt hat, kann man auch auf den Button <em>Collections</em> klicken
+				und so die eigene(n) Collection(s) und Indexe inspizieren.</p>
+				<a href="#heroku" id="heroku" style="color: inherit; text-decoration: none;">
+					<h2>Heroku</h2>
+				</a>
+				<a href="#heroku-von-salesforce" id="heroku-von-salesforce" style="color: inherit; text-decoration: none;">
+					<h3>Heroku von Salesforce</h3>
+				</a>
+				<p><em>Heroku</em> ist eine Cloud-Plattform und funktioniert als PaaS
+					(= Plattform as a Service), so dass man eine Programmier- und Laufzeitumgebung
+					in der Cloud hat: <a href="https://www.heroku.com/platform">https://www.heroku.com/platform</a>. Heroku wird seit 2007
+					entwickelt und wurde 2010 vom CRM-Anbieter
+					<a href="https://www.salesforce.com/de/products/platform/products/heroku/">Salesforce</a>
+				übernommen.</p>
+				<p>Mit Heroku lassen sich Anwendungen für z.B. <em>Node</em> oder <em>Java</em> entwickeln.
+					Als Datenbank kann man z.B. <em>PostgreSQL</em> oder <em>MongoDB</em> verwenden.
+				Das Deployment erfolgt auf der Basis von <em>Git</em> (s.u.).</p>
+				<a href="#dyno-slug-und-buildpack" id="dyno-slug-und-buildpack" style="color: inherit; text-decoration: none;">
+					<h3>dyno, slug und buildpack</h3>
+				</a>
+				<p>Heroku-Anwendungen laufen in mehreren leichtgewichtigen <em>Containern</em>, die
+					<em>dyno</em> heißen. Ein <em>Web dyno</em> wird in der Datei <code>Procfile</code> mit dem Prozess-Typ
+					<em>web</em> deklariert. Nur Web dynos können HTTP-Requests empfangen und -Responses
+				senden.</p>
+				<p>Nachdem die eigene Anwendung gepackt und komprimiert ist, wird sie als <em>slug</em>
+					bezeichnet. Ein <em>slug</em> kann danach in einem <em>dyno</em> ausgeführt werden.
+				Die maximale Größe für ein <em>slug</em> beträgt 500 MB.</p>
+				<p>Mit Hilfe von einem <em>buildpack</em> wird die eigene Anwendung zu einem <em>slug</em>
+					transformiert. Dazu benötigt Heroku diverse Skripte, die von der jeweiligen
+					Programmiersprache, z.B. JavaScript oder Java, abhängen. Mit diesen Skripten
+					wird z.B. die Fremdsoftware (<em>dependencies</em>) geladen, die man innerhalb der
+				eigenen Anwendung nutzt, und es wird ggf. der Compiler aufgerufen.</p>
+				<p>Wenn es im Wurzelverzeichnis eine Datei <code>package.json</code> gibt, verwendet Heroku
+					das <em>Node.js buildpack</em> und ergänzt seine Umgebungsvariable <code>PATH</code> um die Pfade
+				für <code>node</code>, <code>npm</code> und <code>node_modules/.bin</code>.</p>
+				<a href="#registrierung-bei-heroku" id="registrierung-bei-heroku" style="color: inherit; text-decoration: none;">
+					<h3>Registrierung bei Heroku</h3>
+				</a>
+				<p>Zu Beginn muss man sich bei <a href="https://signup.heroku.com">https://signup.heroku.com</a> registrieren, indem man
+					das Formular ausfüllt, mit dem Button <em>CREATE FREE ACCOUNT</em> abschickt und
+				abschließend den Link in der Bestätigungsemail anklickt.</p>
+				<a href="#einmalig-git-repository-erstellen" id="einmalig-git-repository-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>Einmalig: Git-Repository erstellen</h3>
+				</a>
+				<p>In VS Code sind folgende Einstellungen empfehlenswert, nachdem man das
+					Beispielprojekt in VS Code geöffnet hat, indem man VS Code startet und über
+					<em>Datei</em> und den Unterpunkt <em>Ordner öffnen</em> das Verzeichnis mit dem
+					Beispielprojekt geöffnet hat. Jetzt kann man über <em>Datei</em>, den Unterpunkt
+					<em>Einstellungen</em> und nochmals <em>Einstellungen</em> im Eingabefeld <code>Git</code> eingeben.
+					Nun sieht man die Konfigurationsmöglichkeiten für Git und setzt die Haken bei
+				<code>Git: Enable Smart Commit</code> und bei <code>Git: Suggest Smart Commit</code>.</p>
+				<p>Jetzt klickt man auf das Icon <em>Quellcodeverwaltung</em> am linken Rand und
+				anschließend auf den Button <code>Repository initialisieren</code>.</p>
+				<p>Man bleibt in der <em>Quellcodeverwaltung</em> und sieht nun viele Dateien markiert mit
+					<code>U</code> (ncommitted). Im Eingabefeld steht der Hinweis <em>Nachricht</em>, wo man z.B.
+				<code>Initiale</code> Version eingibt und dann auf den Haken (Tooltipp: <em>Commit</em>) klickt.</p>
+				<a href="#einloggen-und-token-erstellen-mit-der-heroku-cli" id="einloggen-und-token-erstellen-mit-der-heroku-cli" style="color: inherit; text-decoration: none;">
+					<h3>Einloggen und Token erstellen mit der Heroku CLI</h3>
+				</a>
+				<p>Mit dem Tastaturkürzel <code>&lt;F1&gt;</code> öffnet man die Kommando<em>P</em>alette.
+					Dort gibt man <code>heroku login</code> ein und über das nun geöffnete Powershell-Terminal
+					wird der Webbrowser mit der Login-URL für Heroku gestartet, so dass man sich
+					dort einloggen kann, wozu man die Emailadresse und das Passwort von der
+				zuvor erfolgten Registrierung verwendet.</p>
+				<p>Nach dem erfolgreichen Einloggen gibt es zur Verwaltung das Verzeichnis
+				<code>C:\Users\&lt;MEINE_KENNUNG&gt;\AppData\Local\heroku</code>.</p>
+				<a href="#leere-anwendung-für-heroku-erstellen" id="leere-anwendung-für-heroku-erstellen" style="color: inherit; text-decoration: none;">
+					<h3>Leere Anwendung für Heroku erstellen</h3>
+				</a>
+				<p>In der Kommandopalette durch <code>&lt;F1&gt;</code> gibt man <code>heroku create</code> ein.
+				Die Ausgabe im Powershell-Terminal sieht dann prinzipiell folgendermaßen aus:</p>
+				<pre><code class="language-text">https://gener-iert-12345.herokuapp.com/ | https://git.heroku.com/gener-iert-12345-53594.git
+</code></pre>
+				<p>Jetzt gibt es also eine generierte Domain für die eigene Anwendung, die künftig
+				über z.B. <a href="https://gener-iert-12345.herokuapp.com/">https://gener-iert-12345.herokuapp.com/</a> erreichbar sein wird.</p>
+				<p>Die ausgegebene URL nimmt man, um in <em>package.json</em> innerhalb von <code>&quot;scripts&quot;: {</code>
+					die dortige URL <code>https://gener-iert-12345.herokuapp.com/</code> bei den Skripten
+				<code>curl:heroku</code> und <code>open:heroku</code> zu überschreiben.</p>
+				<a href="#umgebungsvariable-für-heroku" id="umgebungsvariable-für-heroku" style="color: inherit; text-decoration: none;">
+					<h3>Umgebungsvariable für Heroku</h3>
+				</a>
+				<p>Mit der Kommandopalette durch <code>&lt;F1&gt;</code> gibt man <code>heroku config:set</code> und
+					anschließend prinzipiell <code>DB_HOST=cluster0-?????.mongodb.net</code>, wobei die ?
+					gemäß der obigen Atlas-Konfiguration ersetzt werden müssen. Dabei kann man im
+				Powershell-Terminal die Interaktion mit Heroku verfolgen.</p>
+				<p>Das wiederholt man dann noch für die Umgebungsvariable mit den passenden
+				Werten für Benutzername und Passwort aus der Atlas-Konfiguration:</p>
+				<ul>
+					<li>DB_USER=?????</li>
+					<li>DB_PASS=?????</li>
+					<li>LOG_DIR=/tmp</li>
+					<li>APOLLO_PLAYGROUND=true</li>
+					<li>DB_POPULATE=true</li>
+				</ul>
+				<a href="#deployment-für-heroku" id="deployment-für-heroku" style="color: inherit; text-decoration: none;">
+					<h3>Deployment für Heroku</h3>
+				</a>
+				<p>Für das erstmalige Deployment und nach künftigen Codeänderungen gibt man
+					in der Kommandopalette (durch <code>&lt;F1&gt;</code>) das Kommando <code>git push heroku master</code> ein.
+					Durch diese Push-Operation von Git wird in Heroku ein <em>slug</em> erstellt.
+					Dabei wird die Anwendung gepackt und komprimiert, so dass sie einschließend in
+					einem <em>dyno</em> (leichtgewichtiger Linux-Container) ablaufen kann.
+				Im PowerShell-Terminal kann man dabei den Ablauf mitverfolgen.</p>
+				<pre><code class="language-mermaid">stateDiagram
+  [*] --&gt; Sources : git push heroku master
+  Sources --&gt; Buildsystem
+  state Buildsystem {
+    [*] --&gt; Buildpack
+    Buildpack --&gt; Runtime
+    Runtime --&gt; Dependencies
+    Dependencies --&gt; slug
+  }
+  Buildsystem --&gt; dyno
+</code></pre>
+				<p>Nur die in Git versionierten Dateien werden für das Deployment verwendet,
+					weshalb nur die TypeScript-Dateien zu Heroku hochgeladen werden, die dann dort
+					zu lauffähigen JavaScript-Dateien übersetzt werden müssen. Dazu gibt es das
+					npm-Skript <code>heroku-postbuild</code>, das innerhalb von Heroku aufgerufen wird und
+				nicht manuell aufgerufen werden muss.</p>
+				<p>Wer <em>husky</em> kennt und zusammen mit Git verwenden möchte, muss es noch
+					konfigurieren. Z.Zt. ist <em>husky</em> nur in <code>package.json</code> eingetragen, weshalb
+				man beim Deployment einen vernachlässigbaren Fehler erhält.</p>
+				<p>Nach einem erfolgreichen Deployment sollte man (als Student/in) die
+					Heroku-Anwendung durch das Kommando <code>heroku ps:scale web=1</code> so skalieren, dass
+					sie nur <em>1</em> Web dyno nutzt. Analog kann man durch <code>heroku ps:scale web=0</code> die
+				eigene Anwendung deaktieren.</p>
+				<p>Durch das Kommando <code>heroku buildpacks</code> kann man sich auflisten lassen, welche
+				buildpacks beim Erstellen von einem slug verwendet werden.</p>
+				<a href="#status-informationen-zu-heroku" id="status-informationen-zu-heroku" style="color: inherit; text-decoration: none;">
+					<h3>Status-Informationen zu Heroku</h3>
+				</a>
+				<p>Mit <code>heroku ps</code> kann man sich anzeigen lassen, wieviele freie &quot;Dyno-Stunden&quot;
+					man im aktuellen Monat noch hat und wieviele bereits verbraucht sind.
+					Persönliche Accounts verfügen monatlich über 550 freie &quot;Dyno-Stunden&quot;:
+				<a href="https://devcenter.heroku.com/articles/free-dyno-hours">https://devcenter.heroku.com/articles/free-dyno-hours</a>.</p>
+				<a href="#verfügbarkeit-der-eigenen-heroku-anwendung" id="verfügbarkeit-der-eigenen-heroku-anwendung" style="color: inherit; text-decoration: none;">
+					<h3>Verfügbarkeit der eigenen Heroku-Anwendung</h3>
+				</a>
+				<p>Nach dem Deployment ist die eigene Anwendung verfügbar und kann benutzt
+					werden. Beispielsweise kann man in einer eigenen Powershell das Kommando
+					<code>npm run curl:heroku</code> aufrufen. Dabei wird mit <code>curl</code> auf die URL
+					<code>https://gener-iert-12345.herokuapp.com/filme/00000000-0000-0000-0000-000000000001</code>
+				zugegriffen.</p>
+				<p>Alternativ kann man auch <code>npm run open:heroku</code> oder <code>npm run open:heroku:file</code>
+					oder <code>npm run open:heroku:html</code> aufrufen, dann wird der Response in einem
+				Webbrowser angezeigt.</p>
+				<a href="#heroku-console" id="heroku-console" style="color: inherit; text-decoration: none;">
+					<h3>Heroku-Console</h3>
+				</a>
+				<p>Mit der Kommandopalette durch <code>&lt;F1&gt;</code> kann man
+					<code>heroku logs --tail --app gener-iert-12345</code> eingeben und die Logging-Ausgaben
+				auf der Heroku-Console mitverfolgen, ähnlich wie bei Linux mit <code>tail -f</code>.</p>
+				<a href="#dashboard-für-die-verwaltung-der-eigenen-heroku-anwendungen" id="dashboard-für-die-verwaltung-der-eigenen-heroku-anwendungen" style="color: inherit; text-decoration: none;">
+					<h3>Dashboard für die Verwaltung der eigenen Heroku-Anwendung(en)</h3>
+				</a>
+				<p>Unter <a href="https://dashboard.heroku.com">https://dashboard.heroku.com</a> kann man die eigene Anwendung verwalten.</p>
+				<p>Wenn man dort die eigene Anwendung selektiert bzw. anklickt, kann man z.B. über
+					den Karteireiter <em>Settings</em> eine Anwendung vom Netz nehmen, indem man den
+					<em>Maintenance Mode</em> einschaltet (am Seitenende). Auch kann man dort die
+				Anwendung ggf. löschen.</p>
+				<a href="#sonstige-heroku-kommandos" id="sonstige-heroku-kommandos" style="color: inherit; text-decoration: none;">
+					<h3>Sonstige Heroku-Kommandos</h3>
+				</a>
+				<p>Mit <code>heroku run ...</code> kann man ein einzelnes Kommando als REPL
+					(= Read-eval-print loop) laufen lassen. So zeigt z.B. das Kommando
+					<code>heroku run --app gener-iert-12345 node --version</code> an, welche Node-Version für
+					die Heroku-Anwendung verwendet wird.
+					Oder mit <code>heroku run  --app gener-iert-12345 printenv</code> kann man sich die
+				Umgebungsvariable für die Heroku-Anwendung anzeigen lassen.</p>
+				<p>Mit <code>heroku addons</code> kann man sich zusätzlich installierte Add-ons anzeigen
+					lassen. Beispielsweise könnte man das Add-on <em>mLab MongoDB</em> statt <em>Atlas</em>
+				verwenden.</p>
+				<a href="#debugging-mit-vs-code" id="debugging-mit-vs-code" style="color: inherit; text-decoration: none;">
+					<h2>Debugging mit VS Code</h2>
+				</a>
+				<ul>
+					<li>Das <em>Debug Icon</em> in der <em>Activity Bar</em> anklicken</li>
+					<li>Den Tab <em>Terminal</em> auswählen, dort in das Projektverzeichnis wechseln und
+					dann <code>nodemon</code> als (Remote) Server starten:</li>
+				</ul>
+				<pre><code class="language-PowerShell"><span style="color: #000000">    cd &lt;Projektverzeichnis&gt;</span>
+<span style="color: #000000">    nodemon -V</span>
+</code></pre>
+				<p><code>nodemon</code> ruft dann die JS-Datei auf, die in <code>package.json</code> bei der Property
+					<em>main</em> steht, d.h. <code>dist\index.js</code>, d.h. die Übersetzung durch TypeScript muss
+				vorher manuell durchgeführt werden.</p>
+				<p>Nun kann man Breakpoints setzen, indem man bei einer geöffneten .ts-Datei links
+					von der Zeilennummer klickt. Beim Übersetzen hat nämlich der TypeScript-Compiler
+				Dateien für das <em>Source Mapping</em> generiert.</p>
+				<p>Jetzt muss man nur noch links oben bei &quot;Debugging starten&quot; auf den linken grünen
+				Button klicken (siehe auch .vscode\launch.json).</p>
+				<p><em>Am Ende nicht vergessen, im Terminal den Server mit <code>&lt;Strg&gt;C</code> zu beenden!</em></p>
+				<p><a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging">Dokumentation zum Debugging</a>
+				oder <a href="https://www.sitepoint.com/debug-node-app-tips-tricks-tools">https://www.sitepoint.com/debug-node-app-tips-tricks-tools</a>.</p>
+				<a href="#empfohlene-code-konventionen" id="empfohlene-code-konventionen" style="color: inherit; text-decoration: none;">
+					<h2>Empfohlene Code-Konventionen</h2>
+				</a>
+				<p>In Anlehnung an die
+				<a href="https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines">Guidelines von TypeScript</a></p>
+				<ul>
+					<li>&quot;Feature Filenames&quot;, z.B. film.service.ts</li>
+					<li>Klassennamen und Enums mit PascalCase,</li>
+					<li>Attribute und Funktionen mit camelCase,</li>
+					<li>private Properties <em>nicht</em> mit vorangestelltem <strong>_</strong>,</li>
+					<li>Interfaces <em>nicht</em> mit vorangestelltem <strong>I</strong></li>
+					<li><em>Barrel</em> für häufige Imports, z.B.<ul>
+							<li><code>shared\index.ts</code> erstellen:</li>
+						</ul>
+					</li>
+				</ul>
+				<pre><code class="language-javascript"><span style="color: #000000">    </span><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./bar&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">*</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./foo&#039;</span><span style="color: #000000">;</span>
+</code></pre>
+				<ul>
+					<li>einfaches Importieren:</li>
+				</ul>
+				<pre><code class="language-javascript"><span style="color: #000000">    </span><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Bar</span><span style="color: #000000">, </span><span style="color: #001080">Foo</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;shared&#039;</span><span style="color: #000000">;</span>
+</code></pre>
+				<ul>
+					<li>[...].forEach() und [...].filter() statt for-Schleife</li>
+					<li>Arrow-Functions statt function()</li>
+					<li>undefined verwenden, nicht: null</li>
+					<li>Geschweifte Klammern bei if-Anweisungen</li>
+					<li>Maximale Dateigröße: 400 Zeilen</li>
+					<li>Maximale Funktionsgröße: 75 Zeilen</li>
+				</ul>
+				<a href="#json5stringify-statt-jsonstringify" id="json5stringify-statt-jsonstringify" style="color: inherit; text-decoration: none;">
+					<h3>JSON5.stringify() statt JSON.stringify()</h3>
+				</a>
+				<p>Wenn man bei der String-Ausgabe von JSON-Objekten oder -Arrays nicht die
+					puristische Ausgabe mit Anführungszeichen bei den Schlüsseln haben möchte,
+				dann kann man <code>JSON5.stringify()</code> statt <code>JSON.stringify()</code> verwenden:</p>
+				<pre><code class="language-javascript"><span style="color: #000000">    </span><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">JSON5</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;json5&#039;</span><span style="color: #000000">;</span>
+<span style="color: #000000">    ...</span>
+<span style="color: #000000">    </span><span style="color: #0070C1">JSON5</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">(</span><span style="color: #001080">obj</span><span style="color: #000000">);</span>
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_types.html">@types</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/app.html">app</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth.html">auth</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_rest.html">auth/rest</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_rest_authentication_request_handler.html">auth/rest/authentication.request-<wbr>handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_rest_authorization_request_handler.html">auth/rest/authorization.request-<wbr>handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service.html">auth/service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_auth_service.html">auth/service/auth.service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_errors.html">auth/service/errors</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_role_service.html">auth/service/role.service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_roles.html">auth/service/roles</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_user_service.html">auth/service/user.service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/auth_service_users.html">auth/service/users</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity.html">film/entity</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity_genericjsonschema.html">film/entity/<wbr>Generic<wbr>Json<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity_film.html">film/entity/film</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity_film_model.html">film/entity/film.model</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity_jsonschema.html">film/entity/json<wbr>Schema</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_entity_validatefilm.html">film/entity/validate<wbr>Film</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_graphql.html">film/graphql</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_graphql_resolvers.html">film/graphql/resolvers</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_graphql_typedefs.html">film/graphql/type<wbr>Defs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_html.html">film/html</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_html_neuer_film.html">film/html/neuer-<wbr>film</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_html_suche.html">film/html/suche</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_rest.html">film/rest</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_rest_film_file_request_handler.html">film/rest/film-<wbr>file.request-<wbr>handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_rest_film_request_handler.html">film/rest/film.request-<wbr>handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_service.html">film/service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_service_errors.html">film/service/errors</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_service_film_file_service.html">film/service/film-<wbr>file.service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/film_service_film_service.html">film/service/film.service</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/security.html">security</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/security_cors_handler.html">security/cors.handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/security_helmet_handler.html">security/helmet.handler</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/server.html">server</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared.html">shared</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_base_uri.html">shared/base-<wbr>uri</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config.html">shared/config</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_apollo.html">shared/config/apollo</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_cloud.html">shared/config/cloud</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_db.html">shared/config/db</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_env.html">shared/config/env</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_express.html">shared/config/express</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_jwt.html">shared/config/jwt</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_logger.html">shared/config/logger</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_mail.html">shared/config/mail</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_mime.html">shared/config/mime</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_config_node.html">shared/config/node</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db.html">shared/db</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db_connectdb.html">shared/db/connectDB</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db_gridfs.html">shared/db/gridfs</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db_mongodb.html">shared/db/mongoDB</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db_populatedb.html">shared/db/populateDB</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_db_testdaten.html">shared/db/testdaten</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_httpstatus.html">shared/http<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_logger.html">shared/logger</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/shared_request_handler.html">shared/request-<wbr>handler</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

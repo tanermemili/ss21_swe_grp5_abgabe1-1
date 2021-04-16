@@ -16,6 +16,7 @@
 # Aufruf:   i.a. bereits eingestellt:   $env:SCAFFOLD_PROFILE = 'dev'
 #           skaffold deploy --port-forward
 
+# TODO: Update to v2beta13
 apiVersion: skaffold/v2beta12
 kind: Config
 metadata:
