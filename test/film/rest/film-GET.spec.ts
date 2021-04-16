@@ -19,7 +19,7 @@ import { HttpStatus, nodeConfig } from '../../../src/shared';
 import { agent, createTestserver } from '../../testserver';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import type { AddressInfo } from 'net';
-import type { Film } from '../../../src/film/entity';
+import type { FilmData } from '../../../src/film/entity';
 import { PATHS } from '../../../src/app';
 import type { Server } from 'http';
 import chai from 'chai';
@@ -62,7 +62,7 @@ describe('GET /api/filme', () => {
 
     afterAll(() => { server.close() });
 
-    test('Alle Filme', async () => {
+    test('Alle Buecher', async () => {
         // given
 
         // when
@@ -100,14 +100,14 @@ describe('GET /api/filme', () => {
             expect(body).not.to.be.empty;
 
             // Jeder Film hat einen Titel mit dem Teilstring 'a'
-            body.map((film: Film) => film.titel).forEach((titel: string) =>
+            body.map((film: FilmData) => film.titel).forEach((titel: string) =>
                 expect(titel.toLowerCase()).to.have.string(teilTitel),
             );
         },
     );
 
     each(titelNichtVorhanden).test(
-        'Keine Filme mit einem Titel, der "%s" nicht enthaelt',
+        'Keine Buecher mit einem Titel, der "%s" nicht enthaelt',
         async (teilTitel) => {
             // given
             const uri = `${filmeUri}?titel=${teilTitel}`;
@@ -123,10 +123,10 @@ describe('GET /api/filme', () => {
     );
 
     each(beschreibungVorhanden).test(
-        'Mind. 1 Film mit dem Schlagwort "%s"',
-        async (beschreibung) => {
+        'Mind. 1 Film mit der Beschreibung "%s"',
+        async (schlagwort) => {
             // given
-            const uri = `${filmeUri}?${beschreibung}=true`;
+            const uri = `${filmeUri}?${schlagwort}=true`;
 
             // when
             const response = await fetch(uri, { agent });
@@ -139,20 +139,20 @@ describe('GET /api/filme', () => {
             const body = await response.json();
             expect(body).not.to.be.empty;
 
-            // Jeder Film hat im Array der Schlagwoerter "javascript"
+            // Jeder Film hat im Array die Beschreibung "Naurdoku"
             body.map(
-                (film: Film) => film.beschreibung,
+                (film: FilmData) => film.beschreibung,
             ).forEach((s: Array<string>) =>
-                expect(s).to.include(beschreibung.toUpperCase()),
+                expect(s).to.include(schlagwort.toUpperCase()),
             );
         },
     );
 
     each(beschreibungNichtVorhanden).test(
         'Keine Filme mit dem Schlagwort "%s"',
-        async (beschreibung) => {
+        async (schlagwort) => {
             // given
-            const uri = `${filmeUri}?${beschreibung}=true`;
+            const uri = `${filmeUri}?${schlagwort}=true`;
 
             // when
             const response = await fetch(uri, { agent });
