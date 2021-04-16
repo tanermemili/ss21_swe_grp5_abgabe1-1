@@ -40,25 +40,34 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const geaenderterFilm: Omit<Film, 'isbn'> = {
-    // isbn wird nicht geaendet
-    titel: 'Neu',
-    bewertung: 1,
-    genre: 'DOKUMENTATION',
-    produktionsStudio: 'UNIVERSAL',
-    preis: 99.99,
-    rabatt: 0.099,
-    verfuegbarkeit: true,
-    veroeffentlichung: '2016-02-28',
-    beschreibung: '0-0070-0644-6',
-    website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
-    spieldauer: 120
+const geaenderterFilm: Omit<Film, 'beschreibung'> = {
+    // isbn wird nicht geaendert
+    titel: 'Alpha',
+        bewertung: 4,
+        genre: 'DOKUMENTATION',
+        produktionsStudio: 'DISNEY',
+        preis: 11.1,
+        rabatt: 0.011,
+        verfuegbarkeit: true,
+        veroeffentlichung: '2020-02-01',
+        website: 'https://acme.at/',
+        schauspieler: ['any actor'],
+        regisseur: [
+            {
+                nachname: 'Bond',
+                vorname: 'James',
+            },
+            {
+                nachname: 'Beta',
+
+                vorname: 'Alpha',
+            },
+        ],
+        spieldauer: 120
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000003';
 
-const geaenderterFilmIdNichtVorhanden: Omit<Film, 'isbn' | 'homepage'> = {
+const geaenderterFilmIdNichtVorhanden: Omit<Film, 'beschreibung' | 'website'> = {
     titel: 'Neu',
     bewertung: 1,
     genre: 'DOKUMENTATION',
@@ -67,33 +76,41 @@ const geaenderterFilmIdNichtVorhanden: Omit<Film, 'isbn' | 'homepage'> = {
     rabatt: 0.099,
     verfuegbarkeit: true,
     veroeffentlichung: '2016-02-28',
-    beschreibung: '0-0070-0644-6',
-    website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
+    schauspieler: ['Any Actor', 'Any Actrice'],
+    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
     spieldauer: 120
 };
 const idNichtVorhanden = '00000000-0000-0000-0000-000000000999';
 
 const geaenderterFilmInvalid: object = {
-    titel: 'Neu',
-    bewertung: 1,
+    titel: 'Alpha',
+    bewertung: 4,
     genre: 'DOKUMENTATION',
-    produktionsStudio: 'UNIVERSAL',
-    preis: 99.99,
-    rabatt: 0.099,
+    produktionsStudio: '---',
+    preis: 11.1,
+    rabatt: 0.011,
     verfuegbarkeit: true,
-    veroeffentlichung: '2016-02-28',
-    beschreibung: '0-0070-0644-6',
-    website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
-    spieldauer: 120
+    veroeffentlichung: new Date('2020-02-01'),
+    beschreibung: 'Dokumentation über die Tiere in Afrika',
+    website: 'https://acme.at/',
+    schauspieler: [''],
+    regisseur: [
+        {
+            nachname: 'Bond',
+            vorname: 'James',
+        },
+        {
+            nachname: 'Beta',
+
+            vorname: 'Alpha',
+        },
+    ],
+    spieldauer: 100,
 };
 
 const veralterFilm: object = {
     // isbn wird nicht geaendet
-    titel: 'Neu',
+    titel: 'Alt',
     bewertung: 1,
     genre: 'DOKUMENTATION',
     produktionsStudio: 'UNIVERSAL',
@@ -103,8 +120,8 @@ const veralterFilm: object = {
     veroeffentlichung: '2016-02-28',
     beschreibung: '0-0070-0644-6',
     website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
+    schauspieler: ['Any Actor', 'Any Actrice'],
+    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
     spieldauer: 120
 };
 
@@ -131,7 +148,7 @@ describe('PUT /api/filme/:id', () => {
 
     afterAll(() => { server.close() });
 
-    test('Vorhandener Film aendern', async () => {
+    test('Vorhandenen Film aendern', async () => {
         // given
         const token = await login(loginUri);
         const headers = new Headers({
@@ -183,7 +200,7 @@ describe('PUT /api/filme/:id', () => {
         );
     });
 
-    test('Vorhandener Film aendern, aber mit ungueltigen Daten', async () => {
+    test('Vorhandenen Film aendern, aber mit ungueltigen Daten', async () => {
         // given
         const token = await login(loginUri);
         const headers = new Headers({
@@ -204,19 +221,19 @@ describe('PUT /api/filme/:id', () => {
 
         // then
         expect(response.status).to.be.equal(HttpStatus.BAD_REQUEST);
-        const { art, rating, verlag, datum, isbn } = await response.json();
+        const { art, rating, produktionsStudio, datum, isbn } = await response.json();
         expect(art).to.be.equal(
             'Das Genre eines Filmes muss DOKUMENTATION, DRAMA oder KOMOEDIE sein',
         );
         expect(rating).to.be.equal(`Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`);
-        expect(verlag).to.be.equal(
+        expect(produktionsStudio).to.be.equal(
             'das produktionsStudio eines Filmes muss DISNEY, UNIVERSAL oder WARNERBROS sein',
         );
         expect(datum).to.be.equal('Das Datum muss im Format yyyy-MM-dd sein.');
         expect(isbn).to.be.equal('Die ISBN-Nummer ist nicht korrekt.');
     });
 
-    test('Vorhandener Film aendern, aber ohne Versionsnummer', async () => {
+    test('Vorhandenen Film aendern, aber ohne Versionsnummer', async () => {
         // given
         const token = await login(loginUri);
         const headers = new Headers({
@@ -240,7 +257,7 @@ describe('PUT /api/filme/:id', () => {
         expect(responseBody).to.be.equal('Versionsnummer fehlt');
     });
 
-    test('Vorhandener Film aendern, aber mit alter Versionsnummer', async () => {
+    test('Vorhandenen Film aendern, aber mit alter Versionsnummer', async () => {
         // given
         const token = await login(loginUri);
         const headers = new Headers({
@@ -265,7 +282,7 @@ describe('PUT /api/filme/:id', () => {
         expect(responseBody).to.have.string('Die Versionsnummer');
     });
 
-    test('Vorhandener Film aendern, aber ohne Token', async () => {
+    test('Vorhandenen Film aendern, aber ohne Token', async () => {
         // given
         const headers = new Headers({
             'Content-Type': 'application/json',
@@ -288,7 +305,7 @@ describe('PUT /api/filme/:id', () => {
         expect(responseBody).to.be.equalIgnoreCase('unauthorized');
     });
 
-    test('Vorhandener Film aendern, aber mit falschem Token', async () => {
+    test('Vorhandenen Film aendern, aber mit falschem Token', async () => {
         // given
         const token = 'FALSCH';
         const headers = new Headers({
