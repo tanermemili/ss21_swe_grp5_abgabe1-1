@@ -25,7 +25,6 @@ kind: Kustomization
 resources:
   - ../base
 
-#TODO: An Domäne anpassen
 configMapGenerator:
   - name: film-env
     behavior: merge

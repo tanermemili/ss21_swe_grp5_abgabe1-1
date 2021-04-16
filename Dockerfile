@@ -65,7 +65,6 @@ COPY src/shared/config/*.pem ./dist/shared/config/
 COPY src/shared/config/*.cer ./dist/shared/config/
 
 # Dateien fuer EJS kopieren
-COPY src/views ./dist/views
 COPY src/public ./dist/public
 
 # ==============================================================================

@@ -54,7 +54,7 @@ import type { ApolloServerExpressConfig } from 'apollo-server-express';
 import bearerToken from 'express-bearer-token';
 import compression from 'compression';
 import express from 'express';
-import { helmetHandlers } from './security';
+import { corsHandler, helmetHandlers } from './security';
 import { join } from 'path';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
@@ -138,7 +138,7 @@ class App {
             ...helmetHandlers,
 
             // falls CORS fuer die Webanwendung notwendig ist:
-            // corsHandler,
+            corsHandler,
 
             // GZIP-Komprimierung implizit unterstuetzt durch Chrome, FF, ...
             //   Accept-Encoding: gzip
