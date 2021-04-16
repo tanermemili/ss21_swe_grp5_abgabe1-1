@@ -8,7 +8,7 @@ build
 dist
 doc/entwicklerhandbuch/html/*
 doc/folien/*.html
-doc/api/*
+# doc/api/*
 temp
 tmp
 helm-charts/*/README.md

@@ -42,7 +42,7 @@ export const findById = (req: Request, res: Response) =>
 export const find = (req: Request, res: Response) => handler.find(req, res);
 
 /**
- * Ein neues Film wird asynchron angelegt. Das neu anzulegende Film ist als
+ * Ein neuer Film wird asynchron angelegt. Das neu anzulegende Film ist als
  * JSON-Datensatz im Request-Objekt enthalten und im Request-Header muss
  * `Content-Type` auf `application\json` gesetzt sein. Wenn es keine
  * Verletzungen von Constraints gibt, wird der Statuscode `201` (`Created`)

@@ -1,0 +1,11 @@
+{
+    "titel": 99,
+    "bewertung": 1,
+    "genre": "DOKUMENTATION",
+    "produktionsStudio": "DISNEY",
+    "preis": "string",
+    "rabatt": 0.3,
+    "verfuegbarkeit": true,
+    "beschreibung": "Ein neuer Film",
+    "website": "https://test.de/"
+}

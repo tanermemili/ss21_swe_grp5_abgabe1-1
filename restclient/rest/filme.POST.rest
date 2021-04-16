@@ -42,28 +42,28 @@ Authorization: Bearer {{login.response.body.$.token}}
 < .\json\film-neu.json
 
 ### Neuen Film mit ungueltigen Daten anlegen
-POST https://{{host}}/buecher
+POST https://{{host}}/filme
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
 < .\json\film-neu-invalid.json
 
 ### Neuen Film anlegen, aber der Titel existiert bereits
-POST https://{{host}}/buecher
+POST https://{{host}}/filme
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\film-neu.titel-exists.json
+< .\json\film-neu-titel-exists.json
 
 ### Neuen Film anlegen, aber die ISBN-Nummer existiert bereits
-POST https://{{host}}/buecher
+POST https://{{host}}/filme
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
 < .\json\film-neu.isbn-exists.json
 
 ### Neuen Film ohne Login anlegen
-POST https://{{host}}/buecher
+POST https://{{host}}/filme
 Content-Type: application/json
 
 < .\json\film-neu.json
