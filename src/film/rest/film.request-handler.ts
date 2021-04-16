@@ -321,7 +321,6 @@ export class FilmRequestHandler {
 
         if (err instanceof TitelExists) {
             this.handleTitelExists(err.titel, err.id, res);
-            return;
         }
     }
 
