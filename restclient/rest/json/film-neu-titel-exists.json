@@ -1,0 +1,11 @@
+{
+  "titel": "Alpha",
+  "bewertung": 4,
+  "genre": "DOKUMENTATION",
+  "produktionsStudio": "DISNEY",
+  "preis": 11.1,
+  "rabatt": 0.011,
+  "verfuegbarkeit": true,
+  "beschreibung": "Dokumentation über die Tiere in Afrika",
+  "website": "https://acme.at/"
+}

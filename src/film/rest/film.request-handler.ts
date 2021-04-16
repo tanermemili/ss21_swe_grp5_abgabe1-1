@@ -149,7 +149,7 @@ export class FilmRequestHandler {
      * @returns Leeres Promise-Objekt.
      */
     async find(req: Request, res: Response) {
-        // z.B. https://.../buecher?titel=a
+        // z.B. https://.../filme?titel=a
         // => req.query = { titel: 'a' }
         const { query } = req;
         logger.debug('FilmRequestHandler.find(): queryParams=%o', query);
