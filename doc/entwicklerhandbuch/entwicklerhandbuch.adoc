@@ -60,7 +60,7 @@ include::komponenten.puml[]
 Dies sind verschiedenen Handler-Funktionen, die an der REST-Schnittstelle ausgeführt werden können. Ein eingehender Request eines Clients wird über die Router-Funktion an die Handlerfunktionen weitergeleitet.
 
 .Handler für die REST-Schnittstelle
-[plantuml,BuchHandler,svg]
+[plantuml,FilmHandler,svg]
 ----
 include::FilmHandler.puml[]
 ----
@@ -70,7 +70,7 @@ include::FilmHandler.puml[]
 Der Anwendungskern beinhaltet die Service-Funktionen und die verschiedenen Entitäten. Man kann die Funktionen findById() und find() als Get-Methoden verstehen. Die create()-Funktion realisiert die Post-Methode. Update() kann man als Put-/Patch-Methode verstehen und delete() realisert die Delete-Methode. Somit werden im Anwendungskern die HTTP-Methoden durch die Service-Funktionen realisiert.
 
 .Anwendungskern mit Mongoose
-[plantuml,BuchService,svg]
+[plantuml,FilmService,svg]
 ----
 include::FilmService.puml[]
 ----
@@ -80,7 +80,7 @@ include::FilmService.puml[]
 Hier werden die Entities eines Filmes und deren Typ angezeigt. Ein Film hat dabei 2 Enum-Properties (Genre und Produktionsstudio). Die möglichen Werte eines Genres sind: Dokumentationen, Komödien und Dramen. Ein Produktionsstudio kann dabei die Werte: Disney, Universal, Warner Bros annehmen.
 
 .Entity, Model und Schema
-[plantuml,Buch,svg]
+[plantuml,Film,svg]
 ----
 include::Film.puml[]
 ----
