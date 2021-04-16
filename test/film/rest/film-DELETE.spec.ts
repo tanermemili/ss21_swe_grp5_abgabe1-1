@@ -16,7 +16,7 @@
  */
 
 import { agent, createTestserver, HttpMethod } from '../../testserver';
-import { HttpStatus, serverConfig } from '../../../src/shared';
+import { HttpStatus, nodeConfig } from '../../../src/shared';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import fetch, { Headers, Request } from 'node-fetch';
 import type { AddressInfo } from 'net';
@@ -55,7 +55,7 @@ describe('DELETE /api/filme', () => {
         server = await createTestserver();
 
         const address = server.address() as AddressInfo;
-        const baseUri = `https://${serverConfig.host}:${address.port}`;
+        const baseUri = `https://${nodeConfig.host}:${address.port}`;
         filmeUri = `${baseUri}${path}`;
         loginUri = `${baseUri}${PATHS.login}`;
     });
