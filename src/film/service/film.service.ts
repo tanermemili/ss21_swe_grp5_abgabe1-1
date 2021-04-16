@@ -13,8 +13,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* eslint-disable no-null/no-null, @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable max-lines */
+/* eslint-disable no-null/no-null, unicorn/no-useless-undefined, @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable max-lines*/
 
 import type { Film, FilmData } from '../entity';
 import {

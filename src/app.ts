@@ -76,7 +76,7 @@ const apiPath = '/api';
  */
 export const PATHS = {
     filme: `${apiPath}/filme`,
-    produktionsStudios: `${apiPath}/verlage`,
+    produktionsStudios: `${apiPath}/produktionsStudios`,
     login: `${apiPath}/login`,
     graphql: '/graphql',
     html: '/html',

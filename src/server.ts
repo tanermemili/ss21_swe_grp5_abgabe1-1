@@ -45,35 +45,35 @@ import ip from 'ip';
 import stripIndent from 'strip-indent';
 
 /* eslint-disable no-process-exit */
-//! Arrow Function
+// ! Arrow Function
 const disconnectDB = () => {
-    //! beim Aufruf von process.exit() sollte eslint normalerweise einen Fehler anzeigen
-    //! Der Server wird durch diese Funktion beendet und daher die Warnung
-    //! Die Warnung wird durch den Kommentar dahinter ignoriert
+    // ! beim Aufruf von process.exit() sollte eslint normalerweise einen Fehler anzeigen
+    // ! Der Server wird durch diese Funktion beendet und daher die Warnung
+    // ! Die Warnung wird durch den Kommentar dahinter ignoriert
     connection.close().catch(() => process.exit(0)); // eslint-disable-line node/no-process-exit
 };
 
 const shutdown = () => {
     logger.info('Server wird heruntergefahren...');
     disconnectDB();
-    //! process ist ein Betriebssystemprozess von unserem Server
-    //! mit exit(0) wird der Prozess beendent. 0 ist der Rückgabewert und bedeutet erfolgreich. Andere Zahlen wären Fehlercodes.
+    // ! process ist ein Betriebssystemprozess von unserem Server
+    // ! mit exit(0) wird der Prozess beendent. 0 ist der Rückgabewert und bedeutet erfolgreich. Andere Zahlen wären Fehlercodes.
     process.exit(0); // eslint-disable-line node/no-process-exit
 };
 /* eslint-enable no-process-exit */
 
-//! Destructuring
+// ! Destructuring
 const { host, port } = nodeConfig;
 const printBanner = () => {
     // Heroku entfernt fuehrende Leerzeichen
     const banner = `
 
     .    _    _  _____ _  __           __ _ _
-    .   | |  | |/ ____| |/ /    /\    / _| (_)
-    .   | |__| | (___ | ' /    /  \  | |_| |___  __
-    .   |  __  |\___ \|  <    / /\ \ |  _| | \ \/ /
-    .   | |  | |____) | . \  / ____ \| | | | |>  <
-    .   |_|  |_|_____/|_|\_\/_/    \_\_| |_|_/_/\_\
+    .   | |  | |/ ____| |/ /    /\\    / _| (_)
+    .   | |__| | (___ | ' /    /  \\  | |_| |___  __
+    .   |  __  |\\___ \\|  <    / /\\ \\ |  _| | \\ \\/ /
+    .   | |  | |____) | . \\  / ____\\| | | | |>  <
+    .   |_|  |_|_____/|_|\\_\\/_/    \\_\\_| |_|_/_/\\_\
 
     `;
 
@@ -97,7 +97,6 @@ const printBanner = () => {
 };
 
 const startServer = () => {
-
     let server: Application | Server;
     if (cloud === undefined) {
         const { cert, key } = nodeConfig;
