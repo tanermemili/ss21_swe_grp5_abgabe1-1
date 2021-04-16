@@ -40,7 +40,7 @@ Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-3-put.json
+< .\json\film-3-put.json
 
 ### NICHT-Vorhandenen Film aktualisieren
 PUT https://{{host}}/filme/99999999-9999-9999-9999-999999999999
@@ -48,14 +48,14 @@ Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-3-put.json
+< .\json\film-3-put.json
 
 ### Vorhandenen Film *OHNE* Versionsnummer aktualisieren
 PUT https://{{host}}/filme/00000000-0000-0000-0000-000000000003
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-3-put.json
+< .\json\film-3-put.json
 
 ### Vorhandenen Film mit falscher Versionsnummer aktualisieren
 PUT https://{{host}}/filme/00000000-0000-0000-0000-000000000003
@@ -63,7 +63,7 @@ Content-Type: application/json
 If-Match: 0
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-3-put.json
+< .\json\film-3-put.json
 
 ### Vorhandenen Film mit alter Versionsnummer aktualisieren
 PUT https://{{host}}/filme/00000000-0000-0000-0000-000000000003
@@ -71,7 +71,7 @@ Content-Type: application/json
 If-Match: "-1"
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-3-put.json
+< .\json\film-3-put.json
 
 ### Vorhandenen Film mit ungueltigen Daten aktualisieren
 PUT https://{{host}}/filme/00000000-0000-0000-0000-000000000003
@@ -79,4 +79,4 @@ Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-3-put-invalid.json
+< .\json\film-3-put-invalid.json
