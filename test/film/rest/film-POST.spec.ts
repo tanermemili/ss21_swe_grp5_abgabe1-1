@@ -51,23 +51,23 @@ const neuerFilm: Film = {
     veroeffentlichung: '2016-02-28',
     beschreibung: '0-0070-0644-6',
     website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
+    schauspieler: ['Any Actor'],
+    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
     spieldauer: 120
 };
 const neuerFilmInvalid: object = {
     titel: 'Neu',
     bewertung: 1,
     genre: 'DOKUMENTATION',
-    produktionsStudio: 'UNIVERSAL',
+    produktionsStudio: '---',
     preis: 99.99,
     rabatt: 0.099,
     verfuegbarkeit: true,
     veroeffentlichung: '2016-02-28',
     beschreibung: '0-0070-0644-6',
     website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
+    schauspieler: ['Any Actor', 'Any Actrice'],
+    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
     spieldauer: 120
 };
 const neuerFilmTitelExistiert: Film = {
@@ -81,8 +81,8 @@ const neuerFilmTitelExistiert: Film = {
     veroeffentlichung: '2016-02-28',
     beschreibung: '0-0070-0644-6',
     website: 'https://test.de/',
-    schauspieler: ['JAVASCRIPT', 'TYPESCRIPT'],
-    regisseur: [{ nachname: 'Test', vorname: 'Theo' }],
+    schauspieler: ['Any Actor', 'Any Actrice'],
+    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
     spieldauer: 120
 };
 

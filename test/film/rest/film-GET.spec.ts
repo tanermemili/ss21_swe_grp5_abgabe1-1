@@ -41,7 +41,7 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 const titelVorhanden = ['a', 't', 'g'];
 const titelNichtVorhanden = ['xx', 'yy'];
-const beschreibungVorhanden = ['Naturdokumentation', 'Biographie-Doku'];
+const beschreibungVorhanden = ['Dokumentation über die Zeitalter der Erde', 'Dramafilm ab 16 Jahren'];
 const beschreibungNichtVorhanden = ['Thriller', '...'];
 
 // -----------------------------------------------------------------------------
