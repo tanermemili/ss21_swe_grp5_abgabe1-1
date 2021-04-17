@@ -104,7 +104,7 @@ export class FilmService {
             return filme;
         }
 
-        const { titel, javascript, typescript, ...dbQuery } = query;
+        const { titel, ...dbQuery } = query;
 
         // Schutz vor DDOS unseres Servers/DB, da REGEX Prüfung von Strings aufwändig ist
         const maxStringLength = 10;
@@ -351,6 +351,3 @@ export class FilmService {
         return undefined;
     }
 }
-
-/* eslint-enable no-null/no-null, @typescript-eslint/no-unsafe-assignment */
-/* eslint-enable max-lines */

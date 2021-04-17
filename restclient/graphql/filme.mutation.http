@@ -1,0 +1,71 @@
+### Copyright (C) 2020 - present Juergen Zimmermann, Hochschule Karlsruhe
+###
+### This program is free software: you can redistribute it and/or modify
+### it under the terms of the GNU General Public License as published by
+### the Free Software Foundation, either version 3 of the License, or
+### (at your option) any later version.
+###
+### This program is distributed in the hope that it will be useful,
+### but WITHOUT ANY WARRANTY; without even the implied warranty of
+### MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+### GNU General Public License for more details.
+###
+### You should have received a copy of the GNU General Public License
+### along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+###
+### N e t z w e r k   -  V e r b i n d u n g   n o t w e n d i g
+###
+
+@url = https://localhost:3000/graphql
+#@url = https://gener-iert-12345.herokuapp.com/graphql
+
+### Neuen Film anlegen
+POST {{url}}
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation {
+  createFilm(
+    titel: "Landwirtschaft im Mittelalter"
+    bewertung: 5
+    genre: DOKUMENTATION
+    produktionsStudio: DISNEY
+    preis: 19.99
+    rabatt: 0.0
+    verfuegbarkeit: true
+    beschreibung: "Ein Einblick in das einfache Leben der Bauern im Mittelalter."
+    website: "http://acme.com"
+  )
+}
+
+### Vorhandenen Film aktualisieren
+POST {{url}}
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation {
+  updateFilm(
+    _id: "00000000-0000-0000-0000-000000000003"
+    titel: "Geaendert"
+    bewertung: 5
+    genre: "DOKUMENTATION"
+    produktionsStudio: "DISNEY"
+    preis: 9.99
+    rabatt: 0.0
+    verfuegbarkeit: true
+    datum: null
+    beschreibung: "Ein Einblick in das einfache Leben der Bauern im Mittelalter."
+    website: "http://acme.com"
+    version: 1
+  )
+}
+
+### Vorhandenen Film loeschen
+POST {{url}}
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation {
+  deleteFilm(id: "00000000-0000-0000-0000-000000000004")
+}
