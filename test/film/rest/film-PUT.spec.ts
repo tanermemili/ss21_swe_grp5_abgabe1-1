@@ -20,7 +20,6 @@ import { HttpStatus, logger, nodeConfig } from '../../../src/shared';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import fetch, { Headers, Request } from 'node-fetch';
 import type { AddressInfo } from 'net';
-import type { Film } from '../../../src/film/entity';
 import { MAX_RATING } from '../../../src/film/entity';
 import { PATHS } from '../../../src/app';
 import type { Server } from 'http';
@@ -40,45 +39,35 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const geaenderterFilm: Omit<Film, 'beschreibung'> = {
+const geaenderterFilm: object = {
     // isbn wird nicht geaendert
-    titel: 'Alpha',
-        bewertung: 4,
-        genre: 'DOKUMENTATION',
-        produktionsStudio: 'DISNEY',
-        preis: 11.1,
-        rabatt: 0.011,
+        titel: 'geaendert',
+        bewertung: 1,
+        genre: 'KOMOEDIE',
+        produktionsStudio: 'UNIVERSAL',
+        preis: 33.3,
+        rabatt: 0.033,
         verfuegbarkeit: true,
-        veroeffentlichung: '2020-02-01',
-        website: 'https://acme.at/',
-        schauspieler: ['any actor'],
-        regisseur: [
-            {
-                nachname: 'Bond',
-                vorname: 'James',
-            },
-            {
-                nachname: 'Beta',
-
-                vorname: 'Alpha',
-            },
-        ],
-        spieldauer: 120
+        veroeffentlichung: '2020-02-03',
+        website: 'https://geaendert.com/',
+        schauspieler: ['PITT', 'CLOONEY'],
+        regisseur: [{ nachname: 'Bond', vorname: 'James',}],
+        spieldauer: 99
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000003';
 
-const geaenderterFilmIdNichtVorhanden: Omit<Film, 'beschreibung' | 'website'> = {
-    titel: 'Neu',
-    bewertung: 1,
-    genre: 'DOKUMENTATION',
-    produktionsStudio: 'UNIVERSAL',
-    preis: 99.99,
-    rabatt: 0.099,
-    verfuegbarkeit: true,
-    veroeffentlichung: '2016-02-28',
-    schauspieler: ['Any Actor', 'Any Actrice'],
-    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
-    spieldauer: 120
+const geaenderterFilmIdNichtVorhanden: object = {
+        titel: 'geaendert',
+        bewertung: 1,
+        genre: 'KOMOEDIE',
+        produktionsStudio: 'UNIVERSAL',
+        preis: 33.3,
+        rabatt: 0.033,
+        verfuegbarkeit: true,
+        veroeffentlichung: '2020-02-03',
+        schauspieler: ['PITT', 'CLOONEY'],
+        regisseur: [{ nachname: 'Bond', vorname: 'James',}],
+        spieldauer: 99
 };
 const idNichtVorhanden = '00000000-0000-0000-0000-000000000999';
 
@@ -221,16 +210,16 @@ describe('PUT /api/filme/:id', () => {
 
         // then
         expect(response.status).to.be.equal(HttpStatus.BAD_REQUEST);
-        const { art, rating, produktionsStudio, datum, isbn } = await response.json();
-        expect(art).to.be.equal(
+        const { genre, bewertung, produktionsStudio, veroeffentlichung } = await response.json();
+        expect(genre).to.be.equal(
             'Das Genre eines Filmes muss DOKUMENTATION, DRAMA oder KOMOEDIE sein',
         );
-        expect(rating).to.be.equal(`Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`);
+        expect(bewertung).to.be.equal(`Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`);
         expect(produktionsStudio).to.be.equal(
             'das produktionsStudio eines Filmes muss DISNEY, UNIVERSAL oder WARNERBROS sein',
         );
-        expect(datum).to.be.equal('Das Datum muss im Format yyyy-MM-dd sein.');
-        expect(isbn).to.be.equal('Die ISBN-Nummer ist nicht korrekt.');
+        expect(veroeffentlichung).to.be.equal('Das Datum muss im Format yyyy-MM-dd sein.');
+        //expect(beschreibung).to.be.equal('Die ISBN-Nummer ist nicht korrekt.');
     });
 
     test('Vorhandenen Film aendern, aber ohne Versionsnummer', async () => {
