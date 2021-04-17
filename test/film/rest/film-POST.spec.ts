@@ -48,7 +48,7 @@ const neuerFilm: Film = {
     preis: 99.99,
     rabatt: 0.099,
     verfuegbarkeit: true,
-    veroeffentlichung: '2016-02-28',
+    veroeffentlichung: new Date('2016-02-28'),
     beschreibung: '0-0070-0644-6',
     website: 'https://test.de/',
     schauspieler: ['Any Actor'],

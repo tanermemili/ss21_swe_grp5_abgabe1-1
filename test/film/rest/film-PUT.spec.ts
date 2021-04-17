@@ -20,11 +20,11 @@ import { HttpStatus, logger, nodeConfig } from '../../../src/shared';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import fetch, { Headers, Request } from 'node-fetch';
 import type { AddressInfo } from 'net';
-import { MAX_RATING } from '../../../src/film/entity';
 import { PATHS } from '../../../src/app';
 import type { Server } from 'http';
 import chai from 'chai';
 import { login } from '../../login';
+import { Film, MAX_RATING } from '../../../src/film/entity';
 
 const { expect } = chai;
 
@@ -39,79 +39,51 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const geaenderterFilm: object = {
-    // isbn wird nicht geaendert
-        titel: 'geaendert',
-        bewertung: 1,
-        genre: 'KOMOEDIE',
-        produktionsStudio: 'UNIVERSAL',
-        preis: 33.3,
-        rabatt: 0.033,
-        verfuegbarkeit: true,
-        veroeffentlichung: '2020-02-03',
-        website: 'https://geaendert.com/',
-        schauspieler: ['PITT', 'CLOONEY'],
-        regisseur: [{ nachname: 'Bond', vorname: 'James',}],
-        spieldauer: 99
+const geaenderterFilm: Omit<Film, 'regisseur' | 'schauspieler' | 'beschreibung' | 'spieldauer' | 'veroeffentlichung' > = {
+    titel: 'geaendert',
+    bewertung: 1,
+    genre: 'KOMOEDIE',
+    produktionsStudio: 'UNIVERSAL',
+    preis: 33.3,
+    rabatt: 0.033,
+    verfuegbarkeit: true,
+    website: 'https://acme.at/',
+
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000003';
 
-const geaenderterFilmIdNichtVorhanden: object = {
-        titel: 'geaendert',
-        bewertung: 1,
-        genre: 'KOMOEDIE',
-        produktionsStudio: 'UNIVERSAL',
-        preis: 33.3,
-        rabatt: 0.033,
-        verfuegbarkeit: true,
-        veroeffentlichung: '2020-02-03',
-        schauspieler: ['PITT', 'CLOONEY'],
-        regisseur: [{ nachname: 'Bond', vorname: 'James',}],
-        spieldauer: 99
+const geaenderterFilmIdNichtVorhanden: Omit<Film, 'regisseur' | 'schauspieler' | 'beschreibung' | 'spieldauer' | 'veroeffentlichung'> = {
+    titel: 'geaendert',
+    bewertung: 1,
+    genre: 'KOMOEDIE',
+    produktionsStudio: 'UNIVERSAL',
+    preis: 33.3,
+    rabatt: 0.033,
+    verfuegbarkeit: true,
+    website: 'https://acme.at/',
 };
 const idNichtVorhanden = '00000000-0000-0000-0000-000000000999';
 
 const geaenderterFilmInvalid: object = {
-    titel: 'Alpha',
-    bewertung: 4,
-    genre: 'DOKUMENTATION',
-    produktionsStudio: '---',
-    preis: 11.1,
-    rabatt: 0.011,
+    titel: 'geaendert',
+    bewertung: -1,
+    genre: 'KOMOEDIE',
+    produktionsStudio: 'UNIVERSAL',
+    preis: 33.3,
+    rabatt: 0.033,
     verfuegbarkeit: true,
-    veroeffentlichung: new Date('2020-02-01'),
-    beschreibung: 'Dokumentation über die Tiere in Afrika',
     website: 'https://acme.at/',
-    schauspieler: [''],
-    regisseur: [
-        {
-            nachname: 'Bond',
-            vorname: 'James',
-        },
-        {
-            nachname: 'Beta',
-
-            vorname: 'Alpha',
-        },
-    ],
-    spieldauer: 100,
 };
 
 const veralterFilm: object = {
-    // isbn wird nicht geaendet
-    titel: 'Alt',
+    titel: 'geaendert',
     bewertung: 1,
-    genre: 'DOKUMENTATION',
+    genre: 'KOMOEDIE',
     produktionsStudio: 'UNIVERSAL',
-    preis: 99.99,
-    rabatt: 0.099,
+    preis: 33.3,
+    rabatt: 0.033,
     verfuegbarkeit: true,
-    veroeffentlichung: '2016-02-28',
-    beschreibung: '0-0070-0644-6',
-    website: 'https://test.de/',
-    schauspieler: ['Any Actor', 'Any Actrice'],
-    regisseur: [{ nachname: 'Waltz', vorname: 'Christoph' }],
-    spieldauer: 120
+    website: 'https://acme.at/',
 };
 
 // -----------------------------------------------------------------------------
