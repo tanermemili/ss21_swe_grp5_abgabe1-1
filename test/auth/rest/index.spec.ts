@@ -1,5 +1,6 @@
+/* eslint-disable max-lines,max-lines-per-function,no-underscore-dangle */
+
 /*
- * Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { agent, createTestserver, HttpMethod } from '../../testserver';
-import { HttpStatus, serverConfig } from '../../../src/shared';
+import { HttpMethod, agent, createTestserver } from '../../testserver';
+import { HttpStatus, nodeConfig } from '../../../src/shared';
 import { afterAll, beforeAll, describe, test } from '@jest/globals';
 import fetch, { Headers, Request } from 'node-fetch';
 import type { AddressInfo } from 'net';
 import { PATHS } from '../../../src/app';
+import each from 'jest-each';
 import type { Server } from 'http';
 import chai from 'chai';
-import { login } from '../../login';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const { env } = process;
+const { USER_PASSWORD, USER_PASSWORD_FALSCH } = env; // eslint-disable-line @typescript-eslint/naming-convention
 
 const { expect } = chai;
 
@@ -38,37 +44,39 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const id = '00000000-0000-0000-0000-000000000005';
+const username = 'admin';
+const password = USER_PASSWORD;
+const passwordFalsch = [USER_PASSWORD_FALSCH, USER_PASSWORD_FALSCH];
 
 // -----------------------------------------------------------------------------
 // T e s t s
 // -----------------------------------------------------------------------------
 let server: Server;
-const path = PATHS.filme;
-let filmeUri: string;
 let loginUri: string;
 
 // Test-Suite
-describe('DELETE /api/filme', () => {
+describe('REST-Schnittstelle /api/login', () => {
     // Testserver starten und dabei mit der DB verbinden
     beforeAll(async () => {
         server = await createTestserver();
 
         const address = server.address() as AddressInfo;
-        const baseUri = `https://${serverConfig.host}:${address.port}`;
-        filmeUri = `${baseUri}${path}`;
+        const baseUri = `https://${nodeConfig.host}:${address.port}`;
         loginUri = `${baseUri}${PATHS.login}`;
     });
 
     afterAll(() => { server.close() });
 
-    test('Vorhandenen Film loeschen', async () => {
+    test('Login mit korrektem Passwort', async () => {
         // given
-        const token = await login(loginUri);
-        const headers = new Headers({ Authorization: `Bearer ${token}` });
-        const request = new Request(`${filmeUri}/${id}`, {
-            method: HttpMethod.DELETE,
+        const headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+        });
+        const body = `username=${username}&password=${password}`;
+        const request = new Request(loginUri, {
+            method: HttpMethod.POST,
             headers,
+            body,
             agent,
         });
 
@@ -76,15 +84,23 @@ describe('DELETE /api/filme', () => {
         const response = await fetch(request);
 
         // then
-        expect(response.status).to.be.equal(HttpStatus.NO_CONTENT);
-        const responseBody = await response.text();
-        expect(responseBody).to.be.empty;
+        expect(response.status).to.be.equal(HttpStatus.OK);
+        const responseBody = await response.json();
+        const tokenStr: string = responseBody.token;
+        const tokenParts = tokenStr.split('.');
+        expect(tokenParts.length).to.be.equal(3);
     });
 
-    test('Film loeschen, aber ohne Token', async () => {
+    each(passwordFalsch).test('Login mit falschem Passwort', async (pwd) => {
         // given
-        const request = new Request(`${filmeUri}/${id}`, {
-            method: HttpMethod.DELETE,
+        const headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+        });
+        const body = `username=${username}&password=${pwd}`;
+        const request = new Request(loginUri, {
+            method: HttpMethod.POST,
+            headers,
+            body,
             agent,
         });
 
@@ -97,12 +113,13 @@ describe('DELETE /api/filme', () => {
         expect(responseBody).to.be.equalIgnoreCase('unauthorized');
     });
 
-    test('Film loeschen, aber mit falschem Token', async () => {
+    test('Login ohne Benutzerkennung', async () => {
         // given
-        const token = 'FALSCH';
-        const headers = new Headers({ Authorization: `Bearer ${token}` });
-        const request = new Request(`${filmeUri}/${id}`, {
-            method: HttpMethod.DELETE,
+        const headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+        });
+        const request = new Request(loginUri, {
+            method: HttpMethod.POST,
             headers,
             agent,
         });
