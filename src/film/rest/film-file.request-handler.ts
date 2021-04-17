@@ -7,21 +7,20 @@
  */
 
 import {
+    FileNotFound,
     FilmFileService,
     FilmFileServiceError,
     FilmNotExists,
-    FileNotFound,
     MultipleFiles,
 } from './../service';
 import { HttpStatus, logger } from '../../shared';
 import type { Request, Response } from 'express';
 import type { DownloadError } from '../service';
 
-
 export class FilmFileRequestHandler {
     private readonly service = new FilmFileService();
 
-    upload(req: Request, res: Response){
+    upload(req: Request, res: Response) {
         const { id } = req.params;
         logger.debug('FilmFileRequestHandler.upload(): id=%s', id);
         if (id === undefined) {
@@ -79,7 +78,7 @@ export class FilmFileRequestHandler {
      * @param res Leeres Response-Objekt von Express.
      * @returns Leeres Promise-Objekt.
      */
-     async download(req: Request, res: Response) {
+    async download(req: Request, res: Response) {
         const { id } = req.params;
         logger.debug('FilmFileRequestHandler.downloadBinary(): %s', id);
         if (id === undefined) {
@@ -109,7 +108,7 @@ export class FilmFileRequestHandler {
     }
 
     private handleDownloadError(
-        err: FilmNotExists | DownloadError,
+        err: DownloadError | FilmNotExists,
         res: Response,
     ) {
         if (err instanceof FilmNotExists) {
