@@ -18,7 +18,7 @@
 import { exec } from 'shelljs';
 
 const dockerAccount = 'juergenzimmermann';
-//TODO: An Domäne anpassen
+//TODO: An Domaene anpassen
 const imageName = 'film';
 const imageTag = '1.0.0';
 

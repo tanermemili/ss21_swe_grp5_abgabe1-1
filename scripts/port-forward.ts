@@ -25,7 +25,7 @@ const values = argv._;
 const service = values[2];
 
 const namespace = 'acme';
-//TODO: An Domäne anpassen
+//TODO: An Domaene anpassen
 switch (service) {
     case undefined:
     case 'film':
