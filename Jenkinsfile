@@ -73,8 +73,7 @@ pipeline {
 
                 // https://www.jenkins.io/doc/pipeline/steps/git
                 // "named arguments" statt Funktionsaufruf mit Klammern
-                // git url: 'file:///git-repository/beispiel', branch: 'main', poll: true
-                git url: 'C:\Users\Alfiron\Workspace\', branch: 'main', poll: true
+                git url: 'file:///git-repository/beispiel', branch: 'main', poll: true
             }
         }
 
@@ -190,7 +189,6 @@ pipeline {
                   //]
                 }
 
-                //TODO: An Domaene anpassen
                 success {
                     script {
                         if (fileExists("${env.WORKSPACE}/film.zip")) {
