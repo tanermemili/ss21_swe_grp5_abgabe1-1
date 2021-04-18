@@ -38,4 +38,4 @@ yarn.lock
 # System Dateien
 .DS_Store
 Thumbs.db
-Jenkinsfile
+**/Jenkinsfile
