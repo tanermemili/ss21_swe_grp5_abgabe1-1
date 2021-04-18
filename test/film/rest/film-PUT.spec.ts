@@ -24,7 +24,7 @@ import { PATHS } from '../../../src/app';
 import type { Server } from 'http';
 import chai from 'chai';
 import { login } from '../../login';
-import { Film, MAX_RATING } from '../../../src/film/entity';
+import { Film } from '../../../src/film/entity';
 
 const { expect } = chai;
 
@@ -52,23 +52,23 @@ const geaenderterFilm: Omit<Film, 'regisseur' | 'schauspieler' | 'beschreibung' 
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000003';
 
-const geaenderterFilmIdNichtVorhanden: Omit<Film, 'regisseur' | 'schauspieler' | 'beschreibung' | 'spieldauer' | 'veroeffentlichung'> = {
-    titel: 'geaendert',
+const geaenderterFilmIdNichtVorhanden: Omit<Film, 'regisseur' | 'schauspieler' | 'beschreibung' | 'spieldauer' | 'veroeffentlichung' | 'website'> = {
+    titel: 'nicht vorhanden',
     bewertung: 1,
     genre: 'KOMOEDIE',
     produktionsStudio: 'UNIVERSAL',
     preis: 33.3,
     rabatt: 0.033,
     verfuegbarkeit: true,
-    website: 'https://acme.at/',
+    //website: 'https://acme.at/',
 };
 const idNichtVorhanden = '00000000-0000-0000-0000-000000000999';
 
 const geaenderterFilmInvalid: object = {
     titel: 'geaendert',
     bewertung: -1,
-    genre: 'KOMOEDIE',
-    produktionsStudio: 'UNIVERSAL',
+    genre: 'aaa',
+    produktionsStudio: '---',
     preis: 33.3,
     rabatt: 0.033,
     verfuegbarkeit: true,
@@ -182,16 +182,16 @@ describe('PUT /api/filme/:id', () => {
 
         // then
         expect(response.status).to.be.equal(HttpStatus.BAD_REQUEST);
-        const { genre, bewertung, produktionsStudio, veroeffentlichung } = await response.json();
+        const { genre, bewertung, produktionsStudio } = await response.json();
         expect(genre).to.be.equal(
-            'Das Genre eines Filmes muss DOKUMENTATION, DRAMA oder KOMOEDIE sein',
+            'Das Genre eines Films kann nur DOKUMENTATION, DRAMA oder KOMOEDIE sein',
         );
-        expect(bewertung).to.be.equal(`Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`);
+        expect(bewertung).to.be.equal('Eine Bewertung muss zwischen 0 und 5 liegen.');
         expect(produktionsStudio).to.be.equal(
-            'das produktionsStudio eines Filmes muss DISNEY, UNIVERSAL oder WARNERBROS sein',
+            'Das Produktionsstudio eines Filmes muss DISNEY, UNIVERSAL oder WARNER BROS sein.',
         );
-        expect(veroeffentlichung).to.be.equal('Das Datum muss im Format yyyy-MM-dd sein.');
-        //expect(beschreibung).to.be.equal('Die ISBN-Nummer ist nicht korrekt.');
+        //expect(veroeffentlichung).to.be.equal('Das Datum muss im Format yyyy-MM-dd sein.');
+        //expect(beschreibung).to.be.equal('Die Beschreibung ist nicht korrekt.');
     });
 
     test('Vorhandenen Film aendern, aber ohne Versionsnummer', async () => {

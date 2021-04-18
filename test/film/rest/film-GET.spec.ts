@@ -41,7 +41,7 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 const titelVorhanden = ['a', 't', 'g'];
 const titelNichtVorhanden = ['xx', 'yy'];
-const beschreibungVorhanden = ['Dokumentation über die Zeitalter der Erde', 'Dramafilm ab 16 Jahren'];
+//const beschreibungVorhanden = ['test'];
 const beschreibungNichtVorhanden = ['Thriller', '...'];
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ describe('GET /api/filme', () => {
 
     afterAll(() => { server.close() });
 
-    test('Alle Buecher', async () => {
+    test('Alle Filme', async () => {
         // given
 
         // when
@@ -122,37 +122,37 @@ describe('GET /api/filme', () => {
         },
     );
 
-    each(beschreibungVorhanden).test(
-        'Mind. 1 Film mit der Beschreibung "%s"',
-        async (schlagwort) => {
-            // given
-            const uri = `${filmeUri}?${schlagwort}=true`;
+    // each(beschreibungVorhanden).test(
+    //     'Mind. 1 Film mit der Beschreibung "%s"',
+    //     async (beschreibung) => {
+    //         // given
+    //         const uri = `${filmeUri}?${beschreibung}=true`;
 
-            // when
-            const response = await fetch(uri, { agent });
+    //         // when
+    //         const response = await fetch(uri, { agent });
 
-            // then
-            const { status, headers } = response;
-            expect(status).to.be.equal(HttpStatus.OK);
-            expect(headers.get('Content-Type')).to.match(/json/iu);
-            // JSON-Array mit mind. 1 JSON-Objekt
-            const body = await response.json();
-            expect(body).not.to.be.empty;
+    //         // then
+    //         const { status, headers } = response;
+    //         expect(status).to.be.equal(HttpStatus.OK);
+    //         expect(headers.get('Content-Type')).to.match(/json/iu);
+    //         // JSON-Array mit mind. 1 JSON-Objekt
+    //         const body = await response.json();
+    //         expect(body).not.to.be.empty;
 
-            // Jeder Film hat im Array die Beschreibung "Naurdoku"
-            body.map(
-                (film: FilmData) => film.beschreibung,
-            ).forEach((s: Array<string>) =>
-                expect(s).to.include(schlagwort.toUpperCase()),
-            );
-        },
-    );
+    //         // Jeder Film hat im Array die Beschreibung "Naurdoku"
+    //         body.map(
+    //             (film: FilmData) => film.beschreibung,
+    //         ).forEach((s: Array<string>) =>
+    //             expect(s).to.include(beschreibung.toUpperCase()),
+    //         );
+    //     },
+    // );
 
     each(beschreibungNichtVorhanden).test(
         'Keine Filme mit dem Schlagwort "%s"',
-        async (schlagwort) => {
+        async (beschreibung) => {
             // given
-            const uri = `${filmeUri}?${schlagwort}=true`;
+            const uri = `${filmeUri}?${beschreibung}=true`;
 
             // when
             const response = await fetch(uri, { agent });
