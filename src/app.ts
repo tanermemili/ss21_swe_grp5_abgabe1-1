@@ -251,7 +251,7 @@ class App {
         this.app.set('view engine', 'ejs');
         // __dirname ist das Verzeichnis ".../dist/server"
         /* global __dirname */
-        this.app.set('views', join(__dirname, 'views'));
+        // this.app.set('views', join(__dirname, 'views'));
         this.app.use(express.static(join(__dirname, 'public')));
     }
 }

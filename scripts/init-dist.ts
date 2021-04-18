@@ -49,6 +49,7 @@ if (cloud === undefined) {
 }
 
 // EJS: Views mit Partials, CSS, Bilder, Favicon, manifest.json, robots.txt
-const viewsSrc = join(src, 'views');
+// const viewsSrc = join(src, 'views');
 const publicSrc = join(src, 'public');
-exec(`npx copyfiles --up=1 ${viewsSrc}/** ${publicSrc}/** ${dist}`);
+// exec(`npx copyfiles --up=1 ${viewsSrc}/** ${publicSrc}/** ${dist}`);
+exec(`npx copyfiles --up=1 ${publicSrc}/** ${dist}`);
