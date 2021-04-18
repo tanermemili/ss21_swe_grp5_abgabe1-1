@@ -107,7 +107,7 @@ describe('GET /api/filme', () => {
     );
 
     each(titelNichtVorhanden).test(
-        'Keine Buecher mit einem Titel, der "%s" nicht enthaelt',
+        'Keine Filme mit einem Titel, der "%s" nicht enthaelt',
         async (teilTitel) => {
             // given
             const uri = `${filmeUri}?titel=${teilTitel}`;
