@@ -39,7 +39,7 @@ export const testdaten: FilmData[] = [
         rabatt: 0.011,
         verfuegbarkeit: true,
         veroeffentlichung: new Date('2020-02-01'),
-        beschreibung: 'Afrikas gigantische Landschaften sind atemberaubend in ihrer einmaligen Schönheit und faszinieren mit ihrer Vielfalt an Tieren, die oft einen Kampf um Leben und Tod führen. Zu den faszinierendsten Landschaften zählt das Okavango-Delta in Botsuana.',
+        beschreibung: 'test',
         website: 'https://acme.at/',
         schauspieler: [''],
         regisseur: [

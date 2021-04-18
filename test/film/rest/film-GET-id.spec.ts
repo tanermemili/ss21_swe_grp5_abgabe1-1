@@ -15,16 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+// node-fetch implementiert fuer Node die Funktion fetch(), die fuer Webbrowser
+// standardisiert ist:
+//  https://github.com/node-fetch/node-fetch
+//  https://fetch.spec.whatwg.org
+//  https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+// Alternativen zu node-fetch: https://github.com/request/request/issues/3143
+//                             https://blog.bitsrc.io/comparing-http-request-libraries-for-2019-7bedb1089c83
+//  got         https://github.com/sindresorhus/got
+//  axios       https://github.com/axios/axios, beinhaltet .d.ts
+//  needle      https://github.com/tomas/needle
+//  ky          https://github.com/sindresorhus/ky
+
 import { HttpStatus, nodeConfig } from '../../../src/shared';
 import { agent, createTestserver } from '../../testserver';
-import { afterAll, beforeAll, describe, test } from '@jest/globals';
+import { afterAll, beforeAll, describe } from '@jest/globals';
+import fetch, { Headers, Request } from 'node-fetch';
 import type { AddressInfo } from 'net';
-import type { Film } from '../../../src/film/entity';
 import { PATHS } from '../../../src/app';
 import type { Server } from 'http';
 import chai from 'chai';
 import each from 'jest-each';
-import fetch from 'node-fetch';
 
 const { expect } = chai;
 
@@ -39,10 +51,20 @@ const { expect } = chai;
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const titelVorhanden = ['a', 't', 'g'];
-const titelNichtVorhanden = ['xx', 'yy'];
-const beschreibungVorhanden = ['Naturdokumentation', 'Biographie-Doku'];
-const beschreibungNichtVorhanden = ['Thriller', '...'];
+const idVorhanden = [
+    '00000000-0000-0000-0000-000000000001',
+    '00000000-0000-0000-0000-000000000002',
+    '00000000-0000-0000-0000-000000000003',
+    '00000000-0000-0000-0000-000000000004',
+];
+const idNichtVorhanden = [
+    '00000000-0000-0000-0000-000000000888',
+    '00000000-0000-0000-0000-000000000999',
+];
+const idVorhandenETag = [
+    ['00000000-0000-0000-0000-000000000001', '"0"'],
+    ['00000000-0000-0000-0000-000000000002', '"0"'],
+];
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -52,7 +74,8 @@ const path = PATHS.filme;
 let filmeUri: string;
 
 // Test-Suite
-describe('GET /api/filme', () => {
+describe('GET /api/filme/:id', () => {
+    // Testserver starten und dabei mit der DB verbinden
     beforeAll(async () => {
         server = await createTestserver();
 
@@ -62,55 +85,27 @@ describe('GET /api/filme', () => {
 
     afterAll(() => { server.close() });
 
-    test('Alle Filme', async () => {
+    each(idVorhanden).test('Film zu vorhandener ID %s', async (id) => {
         // given
+        const uri = `${filmeUri}/${id}`;
 
         // when
-        const response = await fetch(filmeUri, { agent });
+        const response = await fetch(uri, { agent });
 
         // then
         const { status, headers } = response;
         expect(status).to.be.equal(HttpStatus.OK);
         expect(headers.get('Content-Type')).to.match(/json/iu);
-        // https://jestjs.io/docs/en/expect
-        // JSON-Array mit mind. 1 JSON-Objekt
-        const filme: Array<any> = await response.json();
-        expect(filme).not.to.be.empty;
-        filme.forEach((film) => {
-            const selfLink = film._links.self.href;
-            expect(selfLink).to.have.string(path);
-        });
+        // im Response-Body ist ist ein JSON-Objekt mit Atom-Links
+        const body = await response.json();
+        expect(body._links.self.href).to.endWith(`${path}/${id}`);
     });
 
-    each(titelVorhanden).test(
-        'Filme mit einem Titel, der "%s" enthaelt',
-        async (teilTitel) => {
+    each(idNichtVorhanden).test(
+        'Keinen Film zu nicht-vorhandener ID %s',
+        async (id) => {
             // given
-            const uri = `${filmeUri}?titel=${teilTitel}`;
-
-            // when
-            const response = await fetch(uri, { agent });
-
-            // then
-            const { status, headers } = response;
-            expect(status).to.be.equal(HttpStatus.OK);
-            expect(headers.get('Content-Type')).to.match(/json/iu);
-            // JSON-Array mit mind. 1 JSON-Objekt
-            const body = await response.json();
-            expect(body).not.to.be.empty;
-
-            // Jeder Film hat einen Titel mit dem Teilstring 'a'
-            body.map((film: Film) => film.titel).forEach((titel: string) =>
-                expect(titel.toLowerCase()).to.have.string(teilTitel),
-            );
-        },
-    );
-
-    each(titelNichtVorhanden).test(
-        'Keine Filme mit einem Titel, der "%s" nicht enthaelt',
-        async (teilTitel) => {
-            // given
-            const uri = `${filmeUri}?titel=${teilTitel}`;
+            const uri = `${filmeUri}/${id}`;
 
             // when
             const response = await fetch(uri, { agent });
@@ -122,45 +117,21 @@ describe('GET /api/filme', () => {
         },
     );
 
-    each(beschreibungVorhanden).test(
-        'Mind. 1 Film mit dem Schlagwort "%s"',
-        async (beschreibung) => {
+    each(idVorhandenETag).test(
+        'Film zu vorhandener ID %s mit ETag %s',
+        async (id, etag) => {
             // given
-            const uri = `${filmeUri}?${beschreibung}=true`;
+            const uri = `${filmeUri}/${id}`;
+            const headers = new Headers({ 'If-None-Match': etag });
+            const request = new Request(uri, { headers, agent });
 
             // when
-            const response = await fetch(uri, { agent });
+            const response = await fetch(request);
 
             // then
-            const { status, headers } = response;
-            expect(status).to.be.equal(HttpStatus.OK);
-            expect(headers.get('Content-Type')).to.match(/json/iu);
-            // JSON-Array mit mind. 1 JSON-Objekt
-            const body = await response.json();
-            expect(body).not.to.be.empty;
-
-            // Jeder Film hat im Array der Schlagwoerter "javascript"
-            body.map(
-                (film: Film) => film.beschreibung,
-            ).forEach((s: Array<string>) =>
-                expect(s).to.include(beschreibung.toUpperCase()),
-            );
-        },
-    );
-
-    each(beschreibungNichtVorhanden).test(
-        'Keine Filme mit dem Schlagwort "%s"',
-        async (beschreibung) => {
-            // given
-            const uri = `${filmeUri}?${beschreibung}=true`;
-
-            // when
-            const response = await fetch(uri, { agent });
-
-            // then
-            expect(response.status).to.be.equal(HttpStatus.NOT_FOUND);
-            const body = await response.text();
-            expect(body).to.be.equalIgnoreCase('not found');
+            const { status, size } = response;
+            expect(status).to.be.equal(HttpStatus.NOT_MODIFIED);
+            expect(size).to.be.equal(0);
         },
     );
 });
