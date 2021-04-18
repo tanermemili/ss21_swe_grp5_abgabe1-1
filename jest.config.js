@@ -37,7 +37,7 @@ module.exports = {
         '<rootDir>/node_modules/',
         '<rootDir>/scripts/',
         '<rootDir>/temp/',
-        //TODO: An unsere Domäne anpassen
+        //TODO: An unsere Domaene anpassen
         // '<rootDir>/src/film/service/mock/',
         // '<rootDir>/src/film/graphql',
         // '<rootDir>/src/film/html',

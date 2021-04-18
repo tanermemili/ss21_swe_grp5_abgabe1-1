@@ -444,7 +444,7 @@ auch einen Token besorgen. Danach kann man sich folgendermaßen authentifizieren
 und das Projekt auf Sicherheitslücken überprüfen
 
 ```PowerShell
-    synk auth <MEIN_TOKEN>
+    snyk auth <MEIN_TOKEN>
     snyk test
 ```
 
@@ -500,7 +500,7 @@ Bereitstellung von Zertifikaten herunterfahren.
 
 ### Aufruf mit Webbrowser
 
-Mit der URL https://localhost:9090 kann man von einem Webbrowser auf das
+Mit der URL http://localhost:9090 kann man von einem Webbrowser auf das
 Jenkins-Image zugreifen. Der Benutzername ist `admin` und das Passwort
 `Software Engineering WI.`.
 
